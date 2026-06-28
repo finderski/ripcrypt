@@ -1,0 +1,47 @@
+{
+  "folder": "dBAI76CApXH8qqjx",
+  "name": "Sickle",
+  "type": "weapon",
+  "_id": "o9saXoHahbxTxt4h",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "quantity": 1,
+    "cost": {
+      "gold": null,
+      "silver": 80,
+      "copper": null
+    },
+    "traits": [],
+    "range": {
+      "short": null,
+      "long": null
+    },
+    "damage": 3,
+    "wear": {
+      "value": 2,
+      "max": 2
+    },
+    "equipped": false,
+    "weight": "modest",
+    "access": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "9x9FgB0YTeCJJUDK": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "ripcrypt",
+    "systemVersion": "0.2.0",
+    "createdTime": 1759993051839,
+    "modifiedTime": 1759993069744,
+    "lastModifiedBy": "9x9FgB0YTeCJJUDK"
+  },
+  "_key": "!items!o9saXoHahbxTxt4h"
+}

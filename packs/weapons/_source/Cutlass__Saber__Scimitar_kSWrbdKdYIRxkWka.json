@@ -1,0 +1,49 @@
+{
+  "folder": "dBAI76CApXH8qqjx",
+  "name": "Cutlass, Saber, Scimitar",
+  "type": "weapon",
+  "_id": "kSWrbdKdYIRxkWka",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "quantity": 1,
+    "cost": {
+      "gold": null,
+      "silver": 120,
+      "copper": null
+    },
+    "traits": [
+      "Agile"
+    ],
+    "range": {
+      "short": null,
+      "long": null
+    },
+    "damage": 2,
+    "wear": {
+      "value": 2,
+      "max": 2
+    },
+    "equipped": false,
+    "weight": "modest",
+    "access": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "9x9FgB0YTeCJJUDK": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "ripcrypt",
+    "systemVersion": "0.2.0",
+    "createdTime": 1759992861725,
+    "modifiedTime": 1759992882913,
+    "lastModifiedBy": "9x9FgB0YTeCJJUDK"
+  },
+  "_key": "!items!kSWrbdKdYIRxkWka"
+}

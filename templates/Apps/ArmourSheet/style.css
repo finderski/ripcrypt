@@ -1,0 +1,135 @@
+.ripcrypt.ArmourSheet > .window-content {
+	--input-height: 1rem;
+	--input-underline: none;
+	--col-gap: 8px;
+	--row-gap: 8px;
+
+	--string-tags-tag-text: var(--header-text);
+	--string-tags-tag-background: var(--header-background);
+	--string-tags-add-text: white;
+	--string-tags-add-background: var(--accent-1);
+	--string-tags-input-text: white;
+	--string-tags-input-background: var(--accent-2);
+
+	--input-text: white;
+	--input-background: var(--accent-2);
+	--button-text: white;
+	--button-background: var(--accent-2);
+
+	--pill-width: 100%;
+	--pill-border-radius: 4px;
+
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+
+	padding: 8px;
+	background: var(--base-background);
+	color: var(--base-text);
+
+	hr {
+		background: var(--accent-1);
+		grid-column: 1 / -1;
+		height: 1px;
+		width: 90%;
+		margin: 0 auto;
+
+		&.vertical {
+			grid-column: unset;
+			height: 100%;
+		}
+	}
+
+	label, .label {
+		display: flex;
+		align-items: center;
+		box-sizing: border-box;
+
+		padding: 2px 4px;
+		text-transform: uppercase;
+		font-size: var(--font-size-14);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		font-weight: bold;
+	}
+
+	button, input, select, .value {
+		border-radius: 4px;
+		padding: 2px 4px;
+	}
+	input[type="checkbox"] {
+		justify-self: end;
+		padding: 0;
+	}
+	.value {
+		border: 2px solid var(--accent-2);
+	}
+
+	.contents {
+		display: grid;
+		grid-template-columns: 300px 1px 118px;
+		gap: 8px;
+
+		> .contents__left {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+			column-gap: var(--col-gap);
+			row-gap: var(--row-gap);
+		}
+
+		> .contents__right {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+		}
+	}
+
+	.section-pill {
+		background: var(--section-header-background);
+		color: var(--section-header-text);
+		padding: 0 4px;
+		border-radius: 999px;
+		text-align: right;
+	}
+
+	rc-border {
+		grid-column: 1 / -1;
+
+		> .content {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+			column-gap: var(--col-gap);
+			row-gap: var(--row-gap);
+		}
+
+		.label {
+			background: purple;
+		}
+	}
+
+	.center {
+		text-align: center;
+	}
+
+	.compass {
+		--size: 35px;
+		width: var(--size);
+		height: var(--size);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		border: 2px solid var(--accent-1);
+		border-radius: 50%;
+		font-size: 1.1rem;
+		position: relative;
+		background: var(--base-background);
+
+		> .value {
+			background: none;
+			width: 70%;
+			text-align: center;
+			padding: 0;
+		}
+	}
+}

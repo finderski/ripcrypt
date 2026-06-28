@@ -1,0 +1,21 @@
+{
+  "type": "Item",
+  "folder": "sjc6X9bKf7BY04Ar",
+  "name": "Light",
+  "color": "#06393f",
+  "sorting": "a",
+  "_id": "vPyj2cK1j66Zyrul",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "ripcrypt",
+    "systemVersion": "0.2.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!folders!vPyj2cK1j66Zyrul"
+}

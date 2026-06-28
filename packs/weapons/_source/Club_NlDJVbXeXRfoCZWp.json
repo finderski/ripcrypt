@@ -1,0 +1,47 @@
+{
+  "folder": "mmd8siMKSLyOeILo",
+  "name": "Club",
+  "type": "weapon",
+  "_id": "NlDJVbXeXRfoCZWp",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "quantity": 1,
+    "cost": {
+      "gold": null,
+      "silver": 2,
+      "copper": null
+    },
+    "traits": [],
+    "range": {
+      "short": null,
+      "long": null
+    },
+    "damage": 1,
+    "wear": {
+      "value": 2,
+      "max": 2
+    },
+    "equipped": false,
+    "weight": "light",
+    "access": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "9x9FgB0YTeCJJUDK": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "ripcrypt",
+    "systemVersion": "0.2.0",
+    "createdTime": 1759992392474,
+    "modifiedTime": 1759992619109,
+    "lastModifiedBy": "9x9FgB0YTeCJJUDK"
+  },
+  "_key": "!items!NlDJVbXeXRfoCZWp"
+}

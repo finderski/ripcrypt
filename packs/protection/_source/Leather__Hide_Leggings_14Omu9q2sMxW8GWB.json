@@ -1,0 +1,41 @@
+{
+  "folder": "HRwiz1c1ZcQyPu4z",
+  "name": "Leather, Hide Leggings",
+  "type": "armour",
+  "_id": "14Omu9q2sMxW8GWB",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "quantity": 1,
+    "cost": {
+      "gold": null,
+      "silver": 20,
+      "copper": null
+    },
+    "protection": 1,
+    "location": [
+      "legs"
+    ],
+    "equipped": false,
+    "weight": "light",
+    "access": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "9x9FgB0YTeCJJUDK": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "ripcrypt",
+    "systemVersion": "0.2.0",
+    "createdTime": 1759994190989,
+    "modifiedTime": 1759994198011,
+    "lastModifiedBy": "9x9FgB0YTeCJJUDK"
+  },
+  "_key": "!items!14Omu9q2sMxW8GWB"
+}

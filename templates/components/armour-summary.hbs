@@ -1,0 +1,35 @@
+{{#if (eq type "hero")}}
+	<rc-svg
+		var:fill="var(--section-header-background)"
+		var:stroke="var(--base-background)"
+		var:stroke-width="2"
+		var:stroke-linejoin="rounded"
+		class="silhouette"
+		name="hero-silhouette"
+	></rc-svg>
+{{else}}
+	<rc-svg
+		var:fill="var(--section-header-background)"
+		var:stroke="var(--base-background)"
+		var:stroke-width="2"
+		var:stroke-linejoin="rounded"
+		class="silhouette"
+		name="geist-silhouette.v2"
+	></rc-svg>
+{{/if}}
+<div class="head">
+	<slot name="head"></slot>
+	<span class="label" aria-hidden="true">{{ rc-i18n "RipCrypt.common.anatomy.head" }}</span>
+</div>
+<div class="body">
+	<slot name="body"></slot>
+	<span class="label" aria-hidden="true">{{ rc-i18n "RipCrypt.common.anatomy.body" }}</span>
+</div>
+<div class="arms">
+	<slot name="arms"></slot>
+	<span class="label" aria-hidden="true">{{ rc-i18n "RipCrypt.common.anatomy.arms" }}</span>
+</div>
+<div class="legs">
+	<slot name="legs"></slot>
+	<span class="label" aria-hidden="true">{{ rc-i18n "RipCrypt.common.anatomy.legs" }}</span>
+</div>

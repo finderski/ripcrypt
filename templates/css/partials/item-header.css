@@ -1,0 +1,11 @@
+.item-header {
+	.name-row {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) min-content 50px;
+		gap: 4px;
+
+		.quantity {
+			text-align: center;
+		}
+	}
+}

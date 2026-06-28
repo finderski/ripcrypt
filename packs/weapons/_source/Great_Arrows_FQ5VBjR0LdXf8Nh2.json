@@ -1,0 +1,35 @@
+{
+  "folder": "gvNPXXRBx2eGIzcU",
+  "name": "Great Arrows",
+  "type": "ammo",
+  "_id": "FQ5VBjR0LdXf8Nh2",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "quantity": 12,
+    "cost": {
+      "gold": null,
+      "silver": 12,
+      "copper": null
+    },
+    "access": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "9x9FgB0YTeCJJUDK": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "ripcrypt",
+    "systemVersion": "0.2.0",
+    "createdTime": 1759993988701,
+    "modifiedTime": 1759993993428,
+    "lastModifiedBy": "9x9FgB0YTeCJJUDK"
+  },
+  "_key": "!items!FQ5VBjR0LdXf8Nh2"
+}

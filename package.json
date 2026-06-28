@@ -1,0 +1,16 @@
+{
+  "devDependencies": {
+    "@eslint/js": "^9.16.0",
+    "@foundryvtt/foundryvtt-cli": "^1.0.3",
+    "@stylistic/eslint-plugin": "^2.12.0",
+    "dotenv": "^17.2.3",
+    "eslint": "^9.16.0"
+  },
+  "scripts": {
+    "data:build": "node scripts/buildCompendia.mjs",
+    "data:extract": "node scripts/extractCompendia.mjs",
+    "link": "node scripts/linkFoundry.mjs",
+    "lint": "eslint --fix",
+    "lint:nofix": "eslint"
+  }
+}

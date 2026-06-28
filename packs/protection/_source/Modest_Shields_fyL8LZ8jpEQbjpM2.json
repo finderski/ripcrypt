@@ -1,0 +1,43 @@
+{
+  "folder": "RXPJBkzVxFnoT3Tm",
+  "name": "Modest Shields",
+  "type": "shield",
+  "_id": "fyL8LZ8jpEQbjpM2",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "quantity": 1,
+    "cost": {
+      "gold": null,
+      "silver": 30,
+      "copper": null
+    },
+    "protection": 1,
+    "location": [
+      "head",
+      "body",
+      "arms"
+    ],
+    "equipped": false,
+    "weight": "modest",
+    "access": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "9x9FgB0YTeCJJUDK": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "ripcrypt",
+    "systemVersion": "0.2.0",
+    "createdTime": 1759994777609,
+    "modifiedTime": 1759994784898,
+    "lastModifiedBy": "9x9FgB0YTeCJJUDK"
+  },
+  "_key": "!items!fyL8LZ8jpEQbjpM2"
+}

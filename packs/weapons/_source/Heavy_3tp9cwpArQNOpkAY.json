@@ -1,0 +1,21 @@
+{
+  "type": "Item",
+  "folder": "3mr6aZe43z7YBysA",
+  "name": "Heavy",
+  "color": "#06393f",
+  "sorting": "a",
+  "_id": "3tp9cwpArQNOpkAY",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "ripcrypt",
+    "systemVersion": "0.2.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!folders!3tp9cwpArQNOpkAY"
+}

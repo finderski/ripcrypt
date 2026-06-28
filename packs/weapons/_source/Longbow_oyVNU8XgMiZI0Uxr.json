@@ -1,0 +1,49 @@
+{
+  "folder": "8NNF9jBjpmPpmw1B",
+  "name": "Longbow",
+  "type": "weapon",
+  "_id": "oyVNU8XgMiZI0Uxr",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "quantity": 1,
+    "cost": {
+      "gold": null,
+      "silver": 80,
+      "copper": null
+    },
+    "traits": [
+      "Ammo"
+    ],
+    "range": {
+      "short": 9,
+      "long": 30
+    },
+    "damage": 3,
+    "wear": {
+      "value": 3,
+      "max": 3
+    },
+    "equipped": false,
+    "weight": "modest",
+    "access": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "9x9FgB0YTeCJJUDK": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "ripcrypt",
+    "systemVersion": "0.2.0",
+    "createdTime": 1759993703627,
+    "modifiedTime": 1759993727378,
+    "lastModifiedBy": "9x9FgB0YTeCJJUDK"
+  },
+  "_key": "!items!oyVNU8XgMiZI0Uxr"
+}

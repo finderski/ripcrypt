@@ -1,0 +1,41 @@
+{
+  "folder": "cKN149ZGLqfyt0oi",
+  "name": "Mail, Link, Scale Coif",
+  "type": "armour",
+  "_id": "HfG5Doxf7576Jgbt",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "quantity": 1,
+    "cost": {
+      "gold": null,
+      "silver": 180,
+      "copper": null
+    },
+    "protection": 2,
+    "location": [
+      "head"
+    ],
+    "equipped": false,
+    "weight": "modest",
+    "access": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "9x9FgB0YTeCJJUDK": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "ripcrypt",
+    "systemVersion": "0.2.0",
+    "createdTime": 1759994210701,
+    "modifiedTime": 1759994221462,
+    "lastModifiedBy": "9x9FgB0YTeCJJUDK"
+  },
+  "_key": "!items!HfG5Doxf7576Jgbt"
+}

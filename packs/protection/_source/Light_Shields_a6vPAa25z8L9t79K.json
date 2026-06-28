@@ -1,0 +1,42 @@
+{
+  "folder": "RXPJBkzVxFnoT3Tm",
+  "name": "Light Shields",
+  "type": "shield",
+  "_id": "a6vPAa25z8L9t79K",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "quantity": 1,
+    "cost": {
+      "gold": null,
+      "silver": 20,
+      "copper": null
+    },
+    "protection": 1,
+    "location": [
+      "head",
+      "arms"
+    ],
+    "equipped": false,
+    "weight": "light",
+    "access": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "9x9FgB0YTeCJJUDK": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "ripcrypt",
+    "systemVersion": "0.2.0",
+    "createdTime": 1759994549164,
+    "modifiedTime": 1759994761998,
+    "lastModifiedBy": "9x9FgB0YTeCJJUDK"
+  },
+  "_key": "!items!a6vPAa25z8L9t79K"
+}

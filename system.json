@@ -1,0 +1,126 @@
+{
+	"id": "ripcrypt",
+	"title": "RipCrypt",
+	"description": "A dungeon sprint RPG. Faster than an arrow to the eye. Smoother than a clean blade. Compact with consequences.",
+	"version": "0.2.0",
+	"compatibility": {
+		"minimum": 13,
+		"verified": "13.350",
+		"maximum": 13
+	},
+	"authors": [
+		{ "name": "Oliver" }
+	],
+	"esmodules": [
+		"module/main.mjs"
+	],
+	"styles": [
+		{
+			"src": "templates/css/main.css",
+			"layer": "system"
+		}
+	],
+	"languages": [
+		{
+			"lang": "en",
+			"name": "English (Canadian)",
+			"path": "langs/en-ca.json"
+		}
+	],
+	"url": "https://github.com/Eldritch-Oliver/Foundry-RipCrypt",
+	"manifest": "https://github.com/Eldritch-Oliver/Foundry-RipCrypt/releases/latest/download/module.json",
+	"download": "#{DOWNLOAD}#",
+	"readme": "README.md",
+	"bugs": "",
+	"socket": true,
+	"flags": {
+		"hotReload": {
+			"extensions": ["css", "hbs", "json", "mjs", "svg"],
+			"paths": ["assets", "templates", "langs", "module"]
+		}
+	},
+	"documentTypes": {
+		"Actor": {
+			"hero": {},
+			"geist": {}
+		},
+		"Item": {
+			"ammo": {},
+			"armour": {},
+			"craft": {},
+			"good": {},
+			"shield": {},
+			"skill": {},
+			"weapon": {}
+		}
+	},
+	"packs": [
+		{
+			"name": "protection",
+			"label": "Armour & Shields",
+			"system": "ripcrypt",
+			"path": "packs/protection",
+			"type": "Item",
+			"ownership": {
+				"PLAYER": "OBSERVER",
+				"ASSISTANT": "OWNER"
+			}
+		},
+		{
+			"name": "weapons",
+			"label": "Weapons & Ammo",
+			"system": "ripcrypt",
+			"path": "packs/weapons",
+			"type": "Item",
+			"ownership": {
+				"PLAYER": "OBSERVER",
+				"ASSISTANT": "OWNER"
+			}
+		},
+		{
+			"name": "skills",
+			"label": "Skills",
+			"system": "ripcrypt",
+			"path": "packs/skills",
+			"type": "Item",
+			"ownership": {
+				"PLAYER": "OBSERVER",
+				"ASSISTANT": "OWNER"
+			}
+		},
+		{
+			"name": "geist",
+			"label": "Geist",
+			"system": "ripcrypt",
+			"path": "packs/geist",
+			"type": "Actor",
+			"ownership": {
+				"PLAYER": "NONE",
+				"ASSISTANT": "OWNER"
+			}
+		}
+	],
+	"packFolders": [
+		{
+			"name": "RipCrypt Sprint Start",
+			"color": "#04262a",
+			"sorting": "m",
+			"folders": [
+				{
+					"name": "Character Options",
+					"color": "#06393f",
+					"sorting": "m",
+					"folders": [],
+					"packs": [
+						"protection",
+						"weapons",
+						"skills"
+					]
+				}
+			],
+			"packs": [
+				"geist"
+			]
+		}
+	]
+}

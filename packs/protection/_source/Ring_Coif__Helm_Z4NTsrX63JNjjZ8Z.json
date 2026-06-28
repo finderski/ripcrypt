@@ -1,0 +1,41 @@
+{
+  "folder": "BsNUpCnwmlhOWBhZ",
+  "name": "Ring Coif, Helm",
+  "type": "armour",
+  "_id": "Z4NTsrX63JNjjZ8Z",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "quantity": 1,
+    "cost": {
+      "gold": null,
+      "silver": 440,
+      "copper": null
+    },
+    "protection": 3,
+    "location": [
+      "head"
+    ],
+    "equipped": false,
+    "weight": "heavy",
+    "access": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "9x9FgB0YTeCJJUDK": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "ripcrypt",
+    "systemVersion": "0.2.0",
+    "createdTime": 1759994438779,
+    "modifiedTime": 1759994448846,
+    "lastModifiedBy": "9x9FgB0YTeCJJUDK"
+  },
+  "_key": "!items!Z4NTsrX63JNjjZ8Z"
+}

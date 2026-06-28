@@ -1,0 +1,28 @@
+{{!--
+Required parameters:
+	"name" : the name of the item
+	"system.quantity" : the quantity of the item
+	"meta.idp" : the ID Prefix for the application
+--}}
+<header class="item-header">
+	<div class="name-row">
+		<input
+			type="text"
+			class="name"
+			aria-label="{{ rc-i18n "Name" }}"
+			name="name"
+			value="{{item.name}}"
+			{{disabled meta.limited}}
+			autocomplete="off"
+		>
+		<span aria-hidden="true">x</span>
+		<input
+			type="number"
+			class="quantity"
+			aria-label="{{ rc-i18n "RipCrypt.common.quantity" }}"
+			data-tooltip="{{ rc-i18n "RipCrypt.common.quantity" }}"
+			name="system.quantity"
+			value="{{system.quantity}}"
+		>
+	</div>
+</header>

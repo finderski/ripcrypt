@@ -1,0 +1,41 @@
+{
+  "folder": "HRwiz1c1ZcQyPu4z",
+  "name": "Leather, Hide Bracers",
+  "type": "armour",
+  "_id": "nz4DXXR4iU9CeMRA",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "quantity": 1,
+    "cost": {
+      "gold": null,
+      "silver": 10,
+      "copper": null
+    },
+    "protection": 1,
+    "location": [
+      "arms"
+    ],
+    "equipped": false,
+    "weight": "light",
+    "access": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "9x9FgB0YTeCJJUDK": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "ripcrypt",
+    "systemVersion": "0.2.0",
+    "createdTime": 1759994170968,
+    "modifiedTime": 1759994180395,
+    "lastModifiedBy": "9x9FgB0YTeCJJUDK"
+  },
+  "_key": "!items!nz4DXXR4iU9CeMRA"
+}

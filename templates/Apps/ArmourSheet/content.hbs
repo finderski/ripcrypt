@@ -1,0 +1,140 @@
+<div class="contents">
+	<div class="contents__left">
+		<label for="{{ meta.idp }}-access">
+			{{ rc-i18n "RipCrypt.common.access" }}
+		</label>
+		<select name="system.access" id="{{ meta.idp }}-access">
+			{{ rc-options system.access accesses localize=true }}
+		</select>
+		<label for="{{ meta.idp }}-weight">
+			{{ rc-i18n "RipCrypt.common.weightRating" }}
+		</label>
+		<select name="system.weight" id="{{ meta.idp }}-weight">
+			{{ rc-options system.weight weights localize=true }}
+		</select>
+		{{#if meta.embedded}}
+			<label for="{{meta.idp}}-equipped">
+				{{ rc-i18n "RipCrypt.common.equipped" }}
+			</label>
+			<input
+				type="checkbox"
+				id="{{meta.idp}}-equipped"
+				name="system.equipped"
+				{{ checked system.equipped }}
+			>
+		{{/if}}
+		<rc-border
+			var:border-color="var(--accent-1)"
+		>
+			<span slot="title">
+				{{ rc-i18n "RipCrypt.common.cost" }}
+			</span>
+			<div slot="content" class="content">
+				<label
+					for="{{ meta.idp }}-gold"
+				>
+					{{ rc-i18n "RipCrypt.common.currency.gold" }}
+				</label>
+				<input
+					type="number"
+					id="{{ meta.idp }}-gold"
+					name="system.cost.gold"
+					value="{{ system.cost.gold }}"
+				>
+				<label
+					for="{{ meta.idp }}-silver"
+				>
+					{{ rc-i18n "RipCrypt.common.currency.silver" }}
+				</label>
+				<input
+					type="number"
+					id="{{ meta.idp }}-silver"
+					name="system.cost.silver"
+					value="{{ system.cost.silver }}"
+				>
+				<label
+					for="{{ meta.idp }}-copper"
+				>
+					{{ rc-i18n "RipCrypt.common.currency.copper" }}
+				</label>
+				<input
+					type="number"
+					id="{{ meta.idp }}-copper"
+					name="system.cost.copper"
+					value="{{ system.cost.copper }}"
+				>
+			</div>
+		</rc-border>
+	</div>
+	<hr class="vertical">
+	<div class="contents__right">
+		<span class="section-pill">
+			{{ rc-i18n "RipCrypt.common.location" }}
+		</span>
+		<armour-summary
+			var:row-gap="8px"
+		>
+			<div slot="head">
+				<input
+					type="checkbox"
+					aria-label="{{
+						rc-i18n
+						"RipCrypt.Apps.protects-the-location"
+						part="@RipCrypt.common.anatomy.head"
+					}}"
+					value="head"
+					{{ checked protects.head }}
+					name="system.location"
+				>
+			</div>
+			<div slot="body">
+				<input
+					type="checkbox"
+					aria-label="{{
+						rc-i18n
+						"RipCrypt.Apps.protects-the-location"
+						part="@RipCrypt.common.anatomy.body"
+					}}"
+					value="body"
+					{{ checked protects.body }}
+					name="system.location"
+				>
+			</div>
+			<div slot="arms">
+				<input
+					type="checkbox"
+					aria-label="{{
+						rc-i18n
+						"RipCrypt.Apps.protects-the-location"
+						part="@RipCrypt.common.anatomy.arms"
+					}}"
+					value="arms"
+					{{ checked protects.arms }}
+					name="system.location"
+				>
+			</div>
+			<div slot="legs">
+				<input
+					type="checkbox"
+					aria-label="{{
+						rc-i18n
+						"RipCrypt.Apps.protects-the-location"
+						part="@RipCrypt.common.anatomy.legs"
+					}}"
+					value="legs"
+					{{ checked protects.legs }}
+					name="system.location"
+				>
+			</div>
+		</armour-summary>
+		<input
+			type="number"
+			class="center"
+			aria-label="{{ rc-i18n "RipCrypt.Apps.damage-reduction" }}"
+			data-tooltip="{{ rc-i18n "RipCrypt.Apps.damage-reduction" }}"
+			min="0"
+			name="system.protection"
+			value="{{ system.protection }}"
+		>
+	</div>
+</div>

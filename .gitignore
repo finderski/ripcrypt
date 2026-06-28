@@ -1,0 +1,6 @@
+
+!.gitignore
+._*
+.DS_Store
+rules/
+.claude/

@@ -1,0 +1,49 @@
+{
+  "folder": "8NNF9jBjpmPpmw1B",
+  "name": "Crossbow",
+  "type": "weapon",
+  "_id": "BNoYUrlpDk6oBeJt",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "quantity": 1,
+    "cost": {
+      "gold": null,
+      "silver": 90,
+      "copper": null
+    },
+    "traits": [
+      "Reload"
+    ],
+    "range": {
+      "short": 10,
+      "long": 25
+    },
+    "damage": 3,
+    "wear": {
+      "value": 3,
+      "max": 3
+    },
+    "equipped": false,
+    "weight": "modest",
+    "access": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "9x9FgB0YTeCJJUDK": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "ripcrypt",
+    "systemVersion": "0.2.0",
+    "createdTime": 1759993621847,
+    "modifiedTime": 1759993694978,
+    "lastModifiedBy": "9x9FgB0YTeCJJUDK"
+  },
+  "_key": "!items!BNoYUrlpDk6oBeJt"
+}
