@@ -13,7 +13,7 @@ export class DicePool extends GenericAppMixin(HandlebarsApplicationMixin(Applica
 			`ripcrypt--DicePool`,
 		],
 		window: {
-			title: `Dice Pool`,
+			title: `RipCrypt.app-titles.DicePool`,
 			frame: true,
 			positioned: true,
 			resizable: false,

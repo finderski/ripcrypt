@@ -1,6 +1,6 @@
 <div class="AllItemSheetV1">
 	{{#if meta.editable}}
-		<label for="{{meta.idp}}-name">{{ rc-i18n "Name" }}</label>
+		<label for="{{meta.idp}}-name">{{ rc-i18n "RipCrypt.common.name" }}</label>
 		<input
 			type="text"
 			id="{{meta.idp}}-name"
@@ -9,7 +9,7 @@
 			value="{{item.name}}"
 		>
 	{{else}}
-		<span class="label">Name</span>
+		<span class="label">{{ rc-i18n "RipCrypt.common.name" }}</span>
 		<span class="value">{{item.name}}</span>
 	{{/if}}
 	<hr>

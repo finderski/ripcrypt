@@ -251,7 +251,7 @@ Top-level language structure in `langs/en-ca.json`:
 | `rc-border` | `keep` | Reusable bordered container with title/content slots. | `module/Apps/components/RipCryptBorder.mjs`, `templates/css/components/rc-border.css` |
 | `armour-summary` | `migrate` | Custom element rendering the armour slot silhouette and slot labels. | `module/Apps/components/ArmourSummary.mjs`, `templates/components/armour-summary.hbs` |
 | Styled shadow-element mixin | `migrate` | Shared shadow DOM/CSS loader for all custom elements. | `module/Apps/components/mixins/StyledShadowElement.mjs` |
-| Custom element registration | `migrate` | Registers components during init and flags form-associated listeners through `CONFIG.CACHE`. | `module/Apps/components/_index.mjs` |
+| Custom element registration | `migrate` | Registers components during init with `customElements.define`; current components are not form-associated and no longer write to `CONFIG.CACHE`. | `module/Apps/components/_index.mjs` |
 
 ## Notable Partial or Placeholder Features
 
@@ -260,7 +260,7 @@ Top-level language structure in `langs/en-ca.json`:
 | Actor coin editing in Skills card | `replace` | UI exists, but coin inputs are hard-coded to `0` and lack `name` attributes, so they do not persist. | `templates/Apps/SkillsCardV1/content.hbs` |
 | Empty fate dropdown option wiring | `replace` | Fate option builder uses `v` instead of `value` for the empty choice. | `module/Apps/ActorSheets/StatsCardV1.mjs` |
 | Light theme mention in README | `remove` | README claims a light theme, but active CSS only wires the dark theme. | `README.md`, `templates/css/vars.css` |
-| Unused custom chat template | `remove` | Template exists without any implementation path using it. | `templates/chat/roll.hbs` |
+| Custom chat template | `keep` | Template is used by RipCrypt roll output and should be verified during v14 chat rendering tests. | `templates/chat/roll.hbs`, `module/rolls/ripcrypt-rolls.mjs` |
 
 ## Recommended Inventory Interpretation
 
@@ -270,4 +270,3 @@ For the v14 migration, the dominant pattern is:
 - `migrate` the existing implementations that already express the intended RipCrypt workflows: sheets, data models, HUD, dice pool, sockets, item workflows, settings, and utilities.
 - `replace` partial or placeholder implementations: missing/incorrect field persistence, hard-coded strings, inactive light theme claim, and any workflow that only exists as a stub.
 - `remove` stale declarations or dead placeholders: missing pack declarations, commented-out non-functional settings, and unused chat-card scaffolding.
-

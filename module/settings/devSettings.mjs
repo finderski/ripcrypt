@@ -8,7 +8,7 @@ export function registerDevSettings() {
 	});
 
 	game.settings.register(`ripcrypt`, `defaultTab`, {
-		name: `Default Tab`,
+		name: `RipCrypt.setting.defaultTab.name`,
 		scope: `client`,
 		type: String,
 		config: game.settings.get(`ripcrypt`, `devMode`),

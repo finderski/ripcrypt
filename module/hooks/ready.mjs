@@ -1,7 +1,23 @@
 import { filePath } from "../consts.mjs";
 import { Logger } from "../utils/Logger.mjs";
 
-Hooks.once(`ready`, () => {
+function ensureDelveDiceHUD() {
+	if (ui.delveDice) { return ui.delveDice };
+	if (!CONFIG.ui.delveDice) { return null };
+
+	ui.delveDice = new CONFIG.ui.delveDice();
+	return ui.delveDice;
+};
+
+async function setDefaultTurnMarker() {
+	const combatConfig = foundry.utils.deepClone(game.settings.get(`core`, `combatTrackerConfig`) ?? {});
+	combatConfig.turnMarker ??= {};
+	combatConfig.turnMarker.src = filePath(`assets/turn-marker.png`);
+	combatConfig.turnMarker.animation = `spinPulse`;
+	await game.settings.set(`core`, `combatTrackerConfig`, combatConfig);
+};
+
+Hooks.once(`ready`, async () => {
 	Logger.log(`Ready`);
 
 	let defaultTab = game.settings.get(`ripcrypt`, `defaultTab`);
@@ -20,16 +36,12 @@ Hooks.once(`ready`, () => {
 		if (game.paused) { game.togglePause(false, { broadcast: true }) };
 	};
 
-	ui.delveDice.render({ force: true });
+	await ensureDelveDiceHUD()?.render({ force: true });
 
 	// MARK: 1-time updates
 	if (!game.settings.get(`ripcrypt`, `firstLoadFinished`)) {
-		// Update the turnMarker to be the RipCrypt defaults
-		const combatConfig = game.settings.get(`core`, `combatTrackerConfig`);
-		combatConfig.turnMarker.src = filePath(`assets/turn-marker.png`);
-		combatConfig.turnMarker.animation = `spinPulse`;
-		game.settings.set(`core`, `combatTrackerConfig`, combatConfig);
+		await setDefaultTurnMarker();
 	};
 
-	game.settings.set(`ripcrypt`, `firstLoadFinished`, true);
+	await game.settings.set(`ripcrypt`, `firstLoadFinished`, true);
 });

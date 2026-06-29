@@ -50,8 +50,8 @@ export class ArmourData extends CommonItemData {
 		const showEquipPrompt = options.showEquipPrompt ?? true;
 		if (showEquipPrompt && this.parent.isEmbedded && this._canEquip()) {
 			const shouldEquip = await DialogV2.confirm({
-				window: { title: `Equip Item?` },
-				content: `Do you want to equip ${item.name}?`,
+				window: { title: localizer(`RipCrypt.Apps.equip-item-title`) },
+				content: localizer(`RipCrypt.Apps.equip-item-prompt`, { itemName: item.name }),
 			});
 			if (shouldEquip) {
 				this.updateSource({ "equipped": true });

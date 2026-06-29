@@ -12,7 +12,6 @@ const components = [
 ];
 
 export function registerCustomComponents() {
-	(CONFIG.CACHE ??= {}).componentListeners ??= [];
 	for (const component of components) {
 		if (!window.customElements.get(component.elementName)) {
 			Logger.debug(`Registering component "${component.elementName}"`);
@@ -20,9 +19,6 @@ export function registerCustomComponents() {
 				component.elementName,
 				component,
 			);
-			if (component.formAssociated) {
-				CONFIG.CACHE.componentListeners.push(component.elementName);
-			}
 		};
 	}
 };

@@ -30,6 +30,7 @@ import { RipCryptItem } from "../documents/item.mjs";
 import { RipCryptToken } from "../documents/token.mjs";
 
 // Misc
+import { filePath } from "../consts.mjs";
 import helpers from "../handlebarHelpers/_index.mjs";
 import { Logger } from "../utils/Logger.mjs";
 import { registerCustomComponents } from "../Apps/components/_index.mjs";
@@ -40,6 +41,40 @@ import { registerUserSettings } from "../settings/userSettings.mjs";
 import { registerWorldSettings } from "../settings/worldSettings.mjs";
 
 const { Items, Actors } = foundry.documents.collections;
+
+const preloadedTemplates = [
+	`templates/Apps/AllItemSheetV1/content.hbs`,
+	`templates/Apps/ArmourSheet/content.hbs`,
+	`templates/Apps/CombinedHeroSheet/crafts.hbs`,
+	`templates/Apps/CraftCardV1/content.hbs`,
+	`templates/Apps/DelveDiceHUD/difficulty.hbs`,
+	`templates/Apps/DelveDiceHUD/fateCompass.hbs`,
+	`templates/Apps/DelveDiceHUD/tour/current.hbs`,
+	`templates/Apps/DelveDiceHUD/tour/next.hbs`,
+	`templates/Apps/DelveDiceHUD/tour/previous.hbs`,
+	`templates/Apps/DicePool/buttons.hbs`,
+	`templates/Apps/DicePool/drag.hbs`,
+	`templates/Apps/DicePool/edge.hbs`,
+	`templates/Apps/DicePool/numberOfDice.hbs`,
+	`templates/Apps/DicePool/target.hbs`,
+	`templates/Apps/RichEditor/content.hbs`,
+	`templates/Apps/SkillsCardV1/content.hbs`,
+	`templates/Apps/StatsCardV1/content.hbs`,
+	`templates/Apps/partials/item-header.hbs`,
+	`templates/Apps/popovers/AmmoTracker/ammoList.hbs`,
+	`templates/chat/roll.hbs`,
+	`templates/components/armour-summary.hbs`,
+];
+
+async function preloadHandlebarsTemplates() {
+	const loader = foundry.applications?.handlebars?.loadTemplates ?? globalThis.loadTemplates;
+	if (typeof loader !== `function`) {
+		Logger.warn(`No public Handlebars template preloader is available`);
+		return;
+	};
+
+	await loader(preloadedTemplates.map(template => filePath(template)));
+};
 
 Hooks.once(`init`, () => {
 	Logger.log(`Initializing`);
@@ -134,4 +169,7 @@ Hooks.once(`init`, () => {
 	registerSockets();
 	registerCustomComponents();
 	Handlebars.registerHelper(helpers);
+	preloadHandlebarsTemplates().catch(error => {
+		Logger.error(`Failed to preload Handlebars templates`, error);
+	});
 });

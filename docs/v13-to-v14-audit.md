@@ -31,7 +31,7 @@ The main remaining v14 breakpoints are:
 - Some item schemas appear to use `options` instead of `choices` on `StringField`, which needs v14 field validation testing.
 - Actor data model derived properties such as `aura`, `limit`, and `speed` are not declared schema fields. Derived data is allowed, but these values must be tested with v14 data preparation and token/resource handling.
 - Combat and token behavior relies on protected/internal APIs such as `_updateTurnMarkers`, `_refreshTurnMarker`, `token._object`, and `CONFIG.Combat.settings.turnMarker`.
-- Custom elements write to `CONFIG.CACHE.componentListeners`, which appears internal and should be replaced or verified in v14.
+- Custom elements now register with `customElements.define` without writing to private `CONFIG.CACHE` state.
 - Some sheet and app overrides use protected ApplicationV2 methods such as `_processSubmitData`, `_processFormData`, `_updatePosition`, and `_insertElement`.
 - Localization is present and mostly namespaced, but several visible strings remain hard-coded or call missing keys such as `Name`.
 - Actor coin fields render as fixed zero values without `name` attributes, so they do not persist from the current sheet.
@@ -139,7 +139,7 @@ v14 compatibility findings:
 - Good: ES module entry is straightforward and v14-compatible in principle.
 - Good: data models are registered during `init`, matching v14 guidance.
 - Verify: `const { Items, Actors } = foundry.documents.collections` and `Actors.registerSheet`/`Items.registerSheet` are still documented in v14 through collection wrappers, so the pattern is acceptable, but each sheet class and option should still be smoke-tested.
-- Risk: `CONFIG.ui.delveDice = DelveDiceHUD` plus `ui.delveDice.render({ force: true })` assumes Foundry will instantiate the custom UI slot like core UI apps. Test in v14 ready lifecycle.
+- Risk: `CONFIG.ui.delveDice = DelveDiceHUD` plus defensive ready-time construction should create the custom HUD if Foundry does not instantiate the custom UI slot. Test in v14 ready lifecycle and confirm only one HUD is rendered.
 - Risk: settings `onChange` callbacks reference `ui.delveDice` before/around ready. If settings change during startup, this may error.
 - Risk: `hotReload` is development-only and may be unavailable depending on Foundry mode. It should remain non-blocking.
 - Risk: `ready` mutates `game.settings.get("core", "combatTrackerConfig")` and assumes `turnMarker` shape with `src` and `animation`. Verify v14 core setting shape before relying on it.
@@ -321,18 +321,9 @@ v14 compatibility findings:
 - Risk: `string-tags` custom element must successfully submit a Set-compatible value for `fields.SetField`.
 - Risk: `prose-mirror` usage in `RichEditor` must save HTMLField data correctly in v14.
 - Risk: custom element slots and shadow DOM may interfere with form collection if a future form-associated custom element is added.
-- Cleanup: hard-coded visible strings remain:
-  - `Hero`
-  - `Haste Check`
-  - `Roll`
-  - `Target`
-  - `Focus`, `Fract`, `Flect`
-  - `Name`
-  - `Dice Pool`
-  - `Text Editor`
-  - combat tracker tooltip and aria strings
-  - equip prompt strings
-- Existing placeholder: `templates/chat/roll.hbs` contains only `HELLO` and is not wired into current roll output.
+- Cleanup: some hard-coded visible strings may still remain in lower-priority or non-critical UI, but the obvious sheet labels, prompt titles, item-name labels, DicePool button labels, and combat-tracker strings are suitable for low-risk localization cleanup.
+- Verify: direct tooltip-key usage such as `data-tooltip="RipCrypt.common.difficulty"` and `data-tooltip="RipCrypt.tooltips.current-tour"` still resolves correctly in v14.
+- Existing chat card: `templates/chat/roll.hbs` is now wired into current roll output and should be tested as part of localization and chat rendering QA.
 
 ## Localization
 
@@ -341,7 +332,7 @@ File: `langs/en-ca.json`
 Current state:
 
 - Manifest declares one language:
-  - `lang`: `en`
+  - `lang`: `en-CA`
   - `name`: `English (Canadian)`
   - `path`: `langs/en-ca.json`
 - `TYPES.Actor.hero`, `TYPES.Actor.geist`, and all item subtype names are present.
@@ -352,10 +343,11 @@ v14 compatibility findings:
 
 - Good: `TYPES` keys are present, which supports v14 create dialogs and type labels.
 - Good: manifest language entry follows the required `lang`, `name`, `path` structure.
-- Cleanup: `Name` is used as a localization key but is not defined in `langs/en-ca.json`. Foundry core may provide `Name`, but system templates should prefer a namespaced key or a known core key.
-- Cleanup: several strings are still hard-coded in JS/templates, listed in the Templates section.
+- Good: the manifest locale can use the canonical `en-CA` language tag accepted by Foundry v14 locale validation.
+- Good: item-sheet `Name` labels can use a RipCrypt namespaced key instead of relying on a non-system key.
+- Good: obvious sheet labels, dialog titles, button text, and combat-tracker labels can be localized with low-risk template and string-key changes.
 - Verify: `@TYPES.Item.${this.parent.type}` references in notifications are passed through the custom recursive localizer. Confirm this still resolves as expected in v14.
-- Typo: `RipCrypt.notifs.info.cryptic-event-alert` says `Occured`; should be `Occurred` when doing localization cleanup.
+- Good: `RipCrypt.notifs.info.cryptic-event-alert` spelling can be corrected during localization cleanup without affecting mechanics.
 
 ## Dice and Chat
 
@@ -384,7 +376,7 @@ v14 compatibility findings:
 - Verify: `this.explode("x=8", { recursive: true })`, `this.explode("xo=1", { recursive: false })`, and `this.countSuccess("cs>=...")` still behave as expected in v14.
 - Risk: `CryptDie.total` clamps `super.total` to zero. Confirm this does not hide useful failure state for `crypted` rolls or interfere with v14 roll tooltips.
 - Risk: `DicePool.#roll` creates a speaker with `this.actor`, but the app does not define `actor`.
-- Cleanup: Haste chat flavor is hard-coded as `Haste Check`.
+- Good: Haste chat flavor can be supplied through a localized key instead of a hard-coded string.
 - Cleanup: If custom chat cards are desired, wire `templates/chat/roll.hbs` through `Roll.render({ template })` or `roll.toMessage` content generation. If default Foundry roll cards are acceptable, remove or document the placeholder.
 
 ## Packs and Compendia
@@ -478,19 +470,31 @@ Files:
 Current state:
 
 - Settings are registered during `init`.
+- `dc`, `sandsOfFate`, `currentFate`, `whoFirst`, and `firstLoadFinished` are hidden system/world state settings.
+- `condensedRange`, `sandsOfFateInitial`, `onCrypticEvent`, and `allowUpdateSandsSocket` are user-facing configurable settings.
+- `devMode` and `defaultTab` are client-scope development conveniences.
 - Some settings use primitive constructors and some use `foundry.data.fields.*`.
 - Socket namespace `system.ripcrypt` is enabled by manifest `socket: true`.
 - Socket handlers support `notify` and `updateSands`.
+- App, component, and chat templates are preloaded during `init` through the public Handlebars template loader when available.
+- Custom elements are registered during `init` through `customElements.define`.
 
 v14 compatibility findings:
 
 - Good: v14 system manifest supports `socket: true` for `system.${id}`.
-- Good: settings are registered early.
+- Good: settings, CONFIG assignments, sheet registrations, socket registration, custom elements, and Handlebars helper registration occur during `init`.
+- Good: setting `onChange` callbacks no longer assume `ui.delveDice` or `ui.combat` exists during startup.
+- Good: `ready` now defensively creates `ui.delveDice` if Foundry does not instantiate the custom `CONFIG.ui` entry automatically.
+- Good: the one-time core combat tracker setting update now clones the setting value and creates the `turnMarker` object if needed before writing RipCrypt defaults.
+- Good: `CONFIG.CACHE.componentListeners` is no longer written for custom elements. Current custom components are not form-associated, so this removes a private CONFIG dependency without changing current behavior.
+- Good: the visible `defaultTab` development setting label now uses a localization key.
 - Verify: settings using `type: new StringField(...)` and `type: new NumberField(...)` are accepted by v14 settings UI and persist as expected.
-- Risk: `registerDevSettings` reads `game.settings.get("ripcrypt", "devMode")` while registering another setting. It should work because `devMode` is registered immediately above it, but test first launch.
+- Verify: `foundry.applications.handlebars.loadTemplates` is available in the target v14 build. The code falls back to global `loadTemplates` and logs a warning if neither loader exists.
+- Verify: `CONFIG.ui.delveDice` custom UI registration plus defensive ready-time construction produces exactly one HUD instance.
+- Verify: v14 `core.combatTrackerConfig` accepts the updated `turnMarker.src` and `turnMarker.animation` values.
+- Risk: `registerDevSettings` reads `game.settings.get("ripcrypt", "devMode")` while registering another setting. It should work because `devMode` is registered immediately above it, but test first launch and persisted dev-mode visibility.
 - Risk: socket handler assumes all payloads can be trusted enough to dispatch by string event key. It validates event existence but not full payload shape beyond handler checks.
 - Risk: `notify` allows only `info`, `error`, and `success`, not `warn`, while code elsewhere uses warnings directly.
-- Cleanup: dev setting name `Default Tab` is hard-coded and not localized.
 
 ## Likely Breaking Changes and Risk Register
 
@@ -502,7 +506,6 @@ v14 compatibility findings:
 ### High Risk Runtime Areas
 
 - Grouped combat and token turn marker overrides.
-- `CONFIG.CACHE.componentListeners` custom-element integration.
 - Broad `CONFIG.Dice.terms.d` replacement.
 - Protected ApplicationV2 overrides.
 - DataModel lifecycle hooks on item system data.
@@ -513,6 +516,7 @@ v14 compatibility findings:
 - SetField cleaning from form controls and compendium arrays.
 - RichEditor and ProseMirror persistence.
 - `ui.delveDice` creation and settings callbacks.
+- One-time mutation of `core.combatTrackerConfig` turn-marker defaults.
 - Sheet registration with multiple actor sheets per actor type.
 - Compendium import validation after schema tightening.
 

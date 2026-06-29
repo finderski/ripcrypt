@@ -265,7 +265,7 @@
 							type="number"
 							id="{{@root.meta.idp}}-{{data.uuid}}-quantity"
 							value="{{data.quantity}}"
-							aria-label="Quantity of {{data.name}}"
+							aria-label="{{ rc-i18n "RipCrypt.common.quantityOf" name=data.name }}"
 							data-foreign-update-on="change,blur"
 							data-foreign-uuid="{{data.uuid}}"
 							data-foreign-name="system.quantity"

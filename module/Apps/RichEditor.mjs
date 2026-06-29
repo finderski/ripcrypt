@@ -18,7 +18,7 @@ export class RichEditor extends HandlebarsApplicationMixin(DocumentSheetV2) {
 			`ripcrypt--RichEditor`,
 		],
 		window: {
-			title: `Text Editor`,
+			title: `RipCrypt.app-titles.RichEditor`,
 			frame: true,
 			positioned: true,
 			resizable: false,

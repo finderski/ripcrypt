@@ -282,6 +282,27 @@ Minimum console checkpoints:
 - [ ] Ammo popover quantity and favourite actions
 - [ ] Repeated open/close of actor and item sheets
 
+## Settings, Hooks, And Initialization
+
+Checklist:
+
+- [ ] Confirm startup logs `ripcrypt | Initializing` before document, sheet, socket, component, and helper-dependent workflows run.
+- [ ] Confirm startup logs `ripcrypt | Ready` after the world UI loads.
+- [ ] Confirm no missing Handlebars helper or missing template errors appear for preloaded app, component, or chat templates.
+- [ ] Confirm the Delve Dice HUD appears once, not zero times or duplicated, after world launch.
+- [ ] Change the hidden `dc` setting from the console and confirm the HUD difficulty part updates or fails harmlessly if the HUD is not rendered.
+- [ ] Change `sandsOfFate` and `currentFate` from the console and confirm the HUD animates or fails harmlessly before render.
+- [ ] Change `whoFirst` through the combat tracker control and confirm the combat tracker rerenders without console errors.
+- [ ] Open Configure Settings and verify user-facing RipCrypt settings show localized labels and option text.
+- [ ] Change `condensedRange`, close settings, reopen a weapon item, and confirm range display behavior follows the setting.
+- [ ] Change `sandsOfFateInitial`, then confirm `sandsOfFate` clamps down when the new initial value is below the current value.
+- [ ] Change `onCrypticEvent` and confirm each option persists after settings close/reopen.
+- [ ] Change `allowUpdateSandsSocket` and confirm Haste rolls respect the setting.
+- [ ] On a first-load development world, confirm RipCrypt writes the default turn-marker image without corrupting the core combat tracker config.
+- [ ] Reload the world after `firstLoadFinished` is true and confirm the turn-marker default update does not run repeatedly.
+- [ ] Confirm custom elements (`rc-icon`, `rc-svg`, `rc-border`, `armour-summary`) render without relying on `CONFIG.CACHE.componentListeners`.
+- [ ] Confirm the `hotReload` hook is harmless when Foundry is not running in a hot-reload development mode.
+
 ## Sheet Interaction And Drag/Drop
 
 Actor sheets now use Foundry v14 `ActorSheetV2` drag/drop flows with a narrow RipCrypt guard layer: owned items are exposed as draggable rows, Item drops are allowed, and unsupported document drops should warn instead of failing silently.
@@ -319,6 +340,8 @@ These are not confirmed failures. They are the highest-value areas to watch whil
 - Actor coin inputs are known to be incomplete in the imported sheet implementation.
 - Combat and token turn-marker overrides still rely on protected or internal APIs.
 - Delve Dice HUD rendering and settings callbacks need confirmation in v14 ready-time execution.
+- Template preloading should be verified in the browser console because the code falls back gracefully if the public preloader is unavailable.
+- The first-load turn-marker default update should be verified against the v14 `core.combatTrackerConfig` shape.
 
 ## Test Run Summary
 

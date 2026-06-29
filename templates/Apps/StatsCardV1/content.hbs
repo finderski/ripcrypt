@@ -3,7 +3,7 @@
 	<div class="header">
 		<div class="image">Logo Image</div>
 		<label class="row-alt left-pill" for="{{meta.idp}}-name">
-			Hero
+			{{ rc-i18n (concat "TYPES.Actor." actor.type) }}
 		</label>
 	</div>
 	<input
@@ -18,7 +18,7 @@
 		<button
 			data-action="rollForHaste"
 		>
-			Haste Check
+			{{ rc-i18n "RipCrypt.Apps.haste-check" }}
 		</button>
 	</div>
 
@@ -312,7 +312,7 @@
 							class="roll icon"
 							data-action="roll"
 							data-dice-count="{{ability.value}}"
-							data-flavor="{{ability.name}} Roll"
+							data-flavor="{{ rc-i18n "RipCrypt.Apps.ability-roll" name=ability.name }}"
 						>
 							<rc-icon
 								var:size="20px"

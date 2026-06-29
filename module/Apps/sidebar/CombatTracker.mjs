@@ -1,13 +1,15 @@
+import { localizer } from "../../utils/Localizer.mjs";
+
 const { CombatTracker } = foundry.applications.sidebar.tabs;
 
 function createButtonInnerHTML() {
 	const whoFirst = game.settings.get(`ripcrypt`, `whoFirst`);
 	let icon = `evil`;
-	let ariaLabel = `Geists go first, click to make heroes go first`;
+	let ariaLabel = localizer(`RipCrypt.Apps.CombatTracker.hostile-first-label`);
 
 	if (whoFirst === `friendly`) {
 		icon = `hero`;
-		ariaLabel = `Heroes go first, click to make geists go first`;
+		ariaLabel = localizer(`RipCrypt.Apps.CombatTracker.friendly-first-label`);
 	};
 
 	return `<rc-icon
@@ -20,9 +22,9 @@ function createButtonInnerHTML() {
 function createButtonTooltip() {
 	const whoFirst = game.settings.get(`ripcrypt`, `whoFirst`);
 	if (whoFirst === `friendly`) {
-		return `Heroes currently go first`;
+		return localizer(`RipCrypt.Apps.CombatTracker.friendly-first-tooltip`);
 	};
-	return `Geists currently go first`;
+	return localizer(`RipCrypt.Apps.CombatTracker.hostile-first-tooltip`);
 };
 
 export class RipCryptCombatTracker extends CombatTracker {

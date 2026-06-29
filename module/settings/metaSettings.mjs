@@ -11,7 +11,7 @@ export function registerMetaSettings() {
 		config: false,
 		requiresReload: false,
 		onChange: () => {
-			ui.delveDice.render({ parts: [`difficulty`] });
+			ui.delveDice?.render({ parts: [`difficulty`] });
 		},
 	});
 
@@ -22,7 +22,7 @@ export function registerMetaSettings() {
 		config: false,
 		requiresReload: false,
 		onChange: async () => {
-			ui.delveDice.animate({ parts: [`sandsOfFate`] });
+			await ui.delveDice?.animate({ parts: [`sandsOfFate`] });
 		},
 	});
 
@@ -36,7 +36,7 @@ export function registerMetaSettings() {
 		config: false,
 		requiresReload: false,
 		onChange: async () => {
-			ui.delveDice.animate({ parts: [`fateCompass`] });
+			await ui.delveDice?.animate({ parts: [`fateCompass`] });
 		},
 	});
 
@@ -48,7 +48,7 @@ export function registerMetaSettings() {
 		default: `friendly`,
 		onChange: async () => {
 			await game.combat?.setupTurns();
-			await ui.combat.render({ parts: [ `tracker` ] });
+			await ui.combat?.render({ parts: [ `tracker` ] });
 		},
 	});
 

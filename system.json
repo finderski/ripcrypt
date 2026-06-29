@@ -21,7 +21,7 @@
 	],
 	"languages": [
 		{
-			"lang": "en",
+			"lang": "en-CA",
 			"name": "English (Canadian)",
 			"path": "langs/en-ca.json"
 		}

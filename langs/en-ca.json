@@ -24,7 +24,9 @@
 			"SkillsCardV1": "Hero Skill Card"
 		},
 		"app-titles": {
-			"AmmoTracker": "Ammo Tracker"
+			"AmmoTracker": "Ammo Tracker",
+			"DicePool": "Dice Pool",
+			"RichEditor": "Text Editor"
 		},
 		"chat": {
 			"states": {
@@ -94,6 +96,7 @@
 			"guts": "Guts",
 			"location": "Location",
 			"move": "Move",
+			"name": "Name",
 			"ordinals": {
 				"North": {
 					"full": "North",
@@ -114,6 +117,7 @@
 			},
 			"protection": "Protection",
 			"quantity": "Quantity",
+			"quantityOf": "Quantity of {name}",
 			"rank": "Rank",
 			"rankNames": {
 				"novice": "Novice",
@@ -122,6 +126,7 @@
 				"master": "Master"
 			},
 			"range": "Range",
+			"roll": "Roll",
 			"run": "Run",
 			"shield": "Shield",
 			"slot": "Slot",
@@ -143,6 +148,9 @@
 			"abbrAccess": {
 				"name": "Abbreviate Access Names",
 				"hint": "Shortens the Access level names the way the book does. (e.g. \"Common\" becomes \"C\")"
+			},
+			"defaultTab": {
+				"name": "Default Tab"
 			},
 			"condensedRange": {
 				"name": "Condense Weapon Range Input",
@@ -187,6 +195,7 @@
 			"location-placeholder": "New Location...",
 			"numberOfDice": "# of Dice",
 			"rollTarget": "Target",
+			"ability-roll": "{name} Roll",
 			"haste-check": "Haste Check",
 			"difficulty": "(DC: {dc})",
 			"RichEditor-no-collaborative": "Warning: This editor is not collaborative, that means that if you and someone else are editing it at the same time, you won't see that someone else is making changes until they save, and then your changes will be lost.",
@@ -198,6 +207,14 @@
 				"unstar-button": "Remove {name} as a starred ammo",
 				"unstar-button-tooltip": "Remove Star"
 			},
+			"CombatTracker": {
+				"friendly-first-label": "Heroes go first, click to make geists go first",
+				"hostile-first-label": "Geists go first, click to make heroes go first",
+				"friendly-first-tooltip": "Heroes currently go first",
+				"hostile-first-tooltip": "Geists currently go first"
+			},
+			"equip-item-title": "Equip Item?",
+			"equip-item-prompt": "Do you want to equip {itemName}?",
 			"protects-the-location": "Protects your {part}"
 		},
 		"notifs": {
@@ -217,7 +234,7 @@
 				"unsupported-item-drop": "Cannot drop the item \"{itemName}\" of type \"{itemType}\" onto this actor sheet."
 			},
 			"info": {
-				"cryptic-event-alert": "A Cryptic Event Has Occured!"
+				"cryptic-event-alert": "A Cryptic Event Has Occurred!"
 			}
 		},
 		"tooltips": {

@@ -21,7 +21,7 @@ Key conclusions from the audit documents:
 - The codebase is already close to modern Foundry patterns: ES modules, ApplicationV2-style sheets, and `foundry.abstract.TypeDataModel` classes are already present.
 - There is no root `template.json`; do not add one unless Foundry v14 testing proves it is required.
 - The highest-priority blockers are manifest compatibility, missing pack declarations, `htmlFields` metadata, data-field validation, and pack build state.
-- The highest-risk runtime areas are combat/token turn-marker overrides, custom element integration through `CONFIG.CACHE`, custom dice replacement, protected ApplicationV2 overrides, and item DataModel lifecycle hooks.
+- The highest-risk runtime areas are combat/token turn-marker overrides, custom dice replacement, protected ApplicationV2 overrides, and item DataModel lifecycle hooks.
 - Preserve current `system.*` field names. The existing actor/item data paths are the migration contract unless a v14 blocker requires a targeted migration.
 
 ## Safety Rules
