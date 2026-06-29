@@ -19,7 +19,8 @@ export function GenericAppMixin(HandlebarsApp) {
 				roll: this.#rollDice,
 				createItem(_event, target) { // uses arrow-less function for "this"
 					const parent = this.document;
-					createItemFromElement(target, { parent });
+					if (parent && !parent.isOwner) { return };
+					return createItemFromElement(target, { parent });
 				},
 				editItem: (_event, target) => editItemFromElement(target),
 				deleteItem: (_event, target) => deleteItemFromElement(target),
@@ -75,8 +76,11 @@ export function GenericAppMixin(HandlebarsApp) {
 			sheet. Primarily useful for editing the Actors' Item collection, or an Items'
 			ActiveEffect collection.
 			*/
-			this.element.querySelectorAll(`input[data-foreign-update-on]`).forEach(el => {
-				const events = el.dataset.foreignUpdateOn.split(`,`);
+			this.element.querySelectorAll(`[data-foreign-update-on]`).forEach(el => {
+				const events = el.dataset.foreignUpdateOn
+					.split(`,`)
+					.map(event => event.trim())
+					.filter(Boolean);
 				for (const event of events) {
 					el.addEventListener(event, updateForeignDocumentFromEvent);
 				};
@@ -123,8 +127,9 @@ export function GenericAppMixin(HandlebarsApp) {
 			const data = target.dataset;
 			const diceCount = parseInt(data.diceCount);
 			const flavor = data.flavor;
+			const actor = this.document instanceof Actor ? this.document : null;
 
-			const dp = new DicePool({ diceCount, flavor });
+			const dp = new DicePool({ diceCount, flavor, actor });
 			dp.render({ force: true });
 		};
 
@@ -144,6 +149,10 @@ export function GenericAppMixin(HandlebarsApp) {
 			};
 
 			const document = await fromUuid(uuid);
+			if (!document) {
+				console.error(`Rich Editor could not resolve document uuid`, uuid);
+				return;
+			};
 			const app = new RichEditor({
 				document,
 				path,

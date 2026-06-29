@@ -4,6 +4,7 @@ import { Logger } from "../../utils/Logger.mjs";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ItemSheetV2 } = foundry.applications.sheets;
+const { getProperty, hasProperty, setProperty } = foundry.utils;
 
 export class AllItemSheetV1 extends GenericAppMixin(HandlebarsApplicationMixin(ItemSheetV2)) {
 
@@ -44,7 +45,9 @@ export class AllItemSheetV1 extends GenericAppMixin(HandlebarsApplicationMixin(I
 		return ctx;
 	};
 
-	async _onRender() {
+	async _onRender(context, options) {
+		await super._onRender(context, options);
+
 		// remove the flag if it exists when we render the sheet
 		delete this.document?.system?.forceRerender;
 	};
@@ -63,6 +66,19 @@ export class AllItemSheetV1 extends GenericAppMixin(HandlebarsApplicationMixin(I
 		if (this.document.system.forceRerender) {
 			await this.render();
 		};
+	};
+
+	_processFormData(event, form, formData) {
+		const data = super._processFormData(event, form, formData);
+
+		if (hasProperty(data, `system.weight`)) {
+			const weight = getProperty(data, `system.weight`);
+			if (weight === `` || weight === `null`) {
+				setProperty(data, `system.weight`, null);
+			};
+		};
+
+		return data;
 	};
 	// #endregion
 

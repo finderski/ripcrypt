@@ -20,7 +20,7 @@ export class CryptDie extends Die {
 		Handle "Ripping" rolls, which is equivalent to re-rolling 8's and counting
 		it as a success.
 		*/
-		await this.explode(`x=8`, { recursive: true });
+		this.explode(`x=8`, true);
 		if(this.results.some(result => result.exploded)) {
 			this.ripCryptState = `ripping`;
 		};
@@ -30,7 +30,7 @@ export class CryptDie extends Die {
 		results in a second 1, causes the roll to "crypt"
 		*/
 		if (!this.ripCryptState) {
-			await this.explode(`xo=1`, { recursive: false });
+			this.explode(`xo=1`, false);
 
 			let almostCrypted = false;
 			for (const result of this.results) {
@@ -46,7 +46,7 @@ export class CryptDie extends Die {
 		};
 
 		// Count successes
-		await this.countSuccess(`cs>=${target}`);
+		this.countSuccess(`cs>=${target}`);
 	};
 
 	get total() {

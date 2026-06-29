@@ -1,3 +1,15 @@
 <div class="dice-roll">
-	HELLO
+	{{#if flavor}}
+		<div class="dice-flavor">{{flavor}}</div>
+	{{/if}}
+	<div class="dice-result ripcrypt-roll {{stateClass}}">
+		<div class="dice-formula">{{formula}}</div>
+		{{{tooltip}}}
+		<div class="ripcrypt-roll-total-row">
+			<h4 class="dice-total">{{total}}</h4>
+			{{#if stateLabel}}
+				<div class="ripcrypt-roll-state {{stateClass}}">{{stateLabel}}</div>
+			{{/if}}
+		</div>
+	</div>
 </div>

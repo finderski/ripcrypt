@@ -14,14 +14,14 @@ import { localizer } from "../utils/Localizer.mjs";
  */
 export function options(selected, opts, meta) {
 	const { localize = false } = meta.hash;
-	selected = Handlebars.escapeExpression(selected);
+	selected = Handlebars.escapeExpression(selected ?? ``);
 	const htmlOptions = [];
 
 	for (let opt of opts) {
 		if (typeof opt === `string`) {
 			opt = { label: opt, value: opt };
 		};
-		opt.value = Handlebars.escapeExpression(opt.value);
+		opt.value = Handlebars.escapeExpression(opt.value ?? ``);
 		htmlOptions.push(
 			`<option
 				value="${opt.value}"

@@ -1,0 +1,28 @@
+.ripcrypt .dice-roll .ripcrypt-roll-total-row {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.ripcrypt .dice-roll .ripcrypt-roll-state {
+	padding: 0.1rem 0.45rem;
+	border-radius: 999px;
+	border: 1px solid var(--accent-1);
+	background: var(--accent-2);
+	color: var(--base-text);
+	font-size: 0.75rem;
+	font-weight: 600;
+	line-height: 1.2;
+	text-transform: uppercase;
+}
+
+.ripcrypt .dice-roll .ripcrypt-roll-state.is-ripping {
+	border-color: var(--accent-3);
+	color: var(--accent-3);
+}
+
+.ripcrypt .dice-roll .ripcrypt-roll-state.is-crypted {
+	border-color: var(--header-background);
+	background: var(--header-background);
+	color: var(--header-text);
+}

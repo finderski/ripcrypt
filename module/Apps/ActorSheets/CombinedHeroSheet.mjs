@@ -49,7 +49,8 @@ export class CombinedHeroSheet extends GenericAppMixin(HandlebarsApplicationMixi
 		await super._onRender(context, options);
 
 		const summaryElement = this.element.querySelector(`.StatsCardV1`);
-		StatsCardV1._onRender(
+		await StatsCardV1._onRender.call(
+			this,
 			context,
 			{
 				...options,
@@ -59,8 +60,8 @@ export class CombinedHeroSheet extends GenericAppMixin(HandlebarsApplicationMixi
 		);
 
 		const skillsElement = this.element.querySelector(`.SkillsCardV1`);
-		SkillsCardV1._createPopoverListeners.bind(this)();
-		SkillsCardV1._onRender.bind(this)(
+		await SkillsCardV1._onRender.call(
+			this,
 			context,
 			{
 				...options,
@@ -68,9 +69,11 @@ export class CombinedHeroSheet extends GenericAppMixin(HandlebarsApplicationMixi
 				isEditable: this.isEditable,
 			},
 		);
+		await SkillsCardV1._createPopoverListeners.call(this);
 
 		const craftsElement = this.element.querySelector(`.crafts-summary`);
-		CraftCardV1._onRender.bind(this)(
+		await CraftCardV1._onRender.call(
+			this,
 			context,
 			{
 				...options,

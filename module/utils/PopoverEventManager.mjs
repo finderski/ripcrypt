@@ -4,6 +4,7 @@ import { Logger } from "./Logger.mjs";
 export class PopoverEventManager {
 	#options;
 	#id;
+	#elements = new Set();
 
 	get id() {
 		return this.#id;
@@ -22,7 +23,7 @@ export class PopoverEventManager {
 
 		if (PopoverEventManager.#existing.has(id)) {
 			const manager = PopoverEventManager.#existing.get(id);
-			manager.#addListeners(element);
+			manager.attach(element);
 			return manager;
 		};
 
@@ -31,34 +32,46 @@ export class PopoverEventManager {
 		options.lockable ??= true;
 
 		this.#options = options;
-		this.#element = element;
 		this.#class = popoverClass;
 
-		this.#addListeners(element);
+		this.attach(element);
 		PopoverEventManager.#existing.set(id, this);
+	};
+
+	attach(element) {
+		if (!(element instanceof HTMLElement)) { return };
+		this.#element = element;
+		this.#addListeners(element);
 	};
 
 	/**
 	 * @param {HTMLElement} element
 	 */
 	#addListeners(element) {
-		element.addEventListener(`pointerenter`, this.#pointerEnterHandler.bind(this));
-		element.addEventListener(`pointerout`, this.#pointerOutHandler.bind(this));
-		element.addEventListener(`click`, this.#clickHandler.bind(this));
+		if (!(element instanceof HTMLElement) || this.#elements.has(element)) { return };
+		this.#elements.add(element);
+
+		element.addEventListener(`pointerenter`, this.#boundPointerEnterHandler);
+		element.addEventListener(`pointerout`, this.#boundPointerOutHandler);
+		element.addEventListener(`click`, this.#boundClickHandler);
 
 		if (this.#options.lockable) {
-			element.addEventListener(`pointerup`, this.#pointerUpHandler.bind(this));
+			element.addEventListener(`pointerup`, this.#boundPointerUpHandler);
 		};
 	};
 
 	destroy() {
 		this.close();
-		this.#element.removeEventListener(`pointerenter`, this.#pointerEnterHandler);
-		this.#element.removeEventListener(`pointerout`, this.#pointerOutHandler);
-		this.#element.removeEventListener(`click`, this.#clickHandler);
-		if (this.#options.lockable) {
-			this.#element.removeEventListener(`pointerup`, this.#pointerUpHandler);
+		for (const element of this.#elements) {
+			element.removeEventListener(`pointerenter`, this.#boundPointerEnterHandler);
+			element.removeEventListener(`pointerout`, this.#boundPointerOutHandler);
+			element.removeEventListener(`click`, this.#boundClickHandler);
+			if (this.#options.lockable) {
+				element.removeEventListener(`pointerup`, this.#boundPointerUpHandler);
+			};
 		};
+		this.#elements.clear();
+		PopoverEventManager.#existing.delete(this.#id);
 		this.#stopOpen();
 		this.#stopClose();
 	};
@@ -110,6 +123,11 @@ export class PopoverEventManager {
 		return new this.#class(options);
 	};
 
+	#boundClickHandler = () => this.#clickHandler();
+	#boundPointerEnterHandler = (event) => this.#pointerEnterHandler(event);
+	#boundPointerOutHandler = () => this.#pointerOutHandler();
+	#boundPointerUpHandler = (event) => this.#pointerUpHandler(event);
+
 	#clickHandler() {
 		Logger.debug(`click event handler`);
 		// Cleanup for the frameless lifecycle
@@ -126,7 +144,10 @@ export class PopoverEventManager {
 	#pointerEnterHandler(event) {
 		this.#stopClose();
 
-		const pos = event.target.getBoundingClientRect();
+		const target = event.currentTarget instanceof HTMLElement ? event.currentTarget : this.#element;
+		if (!(target instanceof HTMLElement)) { return };
+
+		const pos = target.getBoundingClientRect();
 		const x = pos.x + Math.floor(pos.width / 2);
 		const y = pos.y;
 

@@ -2,8 +2,8 @@ import { filePath } from "../consts.mjs";
 import { GenericAppMixin } from "./GenericApp.mjs";
 import { localizer } from "../utils/Localizer.mjs";
 import { Logger } from "../utils/Logger.mjs";
+import { evaluateRipCryptRoll, getRollSpeaker, sendRollToChat } from "../rolls/ripcrypt-rolls.mjs";
 
-const { Roll } = foundry.dice;
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
 export class DicePool extends GenericAppMixin(HandlebarsApplicationMixin(ApplicationV2)) {
@@ -62,6 +62,8 @@ export class DicePool extends GenericAppMixin(HandlebarsApplicationMixin(Applica
 		target,
 		drag = 0, edge = 0,
 		flavor = ``,
+		actor = null,
+		speaker = null,
 		...opts
 	} = {}) {
 		super(opts);
@@ -69,6 +71,8 @@ export class DicePool extends GenericAppMixin(HandlebarsApplicationMixin(Applica
 		this._drag = drag;
 		this._edge = edge;
 		this._flavor = flavor;
+		this._actor = actor;
+		this._speaker = speaker;
 		this._diceCount = diceCount;
 		this._target = target ?? game.settings.get(`ripcrypt`, `dc`) ?? 1;
 	};
@@ -197,12 +201,15 @@ export class DicePool extends GenericAppMixin(HandlebarsApplicationMixin(Applica
 	};
 
 	static async #roll() {
-		let target = this._target;
-		target -= this._edge;
-		target += this._drag;
-		target = Math.max(target, 1);
-
-		const formula = `${this._diceCount}d8rc${target}`;
+		const {
+			roll,
+			formula,
+		} = await evaluateRipCryptRoll({
+			diceCount: this._diceCount,
+			target: this._target,
+			edge: this._edge,
+			drag: this._drag,
+		});
 		Logger.debug(`Attempting to roll formula: ${formula}`);
 
 		let flavor = this._flavor;
@@ -210,10 +217,8 @@ export class DicePool extends GenericAppMixin(HandlebarsApplicationMixin(Applica
 			flavor += ` ` + localizer(`RipCrypt.Apps.difficulty`, { dc: this._target });
 		}
 
-		const roll = new Roll(formula);
-		await roll.evaluate();
-		await roll.toMessage({
-			speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+		await sendRollToChat(roll, {
+			speaker: this._speaker ?? getRollSpeaker({ actor: this._actor }),
 			flavor,
 		});
 		this.close();

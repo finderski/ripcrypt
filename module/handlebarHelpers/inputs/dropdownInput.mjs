@@ -4,11 +4,12 @@ import { options } from "../options.mjs";
 export function dropdownInput(input, data) {
 	const label = localizer(input.label);
 	const id = `${data.meta.idp}-${input.id}`;
+	const value = input.value ?? ``;
 
 	if (!data.meta.editable) {
 		return `<div data-input-type="dropdown">
 			<span class="label">${label}</span>
-			<span class="value">${data.meta.limited && input.limited ? `???` : input.value}</span>
+			<span class="value">${data.meta.limited && input.limited ? `???` : value}</span>
 		</div>`;
 	};
 
@@ -27,7 +28,7 @@ export function dropdownInput(input, data) {
 			name="${input.path}"
 		>
 			${options(
-				input.value,
+				value,
 				input.options,
 				{ hash: { localize: true }},
 			)}

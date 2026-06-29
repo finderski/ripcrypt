@@ -67,7 +67,7 @@ export class AmmoTracker extends GenericPopoverMixin(HandlebarsApplicationMixin(
 			return;
 		};
 
-		if (this._favouriteCount > 3) {
+		if (this._favouriteCount >= 3) {
 			ui.notifications.error(localizer(`RipCrypt.notifs.error.at-favourite-limit`));
 			return;
 		};
@@ -76,7 +76,7 @@ export class AmmoTracker extends GenericPopoverMixin(HandlebarsApplicationMixin(
 		const item = await fromUuid(data.itemId);
 		if (!item) { return };
 
-		item.setFlag(game.system.id, ItemFlags.FAVOURITE, true);
+		await item.setFlag(game.system.id, ItemFlags.FAVOURITE, true);
 	};
 
 	static async #unfavourite(_, el) {
@@ -90,7 +90,7 @@ export class AmmoTracker extends GenericPopoverMixin(HandlebarsApplicationMixin(
 		const item = await fromUuid(data.itemId);
 		if (!item) { return };
 
-		item.unsetFlag(game.system.id, ItemFlags.FAVOURITE);
+		await item.unsetFlag(game.system.id, ItemFlags.FAVOURITE);
 	};
 	// #endregion
 };

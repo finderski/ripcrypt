@@ -59,7 +59,7 @@ export class CraftCardV1 extends GenericAppMixin(HandlebarsApplicationMixin(Acto
 					name: localizer(`RipCrypt.common.edit`),
 					condition: (el) => {
 						const itemId = el.dataset.itemId;
-						return isEditable && itemId !== ``;
+						return isEditable && Boolean(itemId);
 					},
 					callback: editItemFromElement,
 				},
@@ -67,7 +67,7 @@ export class CraftCardV1 extends GenericAppMixin(HandlebarsApplicationMixin(Acto
 					name: localizer(`RipCrypt.common.delete`),
 					condition: (el) => {
 						const itemId = el.dataset.itemId;
-						return isEditable && itemId !== ``;
+						return isEditable && Boolean(itemId);
 					},
 					callback: deleteItemFromElement,
 				},

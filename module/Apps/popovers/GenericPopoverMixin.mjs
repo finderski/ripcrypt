@@ -76,8 +76,11 @@ export function GenericPopoverMixin(HandlebarsApp) {
 			sheet. Primarily useful for editing the Actors' Item collection, or an Items'
 			ActiveEffect collection.
 			*/
-			this.element.querySelectorAll(`input[data-foreign-update-on]`).forEach(el => {
-				const events = el.dataset.foreignUpdateOn.split(`,`);
+			this.element.querySelectorAll(`[data-foreign-update-on]`).forEach(el => {
+				const events = el.dataset.foreignUpdateOn
+					.split(`,`)
+					.map(event => event.trim())
+					.filter(Boolean);
 				for (const event of events) {
 					el.addEventListener(event, updateForeignDocumentFromEvent);
 				};

@@ -149,6 +149,7 @@ Checklist:
 - [ ] Confirm templates render without missing partial/helper errors.
 - [ ] Confirm CSS and local assets load without 404s.
 - [ ] Confirm no sheet open action throws in the console.
+- [ ] Confirm render-time listeners do not multiply after closing and reopening the same sheet several times.
 
 Record:
 
@@ -171,6 +172,7 @@ Record:
 - [ ] Edit `system.guts.value`.
 - [ ] Edit coin fields if and when they are wired to `system.coin.gold`, `system.coin.silver`, and `system.coin.copper`.
 - [ ] Close and reopen the actor sheet and confirm values persist.
+- [ ] Reload the world and confirm edited actor values still persist.
 
 ### Item fields
 
@@ -180,7 +182,26 @@ Record:
 - [ ] Edit skill ability and advances.
 - [ ] Edit craft aspect and advances.
 - [ ] Edit rich text descriptions for `good`, `skill`, and `craft`.
+- [ ] Clear and re-set optional item fields such as weight and confirm empty values do not save as the literal string `null`.
 - [ ] Close and reopen item sheets and confirm values persist.
+- [ ] Reload the world and confirm edited item values still persist.
+
+### Embedded item update paths
+
+- [ ] From the Stats card weapon add control, create embedded `weapon` and `ammo` items and confirm they are created on the actor, not in the world item directory.
+- [ ] From the Skills card skill add controls, create embedded `skill` items and confirm they land in the expected ability list after save/reopen.
+- [ ] From the Skills card gear add control, create embedded `ammo`, `armour`, `good`, `shield`, and `weapon` items and confirm they appear in the gear list unless immediately equipped elsewhere.
+- [ ] Confirm create-item controls do nothing for a non-owner user and do not create stray world items.
+- [ ] Open an embedded item from an actor sheet context menu and confirm the correct item sheet opens.
+- [ ] Confirm edit and delete context-menu actions are only offered on populated owned-item rows or slots.
+- [ ] Delete an embedded item from an actor sheet context menu and confirm the actor sheet rerenders cleanly.
+- [ ] Delete an equipped weapon, armour piece, and shield and confirm the actor summary clears the corresponding display slot after reopen.
+- [ ] Update embedded ammo quantity through the ammo popover and confirm the backing item persists after closing and reopening the actor sheet.
+- [ ] Clear an ammo quantity input on the Skills card or AmmoTracker, blur the field, and confirm the UI restores the prior value instead of throwing a DataModel validation error.
+- [ ] Toggle ammo favourite and unfavourite controls and confirm the favourite slots update without console errors.
+- [ ] Toggle embedded `equipped` fields for weapons, armour, and shields and confirm the actor sheet rerenders to reflect the new state.
+- [ ] Equip and unequip a weapon from its embedded item sheet and confirm it moves between the Skills card gear list and the Stats card weapon table.
+- [ ] Equip and unequip armour or shield from its embedded item sheet and confirm defense values and shield markers on the Stats card update after save/reopen.
 
 Record:
 
@@ -195,15 +216,18 @@ Checklist:
 - [ ] Roll an ability check and confirm chat message creation succeeds.
 - [ ] Confirm the roll formula parses and evaluates.
 - [ ] Inspect the roll tooltip for obvious custom die errors.
+- [ ] Confirm the RipCrypt roll card renders the formula, tooltip, and total cleanly in chat.
+- [ ] Confirm Rip or Crypt state badges appear only when the custom die logic sets them.
 - [ ] Trigger a Haste check from the Delve Dice HUD or sheet control.
 - [ ] Confirm the Haste roll posts to chat.
+- [ ] Confirm the Haste card renders cleanly and does not show a Rip/Crypt state badge.
 - [ ] Confirm chat speaker assignment is correct or at least non-fatal.
 - [ ] Confirm no roll or chat action throws in the console.
 
 Known watch items from the audit:
 
-- `DicePool.#roll` currently uses `ChatMessage.getSpeaker({ actor: this.actor })`, which may be undefined.
-- `templates/chat/roll.hbs` is currently a placeholder and is not expected to render custom roll cards yet.
+- DicePool speaker handling now receives the actor from the sheet action when available; confirm chat messages show the expected speaker.
+- `templates/chat/roll.hbs` now drives the custom RipCrypt chat card; confirm it loads without missing-template errors.
 
 Record:
 
@@ -226,6 +250,7 @@ Checklist:
 - [ ] Open at least one entry from each pack.
 - [ ] Import at least one entry from each pack into the world.
 - [ ] Confirm pack entry open/import actions do not throw validation errors.
+- [ ] Drag a compendium item onto an actor and confirm the default Foundry embedded-item flow still works.
 
 Record:
 
@@ -253,6 +278,21 @@ Minimum console checkpoints:
 - [ ] Item sheet open
 - [ ] Roll/chat actions
 - [ ] Compendium open/import
+- [ ] Embedded item create/edit/delete actions
+- [ ] Ammo popover quantity and favourite actions
+- [ ] Repeated open/close of actor and item sheets
+
+## Sheet Interaction And Drag/Drop
+
+The current system does not implement custom actor or item drag/drop hooks. Testing should confirm that Foundry v14 default document drag/drop behavior still works and that no stale listener state accumulates on rerender.
+
+Checklist:
+
+- [ ] Drag a world item onto a hero actor and confirm it embeds successfully.
+- [ ] Drag a world item onto a geist actor and confirm it embeds successfully where the item type is allowed.
+- [ ] Drag a compendium item onto a hero actor and confirm it embeds successfully.
+- [ ] Re-open the same actor sheet multiple times, use item controls, and confirm a single click performs a single action.
+- [ ] Re-open the ammo popover multiple times and confirm quantity updates and star toggles happen once per interaction.
 
 ## Migration Failures Log
 

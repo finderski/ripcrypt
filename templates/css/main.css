@@ -10,6 +10,7 @@
 /* Elements */
 @import url("./elements/generic.css") layer(elements);
 @import url("./elements/button.css") layer(elements);
+@import url("./elements/chat.css") layer(elements);
 @import url("./elements/input.css") layer(elements);
 @import url("./elements/lists.css") layer(elements);
 @import url("./elements/p.css") layer(elements);

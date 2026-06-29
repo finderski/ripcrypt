@@ -26,6 +26,12 @@
 		"app-titles": {
 			"AmmoTracker": "Ammo Tracker"
 		},
+		"chat": {
+			"states": {
+				"ripping": "Ripping",
+				"crypted": "Crypted"
+			}
+		},
 		"common": {
 			"abilities": {
 				"grit": "Grit",
@@ -181,6 +187,7 @@
 			"location-placeholder": "New Location...",
 			"numberOfDice": "# of Dice",
 			"rollTarget": "Target",
+			"haste-check": "Haste Check",
 			"difficulty": "(DC: {dc})",
 			"RichEditor-no-collaborative": "Warning: This editor is not collaborative, that means that if you and someone else are editing it at the same time, you won't see that someone else is making changes until they save, and then your changes will be lost.",
 			"starred-ammo-placeholder": "Starred Ammo Slot",

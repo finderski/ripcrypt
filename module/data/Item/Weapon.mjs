@@ -166,7 +166,7 @@ export class WeaponData extends CommonItemData {
 				options: [
 					{
 						label: `RipCrypt.common.empty`,
-						value: null,
+						value: ``,
 					},
 					...Object.values(gameTerms.WeightRatings).map(opt => ({
 						label: `RipCrypt.common.weightRatings.${opt}`,

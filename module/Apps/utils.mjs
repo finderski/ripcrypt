@@ -2,13 +2,22 @@
 This file contains utilities used by Applications in order to be DRYer
 */
 
+const { getProperty } = foundry.utils;
+
 /**
  * @param {HTMLElement} target The element to operate on
  */
 export async function createItemFromElement(target, { parent } = {}) {
+	if (parent && !parent.isOwner) { return };
+
 	const data = target.dataset;
-	const types = data.itemTypes?.split(`,`);
-	const type = data.defaultItemType;
+	const types = data.itemTypes
+		?.split(`,`)
+		.map(type => type.trim())
+		.filter(Boolean);
+	const type = data.defaultItemType ?? (types?.length === 1 ? types[0] : undefined);
+	if (!type && !types?.length) { return };
+
 	await Item.createDialog(
 		{ type },
 		{ parent, showEquipPrompt: false },
@@ -28,6 +37,7 @@ export async function editItemFromElement(target) {
 	const itemId = itemEl.dataset.itemId;
 	if (!itemId) { return };
 	const item = await fromUuid(itemId);
+	if (!item?.sheet) { return };
 	item.sheet.render({ force: true, orBringToFront: true });
 };
 
@@ -40,7 +50,8 @@ export async function deleteItemFromElement(target) {
 	const itemId = itemEl.dataset.itemId;
 	if (!itemId) { return };
 	const item = await fromUuid(itemId);
-	item.deleteDialog();
+	if (!item) { return };
+	await item.deleteDialog();
 };
 
 /**
@@ -54,12 +65,32 @@ export async function deleteItemFromElement(target) {
 export async function updateForeignDocumentFromEvent(event) {
 	const target = event.currentTarget;
 	const data = target.dataset;
-	const document = await fromUuid(data.foreignUuid);
+	const {
+		foreignUuid,
+		foreignName,
+	} = data;
+
+	if (!foreignUuid || !foreignName) { return };
+
+	const document = await fromUuid(foreignUuid);
+	if (!document?.isOwner) { return };
 
 	let value = target.value;
 	switch (target.type) {
 		case `checkbox`: value = target.checked; break;
+		case `number`: {
+			const current = getProperty(document, foreignName);
+			if (target.value === `` || Number.isNaN(target.valueAsNumber)) {
+				if (typeof current === `number`) {
+					target.value = String(current);
+				};
+				return;
+			};
+			value = target.valueAsNumber;
+			break;
+		};
 	};
 
-	await document?.update({ [data.foreignName]: value });
+	if (Object.is(getProperty(document, foreignName), value)) { return };
+	await document.update({ [foreignName]: value });
 };

@@ -3,10 +3,10 @@ import { filePath } from "../consts.mjs";
 import { gameTerms } from "../gameTerms.mjs";
 import { localizer } from "../utils/Localizer.mjs";
 import { Logger } from "../utils/Logger.mjs";
+import { getRollSpeaker, rollHasteCheck } from "../rolls/ripcrypt-rolls.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 const { ContextMenu } = foundry.applications.ux;
-const { Roll } = foundry.dice;
 const { FatePath } = gameTerms;
 
 const CompassRotations = {
@@ -276,18 +276,11 @@ export class DelveDiceHUD extends HandlebarsApplicationMixin(ApplicationV2) {
 			return;
 		};
 
-		const roll = new Roll(`1d8xo=1`);
-		await roll.evaluate();
-
-		let delta = 0;
-		if (roll.dice[0].results[0].exploded) {
-			delta = -1;
-			if (roll.dice[0].results[1].result === 1) {
-				delta = -2;
-			};
-		};
-
-		roll.toMessage({ flavor: `Haste Check` });
+		const actor = this?.document instanceof Actor ? this.document : null;
+		const { delta } = await rollHasteCheck({
+			speaker: getRollSpeaker({ actor }),
+			flavor: localizer(`RipCrypt.Apps.haste-check`),
+		});
 
 		// Change the Sands of Fate setting if required
 		if (delta === 0 || !shouldUpdateSands) { return };

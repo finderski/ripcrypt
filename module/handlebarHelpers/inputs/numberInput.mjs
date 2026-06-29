@@ -3,18 +3,19 @@ import { localizer } from "../../utils/Localizer.mjs";
 export function numberInput(input, data) {
 	const label = localizer(input.label);
 	const id = `${data.meta.idp}-${input.id}`;
+	const value = input.value ?? ``;
 
 	if (!data.meta.editable) {
 		return `<div data-input-type="integer">
 			<span class="label">${label}</span>
-			<span class="value">${data.meta.limited && input.limited ? `???` : input.value}</span>
+			<span class="value">${data.meta.limited && input.limited ? `???` : value}</span>
 		</div>`;
 	};
 
 	let attrs = ``;
 	if (input.min != undefined) { attrs += ` min="${input.min}"` };
 	if (input.max != undefined) { attrs += ` max="${input.max}"` };
-	if (input.step != undefined) { attrs += `step="${input.step}"` };
+	if (input.step != undefined) { attrs += ` step="${input.step}"` };
 
 	return `<div data-input-type="integer">
 		<label
@@ -25,7 +26,7 @@ export function numberInput(input, data) {
 		<input
 			type="number"
 			id="${id}"
-			value="${input.value}"
+			value="${value}"
 			name="${input.path}"
 			${attrs}
 		/>

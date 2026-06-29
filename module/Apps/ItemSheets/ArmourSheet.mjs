@@ -38,7 +38,9 @@ export class ArmourSheet extends GenericAppMixin(HandlebarsApplicationMixin(Item
 	// #endregion
 
 	// #region Lifecycle
-	async _onRender() {
+	async _onRender(context, options) {
+		await super._onRender(context, options);
+
 		// remove the flag if it exists when we render the sheet
 		delete this.document?.system?.forceRerender;
 	};
@@ -71,9 +73,19 @@ export class ArmourSheet extends GenericAppMixin(HandlebarsApplicationMixin(Item
 	_processFormData(event, form, formData) {
 		const data = super._processFormData(event, form, formData);
 
+		if (hasProperty(data, `system.weight`)) {
+			const weight = getProperty(data, `system.weight`);
+			if (weight === `` || weight === `null`) {
+				setProperty(data, `system.weight`, null);
+			};
+		};
+
 		if (hasProperty(data, `system.location`)) {
 			let locations = getProperty(data, `system.location`);
-			locations = locations.filter(value => value != null);
+			if (!Array.isArray(locations)) {
+				locations = locations == null ? [] : [locations];
+			};
+			locations = locations.filter(value => value != null && value !== ``);
 			setProperty(data, `system.location`, locations);
 		};
 
@@ -82,8 +94,8 @@ export class ArmourSheet extends GenericAppMixin(HandlebarsApplicationMixin(Item
 	// #endregion
 
 	// #region Data Prep
-	async _preparePartContext(partId, _, opts) {
-		const ctx = await super._preparePartContext(partId, {}, opts);
+	async _preparePartContext(partId, ctx, opts) {
+		ctx = await super._preparePartContext(partId, ctx, opts);
 
 		ctx.item = this.document;
 		ctx.system = this.document.system;
@@ -102,7 +114,7 @@ export class ArmourSheet extends GenericAppMixin(HandlebarsApplicationMixin(Item
 		ctx.weights = [
 			{
 				label: `RipCrypt.common.empty`,
-				value: null,
+				value: ``,
 			},
 			...Object.values(gameTerms.WeightRatings).map(opt => ({
 				label: `RipCrypt.common.weightRatings.${opt}`,

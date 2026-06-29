@@ -26,6 +26,7 @@
 			"path": "langs/en-ca.json"
 		}
 	],
+	"background": "systems/ripcrypt/assets/ripcrypt-cover.svg",
 	"url": "https://github.com/Eldritch-Oliver/Foundry-RipCrypt",
 	"manifest": "https://github.com/Eldritch-Oliver/Foundry-RipCrypt/releases/latest/download/system.json",
 	"readme": "README.md",

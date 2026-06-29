@@ -46,8 +46,8 @@ export class SkillsCardV1 extends GenericAppMixin(HandlebarsApplicationMixin(Act
 	// #region Lifecycle
 	async _onRender(context, options) {
 		await super._onRender(context, options);
-		SkillsCardV1._onRender.bind(this)(context, options);
-		SkillsCardV1._createPopoverListeners.bind(this)();
+		await SkillsCardV1._onRender.call(this, context, options);
+		await SkillsCardV1._createPopoverListeners.call(this);
 	};
 
 	static async _onRender(_context, options) {
@@ -63,7 +63,7 @@ export class SkillsCardV1 extends GenericAppMixin(HandlebarsApplicationMixin(Act
 					name: localizer(`RipCrypt.common.edit`),
 					condition: (el) => {
 						const itemId = el.dataset.itemId;
-						return isEditable && itemId !== ``;
+						return isEditable && Boolean(itemId);
 					},
 					callback: editItemFromElement,
 				},
@@ -71,7 +71,7 @@ export class SkillsCardV1 extends GenericAppMixin(HandlebarsApplicationMixin(Act
 					name: localizer(`RipCrypt.common.delete`),
 					condition: (el) => {
 						const itemId = el.dataset.itemId;
-						return isEditable && itemId !== ``;
+						return isEditable && Boolean(itemId);
 					},
 					callback: deleteItemFromElement,
 				},
@@ -82,11 +82,19 @@ export class SkillsCardV1 extends GenericAppMixin(HandlebarsApplicationMixin(Act
 
 	/** @this {SkillsCardV1} */
 	static async _createPopoverListeners() {
-		const ammoInfoIcon = this.element.querySelector(`.ammo-info-icon`);
-		const idPrefix = this.document.uuid;
+		const selector = `.ammo-info-icon`;
+		const ammoInfoIcon = this.element?.querySelector(selector);
+		if (!ammoInfoIcon) { return };
 
+		const existing = this._popoverManagers.get(selector);
+		if (existing) {
+			existing.attach(ammoInfoIcon);
+			return;
+		};
+
+		const idPrefix = this.document.uuid;
 		const manager = new PopoverEventManager(`${idPrefix}.ammo-info-icon`, ammoInfoIcon, AmmoTracker);
-		this._popoverManagers.set(`.ammo-info-icon`, manager);
+		this._popoverManagers.set(selector, manager);
 		this._hookIDs.set(Hooks.on(`prepare${manager.id}Context`, (ctx) => {
 			ctx.ammos = this.document.itemTypes.ammo;
 		}), `prepare${manager.id}Context`);
