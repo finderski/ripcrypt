@@ -23,6 +23,7 @@ import { WeaponData } from "../data/Item/Weapon.mjs";
 import { CryptDie } from "../dice/CryptDie.mjs";
 
 // Documents
+import { RipCryptActor } from "../documents/actor.mjs";
 import { RipCryptCombat } from "../documents/combat.mjs";
 import { RipCryptCombatant } from "../documents/combatant.mjs";
 import { RipCryptItem } from "../documents/item.mjs";
@@ -67,6 +68,7 @@ Hooks.once(`init`, () => {
 
 	// #region Class Changes
 	CONFIG.ui.combat = RipCryptCombatTracker;
+	CONFIG.Actor.documentClass = RipCryptActor;
 	CONFIG.Combat.documentClass = RipCryptCombat;
 	CONFIG.Combatant.documentClass = RipCryptCombatant;
 	CONFIG.Token.objectClass = RipCryptToken;
@@ -126,6 +128,7 @@ Hooks.once(`init`, () => {
 
 	// #region Token Attrs
 	CONFIG.Actor.trackableAttributes.hero = HeroData.trackableAttributes;
+	CONFIG.Actor.trackableAttributes.geist = GeistData.trackableAttributes;
 	// #endregion
 
 	registerSockets();

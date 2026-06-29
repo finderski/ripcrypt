@@ -4,9 +4,8 @@
 	"description": "A dungeon sprint RPG. Faster than an arrow to the eye. Smoother than a clean blade. Compact with consequences.",
 	"version": "0.2.0",
 	"compatibility": {
-		"minimum": 13,
-		"verified": "13.350",
-		"maximum": 13
+		"minimum": 14,
+		"verified": 14
 	},
 	"authors": [
 		{ "name": "Oliver" }
@@ -28,10 +27,9 @@
 		}
 	],
 	"url": "https://github.com/Eldritch-Oliver/Foundry-RipCrypt",
-	"manifest": "https://github.com/Eldritch-Oliver/Foundry-RipCrypt/releases/latest/download/module.json",
-	"download": "#{DOWNLOAD}#",
+	"manifest": "https://github.com/Eldritch-Oliver/Foundry-RipCrypt/releases/latest/download/system.json",
 	"readme": "README.md",
-	"bugs": "",
+	"bugs": "https://github.com/Eldritch-Oliver/Foundry-RipCrypt/issues",
 	"socket": true,
 	"flags": {
 		"hotReload": {
@@ -47,10 +45,16 @@
 		"Item": {
 			"ammo": {},
 			"armour": {},
-			"craft": {},
-			"good": {},
+			"craft": {
+				"htmlFields": ["description"]
+			},
+			"good": {
+				"htmlFields": ["description"]
+			},
 			"shield": {},
-			"skill": {},
+			"skill": {
+				"htmlFields": ["description"]
+			},
 			"weapon": {}
 		}
 	},
@@ -76,28 +80,6 @@
 				"PLAYER": "OBSERVER",
 				"ASSISTANT": "OWNER"
 			}
-		},
-		{
-			"name": "skills",
-			"label": "Skills",
-			"system": "ripcrypt",
-			"path": "packs/skills",
-			"type": "Item",
-			"ownership": {
-				"PLAYER": "OBSERVER",
-				"ASSISTANT": "OWNER"
-			}
-		},
-		{
-			"name": "geist",
-			"label": "Geist",
-			"system": "ripcrypt",
-			"path": "packs/geist",
-			"type": "Actor",
-			"ownership": {
-				"PLAYER": "NONE",
-				"ASSISTANT": "OWNER"
-			}
 		}
 	],
 	"packFolders": [
@@ -113,14 +95,11 @@
 					"folders": [],
 					"packs": [
 						"protection",
-						"weapons",
-						"skills"
+						"weapons"
 					]
 				}
 			],
-			"packs": [
-				"geist"
-			]
+			"packs": []
 		}
 	]
 }

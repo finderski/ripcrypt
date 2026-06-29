@@ -177,34 +177,58 @@
 			<label for="{{meta.idp}}-gold" >
 				{{ rc-i18n "RipCrypt.common.currency.gold"}}
 			</label>
-			<input
-				type="number"
-				id="{{meta.idp}}-gold"
-				class="input"
-				value="0"
-			>
+			{{#if meta.editable}}
+				<input
+					type="number"
+					id="{{meta.idp}}-gold"
+					class="input"
+					name="system.coin.gold"
+					value="{{coin.gold}}"
+					min="0"
+				>
+			{{else}}
+				<div id="{{meta.idp}}-gold" class="input">
+					{{coin.gold}}
+				</div>
+			{{/if}}
 		</div>
 		<div class="currency pill">
 			<label for="{{meta.idp}}-silver" >
 				{{ rc-i18n "RipCrypt.common.currency.silver"}}
 			</label>
-			<input
-				type="number"
-				id="{{meta.idp}}-silver"
-				class="input"
-				value="0"
-			>
+			{{#if meta.editable}}
+				<input
+					type="number"
+					id="{{meta.idp}}-silver"
+					class="input"
+					name="system.coin.silver"
+					value="{{coin.silver}}"
+					min="0"
+				>
+			{{else}}
+				<div id="{{meta.idp}}-silver" class="input">
+					{{coin.silver}}
+				</div>
+			{{/if}}
 		</div>
 		<div class="currency pill">
 			<label for="{{meta.idp}}-copper" >
 				{{ rc-i18n "RipCrypt.common.currency.copper"}}
 			</label>
-			<input
-				type="number"
-				id="{{meta.idp}}-copper"
-				class="input"
-				value="0"
-			>
+			{{#if meta.editable}}
+				<input
+					type="number"
+					id="{{meta.idp}}-copper"
+					class="input"
+					name="system.coin.copper"
+					value="{{coin.copper}}"
+					min="0"
+				>
+			{{else}}
+				<div id="{{meta.idp}}-copper" class="input">
+					{{coin.copper}}
+				</div>
+			{{/if}}
 		</div>
 	</div>
 

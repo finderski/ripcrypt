@@ -27,6 +27,25 @@ export function derivedMaximumBar(min, initial) {
 			integer: true,
 			nullable: false,
 		}),
+		max: new fields.NumberField({
+			min,
+			initial: min,
+			integer: true,
+			nullable: false,
+			persisted: false,
+		}),
+	});
+};
+
+export function derivedInteger({ min, initial = 0, max } = {}) {
+	return new fields.NumberField({
+		min,
+		initial,
+		max,
+		required: true,
+		nullable: false,
+		integer: true,
+		persisted: false,
 	});
 };
 

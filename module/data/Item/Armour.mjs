@@ -21,22 +21,25 @@ export class ArmourData extends CommonItemData {
 					trim: true,
 					nullable: false,
 					required: true,
-					options: Object.values(gameTerms.Anatomy),
+					choices: Object.values(gameTerms.Anatomy),
 				}),
 				{
+					required: true,
 					nullable: false,
 					initial: [],
 				},
 			),
 			equipped: new fields.BooleanField({
 				initial: false,
+				required: true,
 				nullable: false,
 			}),
 			weight: new fields.StringField({
 				blank: false,
+				required: true,
 				nullable: true,
 				initial: null,
-				options: Object.values(gameTerms.WeightRatings),
+				choices: Object.values(gameTerms.WeightRatings),
 			}),
 		};
 	};

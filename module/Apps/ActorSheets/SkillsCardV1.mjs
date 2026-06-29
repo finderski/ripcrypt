@@ -83,12 +83,12 @@ export class SkillsCardV1 extends GenericAppMixin(HandlebarsApplicationMixin(Act
 	/** @this {SkillsCardV1} */
 	static async _createPopoverListeners() {
 		const ammoInfoIcon = this.element.querySelector(`.ammo-info-icon`);
-		const idPrefix = this.actor.uuid;
+		const idPrefix = this.document.uuid;
 
 		const manager = new PopoverEventManager(`${idPrefix}.ammo-info-icon`, ammoInfoIcon, AmmoTracker);
 		this._popoverManagers.set(`.ammo-info-icon`, manager);
 		this._hookIDs.set(Hooks.on(`prepare${manager.id}Context`, (ctx) => {
-			ctx.ammos = this.actor.itemTypes.ammo;
+			ctx.ammos = this.document.itemTypes.ammo;
 		}), `prepare${manager.id}Context`);
 	};
 
@@ -98,6 +98,7 @@ export class SkillsCardV1 extends GenericAppMixin(HandlebarsApplicationMixin(Act
 
 		ctx = await SkillsCardV1.prepareGear(ctx);
 		ctx = await SkillsCardV1.prepareAmmo(ctx);
+		ctx = await SkillsCardV1.prepareCoin(ctx);
 		ctx = await SkillsCardV1.prepareSkills(ctx);
 
 		ctx.aura = deepClone(ctx.actor.system.aura);
@@ -157,6 +158,18 @@ export class SkillsCardV1 extends GenericAppMixin(HandlebarsApplicationMixin(Act
 		};
 
 		ctx.ammo = total;
+		return ctx;
+	};
+
+	static async prepareCoin(ctx) {
+		ctx.coin = deepClone(ctx.actor.system.coin);
+		if (ctx.meta.limited) {
+			ctx.coin = {
+				gold: `?`,
+				silver: `?`,
+				copper: `?`,
+			};
+		};
 		return ctx;
 	};
 

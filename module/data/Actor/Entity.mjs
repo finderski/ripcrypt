@@ -1,4 +1,4 @@
-import { derivedMaximumBar } from "../helpers.mjs";
+import { derivedInteger, derivedMaximumBar } from "../helpers.mjs";
 import { gameTerms } from "../../gameTerms.mjs";
 import { rankToInteger } from "../../utils/rank.mjs";
 import { sumReduce } from "../../utils/sumReduce.mjs";
@@ -116,6 +116,19 @@ export class EntityData extends foundry.abstract.TypeDataModel {
 					choices: Object.values(gameTerms.Rank),
 				}),
 			}),
+			aura: new fields.SchemaField({
+				normal: derivedInteger({ min: 0, initial: 0 }),
+				heavy: derivedInteger({ min: 0, initial: 0 }),
+			}),
+			limit: new fields.SchemaField({
+				weapons: derivedInteger({ min: 0, initial: 4 }),
+				equipment: derivedInteger({ min: 0, initial: 12 }),
+				skills: derivedInteger({ min: 0, initial: 4 }),
+			}),
+			speed: new fields.SchemaField({
+				move: derivedInteger({ min: 0, initial: 0 }),
+				run: derivedInteger({ min: 0, initial: 0 }),
+			}),
 		};
 	};
 
@@ -125,20 +138,16 @@ export class EntityData extends foundry.abstract.TypeDataModel {
 
 		// Calculate the person's base Crafting aura
 		const rank = rankToInteger(this.level.rank);
-		this.aura = {
-			normal: ( rank + 1 ) * 2,
-			heavy: ( rank + 2 ) * 2,
-		};
+		this.aura.normal = ( rank + 1 ) * 2;
+		this.aura.heavy = ( rank + 2 ) * 2;
 
 		this.guts.max = 0;
 
 		// The limitations imposed on things like inventory spaces and equipped
 		// weapon count
-		this.limit = {
-			weapons: 4,
-			equipment: 12,
-			skills: 4,
-		};
+		this.limit.weapons = 4;
+		this.limit.equipment = 12;
+		this.limit.skills = 4;
 	};
 
 	// MARK: Derived Data
@@ -148,10 +157,8 @@ export class EntityData extends foundry.abstract.TypeDataModel {
 		this.guts.max += Object.values(this.ability).reduce(sumReduce);
 
 		// Movement speeds
-		this.speed = {
-			move: this.ability.gait + 3,
-			run: (this.ability.gait + 3) * 2,
-		};
+		this.speed.move = this.ability.gait + 3;
+		this.speed.run = (this.ability.gait + 3) * 2;
 	};
 
 	// #region Getters

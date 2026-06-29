@@ -117,7 +117,7 @@ export class StatsCardV1 extends GenericAppMixin(HandlebarsApplicationMixin(Acto
 		ctx.fate = {};
 		ctx.fate.selected = ctx.actor.system.fate;
 		ctx.fate.options = [
-			{ label: `RipCrypt.common.empty`, v: `` },
+			{ label: `RipCrypt.common.empty`, value: `` },
 			...Object.values(gameTerms.FatePath)
 				.map(v => ({ label: `RipCrypt.common.ordinals.${v}.full`, value: v })),
 		];

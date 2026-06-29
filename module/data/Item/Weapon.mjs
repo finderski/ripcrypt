@@ -20,6 +20,7 @@ export class WeaponData extends CommonItemData {
 					nullable: false,
 				}),
 				{
+					initial: [],
 					nullable: false,
 					required: true,
 				},
@@ -37,9 +38,10 @@ export class WeaponData extends CommonItemData {
 			}),
 			weight: new fields.StringField({
 				blank: false,
+				required: true,
 				nullable: true,
 				initial: null,
-				options: Object.values(gameTerms.WeightRatings),
+				choices: Object.values(gameTerms.WeightRatings),
 			}),
 		};
 	};
@@ -70,7 +72,7 @@ export class WeaponData extends CommonItemData {
 		if (options.force && game.settings.get(`ripcrypt`, `devMode`)) { return };
 
 		const diff = diffObject(this.parent._source, changes);
-		let valid = super._preUpdate(changes, options, user);
+		let valid = await super._preUpdate(changes, options, user);
 
 		if (getProperty(diff, `system.equipped`) && !this._canEquip()) {
 			ui.notifications.error(localizer(

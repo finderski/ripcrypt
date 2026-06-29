@@ -98,7 +98,9 @@ export class CombinedHeroSheet extends GenericAppMixin(HandlebarsApplicationMixi
 			case `skills`: {
 				ctx = await SkillsCardV1.prepareGear(ctx);
 				ctx = await SkillsCardV1.prepareAmmo(ctx);
+				ctx = await SkillsCardV1.prepareCoin(ctx);
 				ctx = await SkillsCardV1.prepareSkills(ctx);
+				ctx.aura = foundry.utils.deepClone(ctx.actor.system.aura);
 				break;
 			};
 			case `craft`: {

@@ -9,10 +9,12 @@ export class CommonItemData extends foundry.abstract.TypeDataModel {
 		return {
 			quantity: requiredInteger({ min: 0, initial: 1 }),
 			access: new fields.StringField({
+				initial: ``,
+				required: true,
 				blank: true,
 				nullable: false,
 				trim: true,
-				choices: gameTerms.Access,
+				choices: gameTerms.Access.concat(``),
 			}),
 			cost: new fields.SchemaField({
 				gold: optionalInteger(),
