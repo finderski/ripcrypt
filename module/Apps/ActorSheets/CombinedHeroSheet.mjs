@@ -1,13 +1,10 @@
 import { CraftCardV1 } from "./CraftCardV1.mjs";
 import { filePath } from "../../consts.mjs";
-import { GenericAppMixin } from "../GenericApp.mjs";
+import { RipCryptActorSheetV2 } from "./RipCryptActorSheetV2.mjs";
 import { SkillsCardV1 } from "./SkillsCardV1.mjs";
 import { StatsCardV1 } from "./StatsCardV1.mjs";
 
-const { HandlebarsApplicationMixin } = foundry.applications.api;
-const { ActorSheetV2 } = foundry.applications.sheets;
-
-export class CombinedHeroSheet extends GenericAppMixin(HandlebarsApplicationMixin(ActorSheetV2)) {
+export class CombinedHeroSheet extends RipCryptActorSheetV2 {
 
 	// #region Options
 	static DEFAULT_OPTIONS = {

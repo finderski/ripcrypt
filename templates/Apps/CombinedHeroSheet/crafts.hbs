@@ -3,7 +3,7 @@
 	<ol class="craft-list num-before">
 		{{#each craft.focus as | craft |}}
 			{{#if craft}}
-				<li data-item-id="{{craft.uuid}}" data-ctx-menu="craft">
+				<li data-item-id="{{craft.uuid}}" data-ctx-menu="craft" draggable="true">
 					<span class="name">{{ craft.name }}</span>
 					{{#if craft.use}}
 						<rc-icon
@@ -25,7 +25,7 @@
 	<ol class="craft-list num-before">
 		{{#each craft.fract as | craft |}}
 			{{#if craft}}
-				<li data-item-id="{{craft.uuid}}" data-ctx-menu="craft">
+				<li data-item-id="{{craft.uuid}}" data-ctx-menu="craft" draggable="true">
 					<span class="name">{{ craft.name }}</span>
 					{{#if craft.use}}
 						<rc-icon
@@ -47,7 +47,7 @@
 	<ol class="craft-list num-before">
 		{{#each craft.flect as | craft |}}
 			{{#if craft}}
-				<li data-item-id="{{craft.uuid}}" data-ctx-menu="craft">
+				<li data-item-id="{{craft.uuid}}" data-ctx-menu="craft" draggable="true">
 					<span class="name">{{ craft.name }}</span>
 					{{#if craft.use}}
 						<rc-icon

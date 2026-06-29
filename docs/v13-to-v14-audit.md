@@ -401,23 +401,42 @@ Current disk state:
   - `packs/weapons/_source`
 - Built pack database files are also present in both declared pack directories, for example `CURRENT`, `LOG`, and `MANIFEST-*`.
 - Source JSON `_stats.coreVersion` is `13.350`.
+- The runtime pack path in `system.json` points at the compiled pack directory root, not the `_source` subdirectory:
+  - `packs/protection`
+  - `packs/weapons`
+- This matches Foundry v14 package expectations:
+  - `packs[].path` should identify the compendium database location.
+  - `_source/` is a development artifact for CLI extract/build workflows, not the path Foundry opens in a world.
 
 v14 compatibility findings:
 
 - Good: the manifest no longer declares non-existent `skills` and `geist` packs.
+- Good: the current `packs` entries are already compatible with Foundry v14 package schema:
+  - `name`
+  - `label`
+  - `path`
+  - `type`
+  - `system`
+  - `ownership`
+- Good: `packFolders` now only references real pack names present in the manifest.
 - Verify: existing built pack databases open cleanly in Foundry v14 after the manifest/package changes.
-- Migration task: decide whether generated compendium DB files should be committed or built as part of packaging.
-- Migration task: after data model changes, rebuild packs with a v14-compatible Foundry CLI workflow and test opening entries in v14.
+- Manual migration need: decide whether generated compendium DB files remain committed in-repo or are rebuilt during release packaging. The current repository includes both:
+  - compiled databases under `packs/<pack-name>/`
+  - source-of-truth JSON under `packs/<pack-name>/_source/`
+- Manual migration need: after item schema changes, rebuild packs from `_source` before relying on v14 world testing.
+- Manual migration need: local pack rebuild is currently blocked in this workspace until dev dependencies are installed. Running `npm run data:build` currently fails because `@foundryvtt/foundryvtt-cli` is not installed locally.
 - Risk: pack source includes folder documents and item documents mixed in `_source`. The build script uses `compilePack(..., { recursive: true })`; verify v14 CLI output matches Foundry v14 expectations.
 - Risk: source data uses current item schemas. If schema fields are tightened, pack entries may fail validation or require `migrateData`.
-- Cleanup: `.DS_Store` exists under `packs/`.
+- Risk: source and compiled data still carry v13-era `_stats.coreVersion` values such as `13.350`. These do not require hand-editing, but they should be expected to update only after an intentional v14 rebuild.
+- Cleanup: `.DS_Store` exists under `packs/`, but the root `.gitignore` already ignores `.DS_Store`; this is a housekeeping issue rather than a v14 blocker.
 
 Recommended pack sequence:
 
-1. Test existing `protection` and `weapons` packs in Foundry v14 before rebuilding them.
-2. Rebuild `protection` and `weapons` after any schema changes.
-3. Test pack sidebar visibility, opening folder entries, opening item entries, importing items, and dropping compendium items onto actors.
-4. Update pack `_stats` only as part of intentional v14 pack rebuilds.
+1. Keep the manifest pack declarations pointed at `packs/protection` and `packs/weapons`; do not point them at `_source`.
+2. Test existing `protection` and `weapons` compiled packs in Foundry v14 before rebuilding them.
+3. Install dev dependencies, then rebuild `protection` and `weapons` from `_source` after any schema changes.
+4. Test pack sidebar visibility, opening folder entries, opening item entries, importing items, and dropping compendium items onto actors.
+5. Update pack `_stats` only as part of intentional v14 pack rebuilds.
 
 ## Assets and CSS
 

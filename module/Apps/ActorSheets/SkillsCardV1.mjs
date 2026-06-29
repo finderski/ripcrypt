@@ -2,18 +2,16 @@ import { deleteItemFromElement, editItemFromElement } from "../utils.mjs";
 import { documentSorter, filePath } from "../../consts.mjs";
 import { AmmoTracker } from "../popovers/AmmoTracker.mjs";
 import { gameTerms } from "../../gameTerms.mjs";
-import { GenericAppMixin } from "../GenericApp.mjs";
 import { ItemFlags } from "../../flags/item.mjs";
 import { localizer } from "../../utils/Localizer.mjs";
 import { Logger } from "../../utils/Logger.mjs";
 import { PopoverEventManager } from "../../utils/PopoverEventManager.mjs";
+import { RipCryptActorSheetV2 } from "./RipCryptActorSheetV2.mjs";
 
-const { HandlebarsApplicationMixin } = foundry.applications.api;
-const { ActorSheetV2 } = foundry.applications.sheets;
 const { ContextMenu } = foundry.applications.ux;
 const { deepClone } = foundry.utils;
 
-export class SkillsCardV1 extends GenericAppMixin(HandlebarsApplicationMixin(ActorSheetV2)) {
+export class SkillsCardV1 extends RipCryptActorSheetV2 {
 
 	// #region Options
 	static DEFAULT_OPTIONS = {

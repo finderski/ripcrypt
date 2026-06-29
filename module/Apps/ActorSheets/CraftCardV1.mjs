@@ -1,16 +1,14 @@
 import { deleteItemFromElement, editItemFromElement } from "../utils.mjs";
 import { documentSorter, filePath } from "../../consts.mjs";
 import { gameTerms } from "../../gameTerms.mjs";
-import { GenericAppMixin } from "../GenericApp.mjs";
 import { localizer } from "../../utils/Localizer.mjs";
 import { Logger } from "../../utils/Logger.mjs";
+import { RipCryptActorSheetV2 } from "./RipCryptActorSheetV2.mjs";
 
-const { HandlebarsApplicationMixin } = foundry.applications.api;
-const { ActorSheetV2 } = foundry.applications.sheets;
 const { ContextMenu } = foundry.applications.ux;
 const { deepClone } = foundry.utils;
 
-export class CraftCardV1 extends GenericAppMixin(HandlebarsApplicationMixin(ActorSheetV2)) {
+export class CraftCardV1 extends RipCryptActorSheetV2 {
 
 	// #region Options
 	static DEFAULT_OPTIONS = {

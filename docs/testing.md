@@ -284,13 +284,17 @@ Minimum console checkpoints:
 
 ## Sheet Interaction And Drag/Drop
 
-The current system does not implement custom actor or item drag/drop hooks. Testing should confirm that Foundry v14 default document drag/drop behavior still works and that no stale listener state accumulates on rerender.
+Actor sheets now use Foundry v14 `ActorSheetV2` drag/drop flows with a narrow RipCrypt guard layer: owned items are exposed as draggable rows, Item drops are allowed, and unsupported document drops should warn instead of failing silently.
 
 Checklist:
 
 - [ ] Drag a world item onto a hero actor and confirm it embeds successfully.
 - [ ] Drag a world item onto a geist actor and confirm it embeds successfully where the item type is allowed.
 - [ ] Drag a compendium item onto a hero actor and confirm it embeds successfully.
+- [ ] Drag an owned skill to a new position within the same skill list and confirm the sort order persists after closing and reopening the sheet.
+- [ ] Drag an owned craft to a new position within the same craft list and confirm the sort order persists after closing and reopening the sheet.
+- [ ] Drag an owned weapon or gear item to a new position where that list supports sorting and confirm the actor display updates after reopen.
+- [ ] Drop an unsupported document type, such as an Actor or Folder, onto an actor sheet and confirm a warning is shown instead of a silent failure or console error.
 - [ ] Re-open the same actor sheet multiple times, use item controls, and confirm a single click performs a single action.
 - [ ] Re-open the ammo popover multiple times and confirm quantity updates and star toggles happen once per interaction.
 

@@ -18,7 +18,7 @@
 	<ol class="num-before skill-list even grit-skills">
 		{{#each skills.grit as | skill |}}
 			{{#if skill}}
-				<li data-item-id="{{skill.uuid}}" data-ctx-menu="skill">
+				<li data-item-id="{{skill.uuid}}" data-ctx-menu="skill" draggable="true">
 					<span class="name">{{ skill.name }}</span>
 					<rc-icon
 						name="icons/info-circle"
@@ -53,7 +53,7 @@
 	<ol class="num-before skill-list even gait-skills">
 		{{#each skills.gait as | skill |}}
 			{{#if skill}}
-				<li data-item-id="{{skill.uuid}}" data-ctx-menu="skill">
+				<li data-item-id="{{skill.uuid}}" data-ctx-menu="skill" draggable="true">
 					<span class="name">{{ skill.name }}</span>
 					<rc-icon
 						name="icons/info-circle"
@@ -88,7 +88,7 @@
 	<ol class="num-before skill-list odd grip-skills">
 		{{#each skills.grip as | skill |}}
 			{{#if skill}}
-				<li data-item-id="{{skill.uuid}}" data-ctx-menu="skill">
+				<li data-item-id="{{skill.uuid}}" data-ctx-menu="skill" draggable="true">
 					<span class="name">{{ skill.name }}</span>
 					<rc-icon
 						name="icons/info-circle"
@@ -123,7 +123,7 @@
 	<ol class="num-before skill-list odd glim-skills">
 		{{#each skills.glim as | skill |}}
 			{{#if skill}}
-				<li data-item-id="{{skill.uuid}}" data-ctx-menu="skill">
+				<li data-item-id="{{skill.uuid}}" data-ctx-menu="skill" draggable="true">
 					<span class="name">{{ skill.name }}</span>
 					<rc-icon
 						name="icons/info-circle"
@@ -165,6 +165,7 @@
 				data-ctx-menu="gear"
 				data-slot-empty="{{ itemInSlot.empty }}"
 				data-item-id="{{ itemInSlot.uuid }}"
+				{{#unless itemInSlot.empty}}draggable="true"{{/unless}}
 			>
 				{{itemInSlot.name}}
 			</li>

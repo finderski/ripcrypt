@@ -211,7 +211,10 @@
 				"malformed-socket-payload": "Socket event \"{event}\" received with malformed payload. Details: {details}"
 			},
 			"warn": {
-				"cannot-go-negative": "\"{name}\" is unable to be a negative number."
+				"cannot-go-negative": "\"{name}\" is unable to be a negative number.",
+				"unsupported-drop": "This actor sheet only supports dropping Items.",
+				"unsupported-drop-document": "Dropping {documentName} documents onto this actor sheet is not supported.",
+				"unsupported-item-drop": "Cannot drop the item \"{itemName}\" of type \"{itemType}\" onto this actor sheet."
 			},
 			"info": {
 				"cryptic-event-alert": "A Cryptic Event Has Occured!"
