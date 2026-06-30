@@ -1,4 +1,4 @@
-<div class="dice-roll">
+<div class="dice-roll ripcrypt-chat-card">
 	{{#if flavor}}
 		<div class="dice-flavor">{{flavor}}</div>
 	{{/if}}
@@ -20,14 +20,86 @@
 		{{/if}}
 		<div class="ripcrypt-roll-total-row">
 			<h4 class="dice-total">{{total}}</h4>
-			{{#if stateLabel}}
-				<div class="ripcrypt-roll-state {{stateClass}}">{{stateLabel}}</div>
-			{{/if}}
 		</div>
+		{{#if stateLabel}}
+			<div class="ripcrypt-roll-state {{stateClass}}">{{stateLabel}}</div>
+		{{/if}}
+		{{#if attack}}
+			<div class="ripcrypt-roll-attack">
+				{{#if attack.targetName}}
+					<div class="ripcrypt-roll-meta-row">
+						<span class="ripcrypt-roll-meta-label">{{attack.targetTitle}}</span>
+						<span class="ripcrypt-roll-meta-value">{{attack.targetName}}</span>
+					</div>
+				{{/if}}
+				{{#if attack.hitLocationLabel}}
+					<div class="ripcrypt-roll-meta-row">
+						<span class="ripcrypt-roll-meta-label">{{attack.hitLocationTitle}}</span>
+						<span class="ripcrypt-roll-meta-value">
+							{{attack.hitLocationLabel}}
+							{{#if attack.hitLocationDetail}}
+								<span class="ripcrypt-roll-inline-note">{{attack.hitLocationDetail}}</span>
+							{{/if}}
+						</span>
+					</div>
+				{{/if}}
+				{{#if attack.showDamageRows}}
+					<div class="ripcrypt-roll-meta-row">
+						<span class="ripcrypt-roll-meta-label">{{attack.rawDamageTitle}}</span>
+						<span class="ripcrypt-roll-meta-value">{{attack.rawDamageValue}}</span>
+					</div>
+					<div class="ripcrypt-roll-meta-row">
+						<span class="ripcrypt-roll-meta-label">{{attack.armourTitle}}</span>
+						<span class="ripcrypt-roll-meta-value">{{attack.armourValue}}</span>
+					</div>
+					<div class="ripcrypt-roll-meta-row">
+						<span class="ripcrypt-roll-meta-label">{{attack.pendingDamageTitle}}</span>
+						<span class="ripcrypt-roll-meta-value">{{attack.pendingDamageValue}}</span>
+					</div>
+				{{/if}}
+				{{#if attack.noTargetMessage}}
+					<p class="ripcrypt-roll-note">{{attack.noTargetMessage}}</p>
+				{{/if}}
+				{{#if attack.noDamageMessage}}
+					<p class="ripcrypt-roll-note">{{attack.noDamageMessage}}</p>
+				{{/if}}
+				{{#if attack.showApplyDamage}}
+					<button
+						type="button"
+						class="ripcrypt-chat-button"
+						data-ripcrypt-action="applyWeaponDamage"
+					>
+						{{attack.applyDamageLabel}}
+					</button>
+				{{/if}}
+				{{#if attack.appliedMessage}}
+					<p class="ripcrypt-roll-note is-applied">{{attack.appliedMessage}}</p>
+				{{/if}}
+			</div>
+		{{/if}}
 		<details class="ripcrypt-roll-details">
 			<summary class="ripcrypt-roll-details-toggle">{{detailsLabel}}</summary>
 			<div class="ripcrypt-roll-details-body">
-				{{{tooltip}}}
+				{{#if hasDiceDetails}}
+					<div class="dice-rolls ripcrypt-roll-dice-row" aria-label="{{detailsLabel}}">
+						{{#each diceDetails as | die |}}
+							<span class="ripcrypt-roll-die-chain">
+								<span class="roll d8 ripcrypt-roll-die {{die.initial.classes}}">
+									{{die.initial.value}}
+								</span>
+								{{#if die.rerolls.length}}
+									<span class="ripcrypt-roll-chain-open">(</span>
+									{{#each die.rerolls as | result |}}
+										<span class="roll d8 ripcrypt-roll-die is-reroll {{result.classes}}">
+											{{result.value}}
+										</span>
+									{{/each}}
+									<span class="ripcrypt-roll-chain-close">)</span>
+								{{/if}}
+							</span>
+						{{/each}}
+					</div>
+				{{/if}}
 			</div>
 		</details>
 	</div>

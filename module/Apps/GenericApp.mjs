@@ -3,6 +3,7 @@ import { DicePool } from "./DicePool.mjs";
 import { RichEditor } from "./RichEditor.mjs";
 import { toBoolean } from "../consts.mjs";
 import { buildWeaponAttackRollDataFromElement } from "../utils/weaponAttack.mjs";
+import { sendWeaponAttackToChat } from "../rolls/ripcrypt-rolls.mjs";
 
 /**
  * A mixin that takes the class from HandlebarsApplicationMixin and combines it
@@ -147,6 +148,15 @@ export function GenericAppMixin(HandlebarsApp) {
 				target: rollData.target,
 				flavor: rollData.flavor,
 				actor: rollData.actor,
+				onRoll: ({ roll, baseTarget, effectiveTarget, flavor, speaker }) => sendWeaponAttackToChat({
+					roll,
+					actor: rollData.actor,
+					weapon: rollData.weapon,
+					baseTarget,
+					effectiveTarget,
+					speaker,
+					flavor,
+				}),
 			});
 			dp.render({ force: true, orBringToFront: true });
 		};

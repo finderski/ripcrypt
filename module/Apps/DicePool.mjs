@@ -56,6 +56,7 @@ export class DicePool extends GenericAppMixin(HandlebarsApplicationMixin(Applica
 	_target;
 	_drag;
 	_edge;
+	_onRoll;
 
 	constructor({
 		diceCount = 1,
@@ -64,6 +65,7 @@ export class DicePool extends GenericAppMixin(HandlebarsApplicationMixin(Applica
 		flavor = ``,
 		actor = null,
 		speaker = null,
+		onRoll = null,
 		...opts
 	} = {}) {
 		super(opts);
@@ -73,6 +75,7 @@ export class DicePool extends GenericAppMixin(HandlebarsApplicationMixin(Applica
 		this._flavor = flavor;
 		this._actor = actor;
 		this._speaker = speaker;
+		this._onRoll = onRoll;
 		this._diceCount = diceCount;
 		this._target = target ?? game.settings.get(`ripcrypt`, `dc`) ?? 1;
 	};
@@ -218,8 +221,23 @@ export class DicePool extends GenericAppMixin(HandlebarsApplicationMixin(Applica
 			flavor += ` ` + localizer(`RipCrypt.Apps.difficulty`, { dc: this._target });
 		}
 
+		const speaker = this._speaker ?? getRollSpeaker({ actor: this._actor });
+		if (typeof this._onRoll === `function`) {
+			await this._onRoll({
+				roll,
+				formula,
+				effectiveTarget,
+				baseTarget: this._target,
+				flavor,
+				actor: this._actor,
+				speaker,
+			});
+			this.close();
+			return;
+		};
+
 		await sendRollToChat(roll, {
-			speaker: this._speaker ?? getRollSpeaker({ actor: this._actor }),
+			speaker,
 			flavor,
 			ripcrypt: {
 				baseTarget: this._target,

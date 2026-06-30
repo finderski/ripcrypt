@@ -7,6 +7,7 @@ import { localizer } from "../../utils/Localizer.mjs";
 import { Logger } from "../../utils/Logger.mjs";
 import { buildWeaponAttackRollDataFromElement } from "../../utils/weaponAttack.mjs";
 import { RipCryptActorSheetV2 } from "./RipCryptActorSheetV2.mjs";
+import { sendWeaponAttackToChat } from "../../rolls/ripcrypt-rolls.mjs";
 
 const { ContextMenu } = foundry.applications.ux;
 
@@ -63,6 +64,15 @@ export class StatsCardV1 extends RipCryptActorSheetV2 {
 				target: rollData.target,
 				flavor: rollData.flavor,
 				actor: rollData.actor,
+				onRoll: ({ roll, baseTarget, effectiveTarget, flavor, speaker }) => sendWeaponAttackToChat({
+					roll,
+					actor: rollData.actor,
+					weapon: rollData.weapon,
+					baseTarget,
+					effectiveTarget,
+					speaker,
+					flavor,
+				}),
 			});
 			dp.render({ force: true, orBringToFront: true });
 		};
@@ -77,7 +87,7 @@ export class StatsCardV1 extends RipCryptActorSheetV2 {
 						const itemId = el.dataset.itemId;
 						return isEditable && (el.dataset.ctxMenu === `weapon`) && Boolean(itemId);
 					},
-					onClick: openWeaponAttack,
+					onClick: (_event, target) => openWeaponAttack(target),
 				},
 				{
 					label: localizer(`RipCrypt.common.edit`),
@@ -85,7 +95,7 @@ export class StatsCardV1 extends RipCryptActorSheetV2 {
 						const itemId = el.dataset.itemId;
 						return isEditable && Boolean(itemId);
 					},
-					onClick: editItemFromElement,
+					onClick: (_event, target) => editItemFromElement(target),
 				},
 				{
 					label: localizer(`RipCrypt.common.delete`),
@@ -93,7 +103,7 @@ export class StatsCardV1 extends RipCryptActorSheetV2 {
 						const itemId = el.dataset.itemId;
 						return isEditable && Boolean(itemId);
 					},
-					onClick: deleteItemFromElement,
+					onClick: (_event, target) => deleteItemFromElement(target),
 				},
 			],
 			{ jQuery: false, fixed: true },

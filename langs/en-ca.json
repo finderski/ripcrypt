@@ -29,7 +29,20 @@
 			"RichEditor": "Text Editor"
 		},
 		"chat": {
+			"badges": {
+				"rip": "Rip",
+				"crypt": "Crypt"
+			},
+			"buttons": {
+				"apply-damage": "Apply {value} Damage"
+			},
 			"labels": {
+				"armour-at-location": "Armour",
+				"damage-before-armour": "Damage",
+				"dice-term": "Die",
+				"hit-location": "Hit Location",
+				"pending-damage": "Pending Damage",
+				"target": "Target",
 				"target-number": "Target Number"
 			},
 			"outcomes": {
@@ -42,6 +55,15 @@
 			"states": {
 				"ripping": "Ripping",
 				"crypted": "Crypted"
+			},
+			"weapon": {
+				"apply-damage-disabled": "Only a Keeper, or a user who can update both the target and this chat card, may apply damage.",
+				"damage-applied": "{userName} applied {value} damage to {targetName}. Guts is now {guts}.",
+				"hit-location-chosen": "(chosen)",
+				"hit-location-rolled": "({formula}: {total})",
+				"no-damage-penetrates": "{targetName}'s armour on the {locationName} absorbs the blow.",
+				"no-target": "No target selected. Attack rolled without hit location or damage application.",
+				"raw-damage": "{total} ({base} + {extra})"
 			}
 		},
 		"common": {
@@ -210,6 +232,8 @@
 			"ability-roll": "{name} Roll",
 			"weapon-attack": "Weapon Attack",
 			"weapon-attack-roll": "{actorName} attacks with {weaponName} ({abilityName})",
+			"heroic-hit-location-prompt": "{actorName} scored a Heroic Success against {targetName} with {weaponName}. Choose the hit location.",
+			"heroic-hit-location-title": "Choose Hit Location",
 			"haste-check": "Haste Check",
 			"random-difficulty": "Random Difficulty",
 			"random-fate": "Random Fate",
@@ -250,10 +274,15 @@
 				"unsupported-drop": "This actor sheet only supports dropping Items.",
 				"unsupported-drop-document": "Dropping {documentName} documents onto this actor sheet is not supported.",
 				"unsupported-item-drop": "Cannot drop the item \"{itemName}\" of type \"{itemType}\" onto this actor sheet.",
+				"weapon-attack-cannot-apply-damage": "You do not have permission to apply damage to that target or update this chat card.",
+				"weapon-attack-damage-already-applied": "Damage from this attack has already been applied.",
 				"weapon-attack-missing-actor": "Unable to start a weapon attack without an actor.",
 				"weapon-attack-missing-weapon": "Unable to start a weapon attack without a weapon.",
+				"weapon-attack-multiple-targets": "Multiple targets selected. Using the first targeted token.",
+				"weapon-attack-invalid-target": "The selected target does not have a valid actor to damage.",
 				"weapon-attack-invalid-attribute": "{weaponName} does not have a valid attack attribute configured.",
-				"weapon-attack-invalid-dice": "{actorName} cannot roll {abilityName} for {weaponName}."
+				"weapon-attack-invalid-dice": "{actorName} cannot roll {abilityName} for {weaponName}.",
+				"weapon-attack-target-missing": "The targeted token or actor is no longer available."
 			},
 			"info": {
 				"cryptic-event-alert": "A Cryptic Event Has Occurred!"

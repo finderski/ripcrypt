@@ -34,6 +34,7 @@ import { filePath } from "../consts.mjs";
 import helpers from "../handlebarHelpers/_index.mjs";
 import { Logger } from "../utils/Logger.mjs";
 import { registerCustomComponents } from "../Apps/components/_index.mjs";
+import { onRenderRipCryptChatMessage } from "../rolls/ripcrypt-rolls.mjs";
 import { registerDevSettings } from "../settings/devSettings.mjs";
 import { registerMetaSettings } from "../settings/metaSettings.mjs";
 import { registerSockets } from "../sockets/_index.mjs";
@@ -169,6 +170,7 @@ Hooks.once(`init`, () => {
 	registerSockets();
 	registerCustomComponents();
 	Handlebars.registerHelper(helpers);
+	Hooks.on(`renderChatMessageHTML`, onRenderRipCryptChatMessage);
 	preloadHandlebarsTemplates().catch(error => {
 		Logger.error(`Failed to preload Handlebars templates`, error);
 	});

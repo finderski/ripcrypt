@@ -31,18 +31,17 @@ The custom `rc` die modifier is implemented by `CryptDie`.
 
 Current `CryptDie` behavior:
 
-- A result of `8` explodes recursively and marks the die as `ripping`.
-- A die only checks for crypting if it is not already ripping.
-- Crypting uses a single explosion on `1`.
-- If the original roll and the single exploded roll are both `1`, the die is marked `crypted`.
-- Successes are counted with Foundry's success-count modifier using `cs>=T`.
-- The die total clamps to a minimum of `0`.
+- Each initial pool die that rolls `8` counts as `+1` success and rerolls recursively until a non-`8` is rolled.
+- Additional rip-chain results count as successes only when they meet or exceed the target number.
+- A `1` rolled as part of a rip chain does not count as a failure and does not trigger crypting.
+- Each initial pool die that rolls `1` counts as `-1` success and rerolls once for a crypt check.
+- The crypt check only marks the die as `crypted` when the reroll is also `1`; any other crypt-check reroll result is ignored for success counting.
+- Pool total clamps to a minimum of `0`.
 
 Rulebook assumption:
 
-- This preserves the imported implementation's interpretation that ripping and crypting are mutually exclusive for a die.
-- This preserves the imported implementation's success-count behavior after rip/crypt processing.
-- A future rulebook QA pass should confirm whether a crypted die should only remove that die's successes or alter the whole pool result.
+- This follows the rule clarification used in migration QA: only initial-pool `1`s deduct success, and only those `1`s make a single crypt check.
+- Crypt state is exposed in chat, but automatic weapon-wear or dire-failure automation is still not applied here.
 
 ## Haste Check
 

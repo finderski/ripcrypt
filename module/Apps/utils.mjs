@@ -4,11 +4,20 @@ This file contains utilities used by Applications in order to be DRYer
 
 const { getProperty } = foundry.utils;
 
+function resolveTargetElement(target) {
+	if (target instanceof HTMLElement) { return target };
+	if (target?.currentTarget instanceof HTMLElement) { return target.currentTarget };
+	if (target?.target instanceof HTMLElement) { return target.target };
+	return null;
+};
+
 /**
  * @param {HTMLElement} target The element to operate on
  */
 export async function createItemFromElement(target, { parent } = {}) {
 	if (parent && !parent.isOwner) { return };
+	target = resolveTargetElement(target);
+	if (!target) { return };
 
 	const data = target.dataset;
 	const types = data.itemTypes
@@ -32,6 +41,8 @@ export async function createItemFromElement(target, { parent } = {}) {
  * @param {HTMLElement} target The element to operate on
  */
 export async function editItemFromElement(target) {
+	target = resolveTargetElement(target);
+	if (!target) { return };
 	const itemEl = target.closest(`[data-item-id]`);
 	if (!itemEl) { return };
 	const itemId = itemEl.dataset.itemId;
@@ -45,6 +56,8 @@ export async function editItemFromElement(target) {
  * @param {HTMLElement} target The element to operate on
  */
 export async function deleteItemFromElement(target) {
+	target = resolveTargetElement(target);
+	if (!target) { return };
 	const itemEl = target.closest(`[data-item-id]`);
 	if (!itemEl) { return };
 	const itemId = itemEl.dataset.itemId;

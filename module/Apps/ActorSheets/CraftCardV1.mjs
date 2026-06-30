@@ -59,7 +59,7 @@ export class CraftCardV1 extends RipCryptActorSheetV2 {
 						const itemId = el.dataset.itemId;
 						return isEditable && Boolean(itemId);
 					},
-					onClick: editItemFromElement,
+					onClick: (_event, target) => editItemFromElement(target),
 				},
 				{
 					label: localizer(`RipCrypt.common.delete`),
@@ -67,7 +67,7 @@ export class CraftCardV1 extends RipCryptActorSheetV2 {
 						const itemId = el.dataset.itemId;
 						return isEditable && Boolean(itemId);
 					},
-					onClick: deleteItemFromElement,
+					onClick: (_event, target) => deleteItemFromElement(target),
 				},
 			],
 			{ jQuery: false, fixed: true },

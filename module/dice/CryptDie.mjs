@@ -9,47 +9,97 @@ export class CryptDie extends Die {
 	};
 
 	ripCryptState = undefined;
-	async ripOrCrypt(modifier) {
+	ripCryptTarget = undefined;
 
+	async ripOrCrypt(modifier) {
 		const rgx = /rc([0-9]+)/i;
 		const match = modifier.match(rgx);
 		if (!match) { return false };
-		let [ target ] = match.slice(1);
+		const [ target ] = match.slice(1);
+		const targetValue = Number(target);
+		if (!Number.isFinite(targetValue)) { return false };
 
-		/*
-		Handle "Ripping" rolls, which is equivalent to re-rolling 8's and counting
-		it as a success.
-		*/
-		this.explode(`x=8`, true);
-		if(this.results.some(result => result.exploded)) {
-			this.ripCryptState = `ripping`;
+		this.ripCryptTarget = targetValue;
+		this.ripCryptState = undefined;
+
+		const initialCount = Number(this.number ?? this.results.length);
+		const initialResults = this.results.slice(0, initialCount);
+
+		for (const result of this.results) {
+			delete result.success;
+			delete result.failure;
+			delete result.rip;
+			delete result.crypt;
+			delete result.cryptCheck;
 		};
 
-		/*
-		Handles "Crypting" rolls, which is a single explosion on 1's which if it
-		results in a second 1, causes the roll to "crypt"
-		*/
-		if (!this.ripCryptState) {
-			this.explode(`xo=1`, false);
+		for (const [index, result] of initialResults.entries()) {
+			const chainIndex = index + 1;
+			result.chainIndex = chainIndex;
 
-			let almostCrypted = false;
-			for (const result of this.results) {
-				if (result.result !== 1) { continue };
-				if (almostCrypted) {
-					this.ripCryptState = `crypted`;
-					break;
-				}
-				else {
-					almostCrypted = true;
-				}
-			}
+			if (result.result === this.faces) {
+				await this.#resolveRip(result, targetValue, chainIndex);
+				continue;
+			};
+
+			if (result.result === 1) {
+				await this.#resolveCrypt(result, chainIndex);
+				continue;
+			};
+
+			if (result.result >= targetValue) {
+				result.success = true;
+			};
 		};
-
-		// Count successes
-		this.countSuccess(`cs>=${target}`);
 	};
 
 	get total() {
-		return Math.max(super.total, 0);
+		if (this.ripCryptTarget == null) {
+			return Math.max(super.total, 0);
+		};
+
+		let total = 0;
+		for (const result of this.results) {
+			if (result.success) { total += 1 };
+			if (result.failure) { total -= 1 };
+		};
+		return Math.max(total, 0);
+	};
+
+	async #resolveRip(result, targetValue, chainIndex) {
+		result.success = true;
+		result.exploded = true;
+		result.rip = true;
+		if (this.ripCryptState !== `crypted`) {
+			this.ripCryptState = `ripping`;
+		};
+
+		while (true) {
+			const reroll = await this.roll();
+			reroll.chainIndex = chainIndex;
+			if (reroll.result === this.faces) {
+				reroll.success = true;
+				reroll.exploded = true;
+				reroll.rip = true;
+				continue;
+			};
+
+			if (reroll.result >= targetValue) {
+				reroll.success = true;
+			};
+			break;
+		};
+	};
+
+	async #resolveCrypt(result, chainIndex) {
+		result.failure = true;
+
+		const reroll = await this.roll();
+		reroll.chainIndex = chainIndex;
+		reroll.cryptCheck = true;
+		if (reroll.result === 1) {
+			reroll.crypt = true;
+			this.ripCryptState = `crypted`;
+		};
 	};
 };

@@ -1,45 +1,132 @@
-.ripcrypt .dice-roll .ripcrypt-roll-total-row {
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
+.ripcrypt-chat-card .ripcrypt-roll-total-row {
+	display: block;
 }
 
-.ripcrypt .dice-roll .ripcrypt-roll-meta {
+.ripcrypt-chat-card .dice-total {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	min-width: 0;
+	min-height: 3rem;
+	text-align: center;
+	white-space: nowrap;
+	word-break: normal;
+	overflow-wrap: normal;
+	writing-mode: horizontal-tb;
+}
+
+.ripcrypt-chat-card .ripcrypt-roll-meta {
 	display: grid;
 	gap: 0.25rem;
 	margin-top: 0.5rem;
 }
 
-.ripcrypt .dice-roll .ripcrypt-roll-meta-row {
+.ripcrypt-chat-card .ripcrypt-roll-meta-row {
 	display: flex;
 	align-items: baseline;
 	gap: 0.35rem;
 	font-size: 0.875rem;
 }
 
-.ripcrypt .dice-roll .ripcrypt-roll-meta-label {
+.ripcrypt-chat-card .ripcrypt-roll-meta-label {
 	font-weight: 600;
 }
 
-.ripcrypt .dice-roll .ripcrypt-roll-details {
+.ripcrypt-chat-card .ripcrypt-roll-details {
 	margin-top: 0.5rem;
 }
 
-.ripcrypt .dice-roll .ripcrypt-roll-details-toggle {
+.ripcrypt-chat-card .ripcrypt-roll-attack {
+	display: grid;
+	gap: 0.25rem;
+	margin-top: 0.5rem;
+}
+
+.ripcrypt-chat-card .ripcrypt-roll-details-toggle {
 	cursor: pointer;
 	font-size: 0.875rem;
 	font-weight: 600;
 }
 
-.ripcrypt .dice-roll .ripcrypt-roll-details-body {
+.ripcrypt-chat-card .ripcrypt-roll-details-body {
 	margin-top: 0.5rem;
 }
 
-.ripcrypt .dice-roll .ripcrypt-roll-details-body .dice-tooltip {
-	margin: 0;
+.ripcrypt-chat-card .ripcrypt-roll-dice-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.75rem;
+	line-height: 1;
+	margin: 0.5rem 0 0;
+	padding: 0;
 }
 
-.ripcrypt .dice-roll .ripcrypt-roll-state {
+.ripcrypt-chat-card .ripcrypt-roll-die-chain {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+	white-space: nowrap;
+	vertical-align: middle;
+}
+
+.ripcrypt-chat-card .ripcrypt-roll-die {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 24px;
+	width: 24px;
+	height: 24px;
+	margin: 0;
+	background-image: url("/icons/svg/d8-grey.svg");
+	background-repeat: no-repeat;
+	background-size: 24px 24px;
+	color: #000;
+	font-size: var(--font-size-16);
+	font-weight: 700;
+	line-height: 24px;
+	text-align: center;
+}
+
+.ripcrypt-chat-card .ripcrypt-roll-die.is-reroll {
+	min-width: 22px;
+	width: 22px;
+	height: 22px;
+	background-size: 22px 22px;
+	font-size: var(--font-size-14);
+	line-height: 22px;
+}
+
+.ripcrypt-chat-card .ripcrypt-roll-die.success,
+.ripcrypt-chat-card .ripcrypt-roll-die.max {
+	color: #18520b;
+	filter: sepia(0.5) hue-rotate(60deg);
+}
+
+.ripcrypt-chat-card .ripcrypt-roll-die.failure,
+.ripcrypt-chat-card .ripcrypt-roll-die.min {
+	color: #aa0200;
+	filter: sepia(0.5) hue-rotate(-60deg);
+}
+
+.ripcrypt-chat-card .ripcrypt-roll-die.discarded,
+.ripcrypt-chat-card .ripcrypt-roll-die.rerolled {
+	color: inherit;
+	filter: sepia(0.5) contrast(0.75) opacity(0.4);
+}
+
+.ripcrypt-chat-card .ripcrypt-roll-chain-open,
+.ripcrypt-chat-card .ripcrypt-roll-chain-close {
+	font-size: 1.1rem;
+	font-weight: 700;
+}
+
+.ripcrypt-chat-card .ripcrypt-roll-state {
+	margin-top: 0.35rem;
+	display: inline-flex;
+	align-items: center;
 	padding: 0.1rem 0.45rem;
 	border-radius: 999px;
 	border: 1px solid var(--accent-1);
@@ -51,13 +138,45 @@
 	text-transform: uppercase;
 }
 
-.ripcrypt .dice-roll .ripcrypt-roll-state.is-ripping {
+.ripcrypt-chat-card .ripcrypt-roll-state.is-ripping {
 	border-color: var(--accent-3);
 	color: var(--accent-3);
 }
 
-.ripcrypt .dice-roll .ripcrypt-roll-state.is-crypted {
+.ripcrypt-chat-card .ripcrypt-roll-state.is-crypted {
 	border-color: var(--header-background);
 	background: var(--header-background);
 	color: var(--header-text);
+}
+
+.ripcrypt-chat-card .ripcrypt-roll-inline-note {
+	margin-left: 0.35rem;
+	font-size: 0.8rem;
+	opacity: 0.85;
+}
+
+.ripcrypt-chat-card .ripcrypt-roll-note {
+	margin: 0;
+	font-size: 0.85rem;
+}
+
+.ripcrypt-chat-card .ripcrypt-roll-note.is-applied {
+	color: #18520b;
+	font-weight: 600;
+}
+
+.ripcrypt-chat-card .ripcrypt-chat-button {
+	margin-top: 0.35rem;
+	justify-self: start;
+	padding: 0.35rem 0.65rem;
+	border: 1px solid #999;
+	border-radius: 4px;
+	background: rgb(0 0 0 / 10%);
+	box-shadow: 0 0 2px #fff inset;
+	font-weight: 700;
+}
+
+.ripcrypt-chat-card .ripcrypt-chat-button[disabled] {
+	opacity: 0.6;
+	cursor: not-allowed;
 }
