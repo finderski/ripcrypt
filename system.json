@@ -24,6 +24,11 @@
 			"lang": "en-CA",
 			"name": "English (Canadian)",
 			"path": "langs/en-ca.json"
+		},
+		{
+			"lang": "en",
+			"name": "English",
+			"path": "langs/en-ca.json"
 		}
 	],
 	"background": "systems/ripcrypt/assets/ripcrypt-cover.svg",

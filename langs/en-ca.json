@@ -120,10 +120,10 @@
 			"quantityOf": "Quantity of {name}",
 			"rank": "Rank",
 			"rankNames": {
-				"novice": "Novice",
-				"adept": "Adept",
-				"expert": "Expert",
-				"master": "Master"
+				"novice": "I",
+				"adept": "II",
+				"expert": "III",
+				"master": "IV"
 			},
 			"range": "Range",
 			"roll": "Roll",
