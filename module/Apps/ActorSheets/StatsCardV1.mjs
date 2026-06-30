@@ -1,9 +1,11 @@
 import { deleteItemFromElement, editItemFromElement } from "../utils.mjs";
 import { DelveDiceHUD } from "../DelveDiceHUD.mjs";
+import { DicePool } from "../DicePool.mjs";
 import { filePath } from "../../consts.mjs";
 import { gameTerms } from "../../gameTerms.mjs";
 import { localizer } from "../../utils/Localizer.mjs";
 import { Logger } from "../../utils/Logger.mjs";
+import { buildWeaponAttackRollDataFromElement } from "../../utils/weaponAttack.mjs";
 import { RipCryptActorSheetV2 } from "./RipCryptActorSheetV2.mjs";
 
 const { ContextMenu } = foundry.applications.ux;
@@ -50,25 +52,48 @@ export class StatsCardV1 extends RipCryptActorSheetV2 {
 			element = this.element,
 			isEditable = this.isEditable,
 		} = options;
+		const openWeaponAttack = async (el) => {
+			const rollData = await buildWeaponAttackRollDataFromElement(el, {
+				parent: this.document,
+			});
+			if (!rollData) { return };
+
+			const dp = new DicePool({
+				diceCount: rollData.diceCount,
+				target: rollData.target,
+				flavor: rollData.flavor,
+				actor: rollData.actor,
+			});
+			dp.render({ force: true, orBringToFront: true });
+		};
+
 		new ContextMenu(
 			element,
 			`[data-ctx-menu="weapon"],[data-ctx-menu="armour"]`,
 			[
 				{
-					name: localizer(`RipCrypt.common.edit`),
-					condition: (el) => {
+					label: localizer(`RipCrypt.common.attack`),
+					visible: (el) => {
 						const itemId = el.dataset.itemId;
-						return isEditable && Boolean(itemId);
+						return isEditable && (el.dataset.ctxMenu === `weapon`) && Boolean(itemId);
 					},
-					callback: editItemFromElement,
+					onClick: openWeaponAttack,
 				},
 				{
-					name: localizer(`RipCrypt.common.delete`),
-					condition: (el) => {
+					label: localizer(`RipCrypt.common.edit`),
+					visible: (el) => {
 						const itemId = el.dataset.itemId;
 						return isEditable && Boolean(itemId);
 					},
-					callback: deleteItemFromElement,
+					onClick: editItemFromElement,
+				},
+				{
+					label: localizer(`RipCrypt.common.delete`),
+					visible: (el) => {
+						const itemId = el.dataset.itemId;
+						return isEditable && Boolean(itemId);
+					},
+					onClick: deleteItemFromElement,
 				},
 			],
 			{ jQuery: false, fixed: true },

@@ -1,4 +1,5 @@
 import { gameTerms } from "../../gameTerms.mjs";
+import { enrichHTML } from "../../utils/TextEditor.mjs";
 
 const { fields } = foundry.data;
 
@@ -67,7 +68,7 @@ export class SkillData extends foundry.abstract.TypeDataModel {
 				label: `RipCrypt.common.description`,
 				path: `system.description`,
 				uuid: this.parent.uuid,
-				value: await TextEditor.enrichHTML(this.description),
+				value: await enrichHTML(this.description),
 				collaborative: false,
 			},
 			{

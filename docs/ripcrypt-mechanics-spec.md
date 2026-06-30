@@ -74,6 +74,20 @@ Current behavior:
 - Haste checks launched from an actor sheet use that actor as the chat speaker when available.
 - Rolls without an actor fall back to Foundry's default `ChatMessage.getSpeaker()` behavior.
 
+## Weapon Attack Workflow
+
+Current behavior:
+
+- Weapon items now store `system.attackAttribute`.
+- Valid weapon attack attributes are the actor ability fields `grit`, `gait`, `grip`, and `glim`.
+- Triggering an attack from an equipped weapon opens the DicePool with dice count taken from the owning actor's matching ability value.
+- Weapon attacks default to the current global difficulty, but the DicePool remains editable so the user can choose a different target before rolling.
+- Weapon attack chat flavor includes actor name, weapon name, and the configured attack attribute label.
+
+Rulebook assumption:
+
+- The imported system did not previously encode a weapon attack attribute, so the new field defaults to `grip` as a conservative physical-attack baseline until specific weapons are configured.
+
 ## Combat Initiative
 
 Combat does not use Foundry `Roll` objects for initiative. Current behavior is deterministic:

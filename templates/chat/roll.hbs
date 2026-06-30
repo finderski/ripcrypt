@@ -4,12 +4,31 @@
 	{{/if}}
 	<div class="dice-result ripcrypt-roll {{stateClass}}">
 		<div class="dice-formula">{{formula}}</div>
-		{{{tooltip}}}
+		{{#if difficultyLabel}}
+			<div class="ripcrypt-roll-meta">
+				<div class="ripcrypt-roll-meta-row">
+					<span class="ripcrypt-roll-meta-label">{{difficultyTitle}}</span>
+					<span class="ripcrypt-roll-meta-value">{{difficultyLabel}}</span>
+				</div>
+				{{#if targetNumber}}
+					<div class="ripcrypt-roll-meta-row">
+						<span class="ripcrypt-roll-meta-label">{{targetLabel}}</span>
+						<span class="ripcrypt-roll-meta-value">{{targetNumber}}</span>
+					</div>
+				{{/if}}
+			</div>
+		{{/if}}
 		<div class="ripcrypt-roll-total-row">
 			<h4 class="dice-total">{{total}}</h4>
 			{{#if stateLabel}}
 				<div class="ripcrypt-roll-state {{stateClass}}">{{stateLabel}}</div>
 			{{/if}}
 		</div>
+		<details class="ripcrypt-roll-details">
+			<summary class="ripcrypt-roll-details-toggle">{{detailsLabel}}</summary>
+			<div class="ripcrypt-roll-details-body">
+				{{{tooltip}}}
+			</div>
+		</details>
 	</div>
 </div>

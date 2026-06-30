@@ -3,6 +3,7 @@ import { CommonItemData } from "./Common.mjs";
 import { gameTerms } from "../../gameTerms.mjs";
 import { localizer } from "../../utils/Localizer.mjs";
 import { Logger } from "../../utils/Logger.mjs";
+import { WeaponAttackAbilities } from "../../utils/weaponAttack.mjs";
 
 const { diffObject, getProperty, setProperty } = foundry.utils;
 const { DialogV2 } = foundry.applications.api;
@@ -28,6 +29,14 @@ export class WeaponData extends CommonItemData {
 			range: new fields.SchemaField({
 				short: optionalInteger(),
 				long: optionalInteger(),
+			}),
+			attackAttribute: new fields.StringField({
+				initial: gameTerms.Abilities.GRIP,
+				blank: false,
+				trim: true,
+				nullable: false,
+				required: true,
+				choices: () => WeaponAttackAbilities,
 			}),
 			damage: requiredInteger({ min: 0, initial: 0 }),
 			wear: barAttribute(0, 0, 4),
@@ -181,6 +190,17 @@ export class WeaponData extends CommonItemData {
 				placeholder: `RipCrypt.Apps.traits-placeholder`,
 				path: `system.traits`,
 				value: this.traitString,
+			},
+			{
+				id: `attack-attribute`,
+				type: `dropdown`,
+				label: `RipCrypt.common.attackAttribute`,
+				path: `system.attackAttribute`,
+				value: this.attackAttribute,
+				options: WeaponAttackAbilities.map(ability => ({
+					label: `RipCrypt.common.abilities.${ability}`,
+					value: ability,
+				})),
 			},
 		];
 

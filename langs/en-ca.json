@@ -29,6 +29,16 @@
 			"RichEditor": "Text Editor"
 		},
 		"chat": {
+			"labels": {
+				"target-number": "Target Number"
+			},
+			"outcomes": {
+				"failure": "Failure (0)",
+				"partial": "Partial Success (1)",
+				"full": "Full Success (2)",
+				"heroic": "Heroic Success (3+)"
+			},
+			"roll-details": "Dice Details",
 			"states": {
 				"ripping": "Ripping",
 				"crypted": "Crypted"
@@ -59,6 +69,8 @@
 				"legs": "Legs"
 			},
 			"armour": "Armour",
+			"attack": "Attack",
+			"attackAttribute": "Attack Attribute",
 			"aspect": "Aspect",
 			"aspectNames": {
 				"flect": "Flect",
@@ -196,7 +208,13 @@
 			"numberOfDice": "# of Dice",
 			"rollTarget": "Target",
 			"ability-roll": "{name} Roll",
+			"weapon-attack": "Weapon Attack",
+			"weapon-attack-roll": "{actorName} attacks with {weaponName} ({abilityName})",
 			"haste-check": "Haste Check",
+			"random-difficulty": "Random Difficulty",
+			"random-fate": "Random Fate",
+			"random-difficulty-roll": "Random Difficulty Roll",
+			"random-fate-roll": "Random Fate Roll",
 			"difficulty": "(DC: {dc})",
 			"RichEditor-no-collaborative": "Warning: This editor is not collaborative, that means that if you and someone else are editing it at the same time, you won't see that someone else is making changes until they save, and then your changes will be lost.",
 			"starred-ammo-placeholder": "Starred Ammo Slot",
@@ -231,7 +249,11 @@
 				"cannot-go-negative": "\"{name}\" is unable to be a negative number.",
 				"unsupported-drop": "This actor sheet only supports dropping Items.",
 				"unsupported-drop-document": "Dropping {documentName} documents onto this actor sheet is not supported.",
-				"unsupported-item-drop": "Cannot drop the item \"{itemName}\" of type \"{itemType}\" onto this actor sheet."
+				"unsupported-item-drop": "Cannot drop the item \"{itemName}\" of type \"{itemType}\" onto this actor sheet.",
+				"weapon-attack-missing-actor": "Unable to start a weapon attack without an actor.",
+				"weapon-attack-missing-weapon": "Unable to start a weapon attack without a weapon.",
+				"weapon-attack-invalid-attribute": "{weaponName} does not have a valid attack attribute configured.",
+				"weapon-attack-invalid-dice": "{actorName} cannot roll {abilityName} for {weaponName}."
 			},
 			"info": {
 				"cryptic-event-alert": "A Cryptic Event Has Occurred!"
@@ -240,6 +262,7 @@
 		"tooltips": {
 			"shield-bonus": "Shield Bonus: {value}",
 			"set-fate-to": "Set Fate to {ordinal}",
+			"random-fate": "Roll Random Fate",
 			"current-tour": "Current Delve Tour",
 			"create-new-item": "Create new item",
 			"next-tour": "Next Delve Tour",

@@ -6,6 +6,7 @@ more visible and doesn't cause as much overflow chaos.
 */
 
 import { filePath } from "../consts.mjs";
+import { enrichHTML } from "../utils/TextEditor.mjs";
 
 const { HandlebarsApplicationMixin, DocumentSheetV2 } = foundry.applications.api;
 const { hasProperty, getProperty } = foundry.utils;
@@ -80,7 +81,7 @@ export class RichEditor extends HandlebarsApplicationMixin(DocumentSheetV2) {
 		};
 
 		const value = getProperty(this.document, this.path);
-		ctx.enriched = await TextEditor.enrichHTML(value);
+		ctx.enriched = await enrichHTML(value);
 		ctx.raw = value;
 		return ctx;
 	};

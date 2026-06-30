@@ -103,14 +103,31 @@ export class ArmourData extends CommonItemData {
 			return false;
 		};
 
-		const slots = parent.parent.system.equippedArmour ?? {};
+		const actor = parent.parent;
+		const desiredLocations = new Set(
+			[...this.location]
+				.map(location => String(location).toLowerCase())
+				.filter(Boolean),
+		);
 
-		for (const locationTag of this.location) {
-			if (slots[locationTag.toLowerCase()] != null) {
-				Logger.error(`Unable to equip multiple items in the same slot`);
-				return false;
-			};
-		};
+		for (const armour of actor.itemTypes.armour) {
+			if (armour.id === parent.id || !armour.system.equipped) { continue };
+
+			const overlappingLocations = [...armour.system.location]
+				.map(location => String(location).toLowerCase())
+				.filter(location => desiredLocations.has(location));
+			if (overlappingLocations.length === 0) { continue };
+
+			Logger.error(
+				`Unable to equip multiple items in the same slot`,
+				{
+					item: parent.name,
+					conflictingItem: armour.name,
+					locations: overlappingLocations,
+				},
+			);
+			return false;
+		}
 		return true;
 	};
 

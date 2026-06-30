@@ -116,6 +116,12 @@
 			align-items: center;
 			gap: 4px;
 		}
+		.weapon-name {
+			min-width: 0;
+		}
+		.weapon-attack {
+			flex: 0 0 auto;
+		}
 		.row-alt > * {
 			background: inherit;
 		}

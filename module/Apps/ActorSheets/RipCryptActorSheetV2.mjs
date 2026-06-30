@@ -1,5 +1,6 @@
 import { GenericAppMixin } from "../GenericApp.mjs";
 import { localizer } from "../../utils/Localizer.mjs";
+import { getDragEventData } from "../../utils/TextEditor.mjs";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
@@ -22,7 +23,7 @@ export class RipCryptActorSheetV2 extends GenericAppMixin(HandlebarsApplicationM
 	};
 
 	async _onDrop(event) {
-		const data = TextEditor.implementation.getDragEventData(event);
+		const data = getDragEventData(event);
 		const documentClass = foundry.utils.getDocumentClass(data.type);
 		if (!documentClass) {
 			ui.notifications.warn(localizer(`RipCrypt.notifs.warn.unsupported-drop`));

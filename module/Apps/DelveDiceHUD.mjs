@@ -3,10 +3,11 @@ import { filePath } from "../consts.mjs";
 import { gameTerms } from "../gameTerms.mjs";
 import { localizer } from "../utils/Localizer.mjs";
 import { Logger } from "../utils/Logger.mjs";
-import { getRollSpeaker, rollHasteCheck } from "../rolls/ripcrypt-rolls.mjs";
+import { getRollSpeaker, rollHasteCheck, sendRollToChat } from "../rolls/ripcrypt-rolls.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 const { ContextMenu } = foundry.applications.ux;
+const { Roll } = foundry.dice;
 const { FatePath } = gameTerms;
 
 const CompassRotations = {
@@ -22,6 +23,22 @@ const conditions = [
 	{ label: `RipCrypt.common.difficulties.tough`, value: 6 },
 	{ label: `RipCrypt.common.difficulties.hard`, value: 7 },
 ];
+const FateByRoll = Object.freeze({
+	1: FatePath.NORTH,
+	2: FatePath.EAST,
+	3: FatePath.SOUTH,
+	4: FatePath.WEST,
+});
+
+async function rollVisibleFormula(formula, flavor) {
+	const roll = new Roll(formula);
+	await roll.evaluate();
+	await sendRollToChat(roll, {
+		speaker: getRollSpeaker({ alias: game.system.title }),
+		flavor,
+	});
+	return roll;
+};
 
 export class DelveDiceHUD extends HandlebarsApplicationMixin(ApplicationV2) {
 	// #region Options
@@ -106,15 +123,24 @@ export class DelveDiceHUD extends HandlebarsApplicationMixin(ApplicationV2) {
 			`#delve-difficulty`,
 			[
 				...conditions.map(condition => ({
-					name: localizer(condition.label),
-					callback: DelveDiceHUD.#setDifficulty.bind(this, condition.value),
+					label: localizer(condition.label),
+					onClick: DelveDiceHUD.#setDifficulty.bind(this, condition.value),
 				})),
 				{
-					name: localizer(`RipCrypt.common.difficulties.random`),
-					callback: () => {
-						const condition = conditions[Math.floor(Math.random() * conditions.length)];
-						DelveDiceHUD.#setDifficulty.bind(this)(condition.value);
-					},
+					label: localizer(`RipCrypt.Apps.random-difficulty`),
+					onClick: DelveDiceHUD.#setRandomDifficulty.bind(this),
+				},
+			],
+			{ jQuery: false, fixed: true },
+		);
+
+		new ContextMenu(
+			this.element,
+			`#fate-compass`,
+			[
+				{
+					label: localizer(`RipCrypt.Apps.random-fate`),
+					onClick: () => this.#setRandomFate(),
 				},
 			],
 			{ jQuery: false, fixed: true },
@@ -215,7 +241,29 @@ export class DelveDiceHUD extends HandlebarsApplicationMixin(ApplicationV2) {
 	/** @this {DelveDiceHUD} */
 	static async #setDifficulty(value) {
 		this._difficulty = value;
-		game.settings.set(`ripcrypt`, `dc`, value);
+		await game.settings.set(`ripcrypt`, `dc`, value);
+	};
+
+	/** @this {DelveDiceHUD} */
+	static async #setRandomDifficulty() {
+		const roll = await rollVisibleFormula(
+			`1d4+3`,
+			localizer(`RipCrypt.Apps.random-difficulty-roll`),
+		);
+		this._difficulty = roll.total;
+		await game.settings.set(`ripcrypt`, `dc`, roll.total);
+	};
+
+	async #setRandomFate() {
+		const roll = await rollVisibleFormula(
+			`1d4`,
+			localizer(`RipCrypt.Apps.random-fate-roll`),
+		);
+		const fate = FateByRoll[roll.total];
+		if (!fate) { return };
+
+		this.#animateCompassTo(fate);
+		await game.settings.set(`ripcrypt`, `currentFate`, fate);
 	};
 	// #endregion
 

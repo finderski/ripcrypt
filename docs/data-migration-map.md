@@ -174,6 +174,7 @@ Existing pack source fields:
 | `system.range` | persisted | `fields.SchemaField` | Keep `SchemaField`. | Child paths update from generic item sheet. | |
 | `system.range.short` | user-editable | nullable integer | Keep nullable `NumberField`. | `system.range.short`. | Can be null for melee weapons. |
 | `system.range.long` | user-editable | nullable integer | Keep nullable `NumberField`. | `system.range.long`. | Can be null. |
+| `system.attackAttribute` | user-editable | `fields.StringField`, choices grit/gait/grip/glim, initial grip | Keep persisted `StringField`. | `system.attackAttribute`. | Drives weapon attack DicePool dice count from the owning actor's matching ability. |
 | `system.damage` | user-editable | required integer, min `0`, initial `0` | Keep `NumberField`. | `system.damage`. | |
 | `system.wear` | persisted | `barAttribute(0, 0, 4)` | Keep `SchemaField({ value, max })`. | Child paths update from generic item sheet. | |
 | `system.wear.value` | user-editable | integer, min `0`, initial `0`, max `4` | Keep `NumberField`. | `system.wear.value`. | Current wear. |
@@ -393,4 +394,3 @@ Use this checklist when making the first implementation pass:
 8. Preserve embedded item fields because actor display and equip constraints depend on them.
 9. Treat missing `skills` and `geist` packs as manifest/content issues, not TypeDataModel fields.
 10. Run v14 creation/edit/save/reopen tests for every actor and item type after schema changes.
-

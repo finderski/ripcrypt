@@ -4,6 +4,41 @@
 	gap: 0.5rem;
 }
 
+.ripcrypt .dice-roll .ripcrypt-roll-meta {
+	display: grid;
+	gap: 0.25rem;
+	margin-top: 0.5rem;
+}
+
+.ripcrypt .dice-roll .ripcrypt-roll-meta-row {
+	display: flex;
+	align-items: baseline;
+	gap: 0.35rem;
+	font-size: 0.875rem;
+}
+
+.ripcrypt .dice-roll .ripcrypt-roll-meta-label {
+	font-weight: 600;
+}
+
+.ripcrypt .dice-roll .ripcrypt-roll-details {
+	margin-top: 0.5rem;
+}
+
+.ripcrypt .dice-roll .ripcrypt-roll-details-toggle {
+	cursor: pointer;
+	font-size: 0.875rem;
+	font-weight: 600;
+}
+
+.ripcrypt .dice-roll .ripcrypt-roll-details-body {
+	margin-top: 0.5rem;
+}
+
+.ripcrypt .dice-roll .ripcrypt-roll-details-body .dice-tooltip {
+	margin: 0;
+}
+
 .ripcrypt .dice-roll .ripcrypt-roll-state {
 	padding: 0.1rem 0.45rem;
 	border-radius: 999px;

@@ -54,20 +54,20 @@ export class CraftCardV1 extends RipCryptActorSheetV2 {
 			`[data-ctx-menu="craft"]`,
 			[
 				{
-					name: localizer(`RipCrypt.common.edit`),
-					condition: (el) => {
+					label: localizer(`RipCrypt.common.edit`),
+					visible: (el) => {
 						const itemId = el.dataset.itemId;
 						return isEditable && Boolean(itemId);
 					},
-					callback: editItemFromElement,
+					onClick: editItemFromElement,
 				},
 				{
-					name: localizer(`RipCrypt.common.delete`),
-					condition: (el) => {
+					label: localizer(`RipCrypt.common.delete`),
+					visible: (el) => {
 						const itemId = el.dataset.itemId;
 						return isEditable && Boolean(itemId);
 					},
-					callback: deleteItemFromElement,
+					onClick: deleteItemFromElement,
 				},
 			],
 			{ jQuery: false, fixed: true },

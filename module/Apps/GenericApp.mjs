@@ -2,6 +2,7 @@ import { createItemFromElement, deleteItemFromElement, editItemFromElement, upda
 import { DicePool } from "./DicePool.mjs";
 import { RichEditor } from "./RichEditor.mjs";
 import { toBoolean } from "../consts.mjs";
+import { buildWeaponAttackRollDataFromElement } from "../utils/weaponAttack.mjs";
 
 /**
  * A mixin that takes the class from HandlebarsApplicationMixin and combines it
@@ -17,6 +18,7 @@ export function GenericAppMixin(HandlebarsApp) {
 			],
 			actions: {
 				roll: this.#rollDice,
+				rollWeaponAttack: this.#rollWeaponAttack,
 				createItem(_event, target) { // uses arrow-less function for "this"
 					const parent = this.document;
 					if (parent && !parent.isOwner) { return };
@@ -131,6 +133,22 @@ export function GenericAppMixin(HandlebarsApp) {
 
 			const dp = new DicePool({ diceCount, flavor, actor });
 			dp.render({ force: true });
+		};
+
+		/** @this {GenericRipCryptApp} */
+		static async #rollWeaponAttack(_event, target) {
+			const rollData = await buildWeaponAttackRollDataFromElement(target, {
+				parent: this.document,
+			});
+			if (!rollData) { return };
+
+			const dp = new DicePool({
+				diceCount: rollData.diceCount,
+				target: rollData.target,
+				flavor: rollData.flavor,
+				actor: rollData.actor,
+			});
+			dp.render({ force: true, orBringToFront: true });
 		};
 
 		/** @this {GenericRipCryptApp} */

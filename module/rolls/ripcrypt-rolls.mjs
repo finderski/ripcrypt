@@ -1,8 +1,15 @@
 import { filePath } from "../consts.mjs";
 
+const { renderTemplate } = foundry.applications.handlebars;
 const { Roll } = foundry.dice;
 
 const rollTemplate = filePath(`templates/chat/roll.hbs`);
+const DifficultyLabelKeys = Object.freeze({
+	4: `RipCrypt.common.difficulties.easy`,
+	5: `RipCrypt.common.difficulties.normal`,
+	6: `RipCrypt.common.difficulties.tough`,
+	7: `RipCrypt.common.difficulties.hard`,
+});
 
 export function getRollSpeaker({ actor, token, alias } = {}) {
 	const options = {};
@@ -41,13 +48,13 @@ export async function evaluateRipCryptRoll({ diceCount = 1, target = 1, edge = 0
 	};
 };
 
-export async function sendRollToChat(roll, { speaker, flavor } = {}) {
+export async function sendRollToChat(roll, { speaker, flavor, ripcrypt = null } = {}) {
 	const messageData = await roll.toMessage({
 		speaker: speaker ?? getRollSpeaker(),
 		flavor,
 	}, { create: false });
 
-	messageData.content = await renderRipCryptRollCard(roll, { flavor });
+	messageData.content = await renderRipCryptRollCard(roll, { flavor, ripcrypt });
 	return ChatMessage.create(messageData);
 };
 
@@ -63,13 +70,44 @@ export function getRipCryptState(roll) {
 	return null;
 };
 
-export async function renderRipCryptRollCard(roll, { flavor } = {}) {
+function getRipCryptDifficultySummary(baseTarget) {
+	const numericTarget = Number(baseTarget);
+	if (!Number.isFinite(numericTarget)) { return null };
+
+	const key = DifficultyLabelKeys[numericTarget];
+	if (!key) { return String(numericTarget) };
+
+	const label = game.i18n.localize(key);
+	return `${label} (${numericTarget})`;
+};
+
+// This is a chat-summary mapping only; the underlying roll total remains the
+// actual success count evaluated by Foundry and shown in the expanded details.
+function getRipCryptOutcomeLabel(total) {
+	const numericTotal = Number(total);
+	if (!Number.isFinite(numericTotal)) { return String(total ?? ``) };
+	if (numericTotal <= 0) { return game.i18n.localize(`RipCrypt.chat.outcomes.failure`) };
+	if (numericTotal === 1) { return game.i18n.localize(`RipCrypt.chat.outcomes.partial`) };
+	if (numericTotal === 2) { return game.i18n.localize(`RipCrypt.chat.outcomes.full`) };
+	return game.i18n.localize(`RipCrypt.chat.outcomes.heroic`);
+};
+
+export async function renderRipCryptRollCard(roll, { flavor, ripcrypt = null } = {}) {
 	const state = getRipCryptState(roll);
+	const difficultySummary = getRipCryptDifficultySummary(ripcrypt?.baseTarget);
+	const targetNumber = Number.isFinite(Number(ripcrypt?.effectiveTarget))
+		? Number(ripcrypt.effectiveTarget)
+		: null;
 	const context = {
 		flavor,
 		formula: roll.formula,
-		total: roll.total,
+		total: ripcrypt?.showOutcomeLabel ? getRipCryptOutcomeLabel(roll.total) : roll.total,
+		difficultyLabel: difficultySummary,
+		targetLabel: game.i18n.localize(`RipCrypt.chat.labels.target-number`),
+		targetNumber,
+		difficultyTitle: game.i18n.localize(`RipCrypt.common.difficulty`),
 		tooltip: await roll.getTooltip(),
+		detailsLabel: game.i18n.localize(`RipCrypt.chat.roll-details`),
 		state,
 		stateLabel: state ? game.i18n.localize(`RipCrypt.chat.states.${state}`) : null,
 		stateClass: state ? `is-${state}` : ``,

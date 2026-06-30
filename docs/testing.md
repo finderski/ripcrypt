@@ -177,7 +177,7 @@ Record:
 ### Item fields
 
 - [ ] Edit common item fields such as quantity, access, and cost where applicable.
-- [ ] Edit weapon traits, ranges, wear, weight, and equipped state where applicable.
+- [ ] Edit weapon attack attribute, traits, ranges, wear, weight, and equipped state where applicable.
 - [ ] Edit armour or shield protection, locations, weight, and equipped state.
 - [ ] Edit skill ability and advances.
 - [ ] Edit craft aspect and advances.
@@ -214,10 +214,19 @@ Checklist:
 
 - [ ] Open the Dice Pool app from an actor workflow that uses it.
 - [ ] Roll an ability check and confirm chat message creation succeeds.
+- [ ] Trigger a weapon attack from an equipped weapon row or its context menu and confirm the Dice Pool opens prefilled from the weapon's attack attribute.
 - [ ] Confirm the roll formula parses and evaluates.
 - [ ] Inspect the roll tooltip for obvious custom die errors.
-- [ ] Confirm the RipCrypt roll card renders the formula, tooltip, and total cleanly in chat.
+- [ ] Confirm the RipCrypt roll card renders the formula and total cleanly in chat.
+- [ ] Confirm DicePool roll cards show both Difficulty and Target Number.
+- [ ] Confirm weapon attack chat flavor includes the actor name and weapon name.
+- [ ] Confirm Difficulty displays Easy (4), Normal (5), Tough (6), or Hard (7) when those base difficulties are selected.
+- [ ] Confirm roll outcomes display as Failure (0), Partial Success (1), Full Success (2), or Heroic Success (3+) instead of a bare success count.
+- [ ] Expand the roll card details and confirm the dice breakdown is visible.
+- [ ] Confirm the expanded details show the underlying die values for normal rolls plus any rip or crypt chains when they occur.
 - [ ] Confirm Rip or Crypt state badges appear only when the custom die logic sets them.
+- [ ] Use the Delve Dice HUD random difficulty option and confirm a visible `1d4+3` chat roll is created and the HUD DC updates to 4, 5, 6, or 7 based on the total.
+- [ ] Use the Delve Dice HUD Fate compass context menu random option and confirm a visible `1d4` chat roll is created and the compass updates to North on 1, East on 2, South on 3, or West on 4.
 - [ ] Trigger a Haste check from the Delve Dice HUD or sheet control.
 - [ ] Confirm the Haste roll posts to chat.
 - [ ] Confirm the Haste card renders cleanly and does not show a Rip/Crypt state badge.
@@ -281,6 +290,12 @@ Minimum console checkpoints:
 - [ ] Embedded item create/edit/delete actions
 - [ ] Ammo popover quantity and favourite actions
 - [ ] Repeated open/close of actor and item sheets
+
+Troubleshooting note:
+
+- `Uncaught (in promise) Error: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received` at `game:1` is not currently traced to RipCrypt code. This error is characteristic of a browser extension or host-page message listener, not a Foundry hook, DOM event listener, or `game.socket` callback in this system.
+- If this appears near `DelveDiceHUD` context logs, treat the timing as correlation first. The HUD currently logs each part context during render, but it does not use `postMessage`, `runtime.onMessage`, `BroadcastChannel`, or any listener that returns `true` to hold a browser message port open.
+- Re-test with browser extensions disabled, or in a clean Chromium/Firefox profile, before treating this as a RipCrypt migration failure.
 
 ## Settings, Hooks, And Initialization
 

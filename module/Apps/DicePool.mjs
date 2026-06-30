@@ -204,6 +204,7 @@ export class DicePool extends GenericAppMixin(HandlebarsApplicationMixin(Applica
 		const {
 			roll,
 			formula,
+			effectiveTarget,
 		} = await evaluateRipCryptRoll({
 			diceCount: this._diceCount,
 			target: this._target,
@@ -220,6 +221,11 @@ export class DicePool extends GenericAppMixin(HandlebarsApplicationMixin(Applica
 		await sendRollToChat(roll, {
 			speaker: this._speaker ?? getRollSpeaker({ actor: this._actor }),
 			flavor,
+			ripcrypt: {
+				baseTarget: this._target,
+				effectiveTarget,
+				showOutcomeLabel: true,
+			},
 		});
 		this.close();
 	};
