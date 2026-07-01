@@ -54,11 +54,82 @@
 		padding-left: var(--col-gap);
 	}
 	.action-row {
-		grid-column: span 3;
+		grid-column: 2 / span 3;
 
 		button {
 			border-bottom: 2px dashed var(--accent-3);
 		}
+	}
+
+	.geist-traits {
+		grid-column: 2 / span 3;
+		align-self: start;
+		padding: 4px 6px;
+		border: 1px solid var(--accent-1);
+		border-radius: 4px;
+
+		summary {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			cursor: pointer;
+			list-style: none;
+		}
+
+		summary::-webkit-details-marker {
+			display: none;
+		}
+
+		.label {
+			flex: 0 0 auto;
+		}
+
+		.value {
+			min-width: 0;
+			background: none;
+			padding: 0;
+			text-transform: none;
+		}
+	}
+
+	.geist-traits__content {
+		display: grid;
+		gap: 6px;
+		margin-top: 6px;
+	}
+
+	.geist-traits__option {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr);
+		column-gap: 6px;
+		row-gap: 2px;
+		align-items: start;
+		text-transform: none;
+		font-weight: normal;
+	}
+
+	.geist-traits__option-label {
+		font-weight: 700;
+	}
+
+	.geist-traits__option-description,
+	.geist-traits__entry p {
+		grid-column: 2;
+		margin: 0;
+		font-size: var(--font-size-12);
+		text-transform: none;
+	}
+
+	.geist-traits__entry {
+		padding: 4px 6px;
+		border: 1px solid var(--accent-2);
+		border-radius: 4px;
+	}
+
+	.geist-traits__entry summary {
+		cursor: pointer;
+		font-weight: 700;
+		list-style: none;
 	}
 
 	.glory-label {

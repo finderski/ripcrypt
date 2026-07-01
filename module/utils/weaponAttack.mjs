@@ -1,3 +1,4 @@
+import { getTraitDisplayData, RipCryptTraitKinds } from "../config/traits.mjs";
 import { gameTerms } from "../gameTerms.mjs";
 import { getFateAlignmentEdge } from "./fates.mjs";
 import { localizer } from "./Localizer.mjs";
@@ -436,6 +437,7 @@ export async function buildWeaponAttackChatData({
 		actorName: actor?.name ?? ``,
 		weaponName: weapon?.name ?? ``,
 		abilityName: getWeaponAttackAbilityName(weapon?.system?.attackAttribute),
+		weaponTraits: getTraitDisplayData(RipCryptTraitKinds.WEAPON, weapon?.system?.traits),
 		edgeCount,
 		dragCount,
 		finalModifierSummary: (rangeContext?.isRanged || edgeCount || dragCount)

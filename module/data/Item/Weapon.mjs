@@ -1,5 +1,11 @@
 import { barAttribute, optionalInteger, requiredInteger } from "../helpers.mjs";
 import { CommonItemData } from "./Common.mjs";
+import {
+	getTraitDisplayData,
+	getTraitOptions,
+	getUnknownTraitValues,
+	RipCryptTraitKinds,
+} from "../../config/traits.mjs";
 import { gameTerms } from "../../gameTerms.mjs";
 import { localizer } from "../../utils/Localizer.mjs";
 import { Logger } from "../../utils/Logger.mjs";
@@ -118,7 +124,13 @@ export class WeaponData extends CommonItemData {
 	};
 
 	get traitString() {
-		return [...this.traits].join(`, `);
+		return this.traitDisplayData
+			.map(trait => trait.label)
+			.join(`, `);
+	};
+
+	get traitDisplayData() {
+		return getTraitDisplayData(RipCryptTraitKinds.WEAPON, this.traits);
 	};
 
 	get rangeString() {
@@ -185,11 +197,11 @@ export class WeaponData extends CommonItemData {
 			},
 			{
 				id: `traits`,
-				type: `string-set`,
+				type: `checkbox-set`,
 				label: `RipCrypt.common.traits`,
-				placeholder: `RipCrypt.Apps.traits-placeholder`,
 				path: `system.traits`,
-				value: this.traitString,
+				options: getTraitOptions(RipCryptTraitKinds.WEAPON, this.traits),
+				unknownValues: getUnknownTraitValues(RipCryptTraitKinds.WEAPON, this.traits),
 			},
 			{
 				id: `attack-attribute`,

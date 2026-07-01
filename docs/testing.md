@@ -178,10 +178,13 @@ Record:
 
 - [ ] Edit common item fields such as quantity, access, and cost where applicable.
 - [ ] Edit weapon attack attribute, traits, ranges, wear, weight, and equipped state where applicable.
+- [ ] On a weapon item sheet, select one or more canonical weapon traits and confirm they save, reload, and remain checked after reopening the item.
 - [ ] Edit armour or shield protection, locations, weight, and equipped state.
 - [ ] Edit skill ability and advances.
 - [ ] Edit craft aspect and advances.
 - [ ] Edit rich text descriptions for `good`, `skill`, and `craft`.
+- [ ] On a Geist actor sheet as GM, select one or more Geist traits and confirm they save, reload, and remain checked after reopening the sheet.
+- [ ] On a Geist actor sheet as a non-GM user, confirm the Geist trait list and descriptions are not visible.
 - [ ] Clear and re-set optional item fields such as weight and confirm empty values do not save as the literal string `null`.
 - [ ] Close and reopen item sheets and confirm values persist.
 - [ ] Reload the world and confirm edited item values still persist.
@@ -230,10 +233,14 @@ Checklist:
 - [ ] Confirm the RipCrypt roll card renders the formula and total cleanly in chat.
 - [ ] Confirm DicePool roll cards show both Difficulty and Target Number.
 - [ ] Confirm weapon attack chat flavor includes the actor name and weapon name.
+- [ ] Confirm weapon attack chat cards display the selected weapon traits.
+- [ ] Expand each displayed weapon trait on the chat card and confirm its description matches the configured preset text.
 - [ ] Confirm Difficulty displays Easy (4), Normal (5), Tough (6), or Hard (7) when those base difficulties are selected.
 - [ ] Confirm roll outcomes display as Failure (0), Partial Success (1), Full Success (2), or Heroic Success (3+) instead of a bare success count.
 - [ ] Expand the roll card details and confirm the dice breakdown is visible.
 - [ ] Confirm the expanded details show the underlying die values for normal rolls plus any rip or crypt chains when they occur.
+- [ ] Make a roll from a Geist sheet while logged in as GM and confirm a GM-only Geist traits section is injected into the rendered chat card.
+- [ ] View the same Geist roll as a non-GM user and confirm no Geist trait labels or descriptions appear in chat HTML, visible content, or chat-message flags beyond the normal speaker data.
 - [ ] Confirm Rip or Crypt state badges appear only when the custom die logic sets them.
 - [ ] Use the Delve Dice HUD random difficulty option and confirm a visible `1d4+3` chat roll is created and the HUD DC updates to 4, 5, 6, or 7 based on the total.
 - [ ] Use the Delve Dice HUD Fate compass context menu random option and confirm a visible `1d4` chat roll is created and the compass updates to North on 1, East on 2, South on 3, or West on 4.

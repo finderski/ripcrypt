@@ -2,6 +2,11 @@ import { deleteItemFromElement, editItemFromElement } from "../utils.mjs";
 import { DelveDiceHUD } from "../DelveDiceHUD.mjs";
 import { DicePool } from "../DicePool.mjs";
 import { filePath } from "../../consts.mjs";
+import {
+	getTraitOptions,
+	getUnknownTraitValues,
+	RipCryptTraitKinds,
+} from "../../config/traits.mjs";
 import { gameTerms } from "../../gameTerms.mjs";
 import { localizer } from "../../utils/Localizer.mjs";
 import { Logger } from "../../utils/Logger.mjs";
@@ -127,6 +132,7 @@ export class StatsCardV1 extends RipCryptActorSheetV2 {
 		ctx = await StatsCardV1.prepareArmor(ctx);
 		ctx = await StatsCardV1.prepareFatePath(ctx);
 		ctx = await StatsCardV1.prepareAbilityRow(ctx);
+		ctx = await StatsCardV1.prepareGeistTraits(ctx);
 		ctx = await StatsCardV1.prepareSpeed(ctx);
 		ctx = await StatsCardV1.prepareLevelData(ctx);
 
@@ -177,6 +183,24 @@ export class StatsCardV1 extends RipCryptActorSheetV2 {
 				value: ctx.meta.limited ? `?` : ctx.actor.system.ability[key],
 				readonly: !ctx.meta.editable,
 			});
+		};
+		return ctx;
+	};
+
+	static async prepareGeistTraits(ctx) {
+		if (ctx.actor.type !== `geist`) {
+			ctx.geistTraits = null;
+			return ctx;
+		};
+
+		const selectedTraits = ctx.actor.system.traitDisplayData ?? [];
+		ctx.geistTraits = {
+			visible: Boolean(ctx.meta.isGM),
+			editable: Boolean(ctx.meta.editable && ctx.meta.isGM),
+			options: getTraitOptions(RipCryptTraitKinds.GEIST, ctx.actor.system.traits),
+			unknownValues: getUnknownTraitValues(RipCryptTraitKinds.GEIST, ctx.actor.system.traits),
+			selected: selectedTraits,
+			summary: selectedTraits.map(trait => trait.label).join(`, `) || localizer(`RipCrypt.common.empty`),
 		};
 		return ctx;
 	};

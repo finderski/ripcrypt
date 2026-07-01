@@ -11,6 +11,8 @@ import {
 import { buildWeaponAttackRollDataFromElement } from "../utils/weaponAttack.mjs";
 import { sendWeaponAttackToChat } from "../rolls/ripcrypt-rolls.mjs";
 
+const { deleteProperty, getProperty, hasProperty, setProperty } = foundry.utils;
+
 /**
  * A mixin that takes the class from HandlebarsApplicationMixin and combines it
  * with utility functions / data that is used across all RipCrypt applications
@@ -107,10 +109,32 @@ export function GenericAppMixin(HandlebarsApp) {
 				ctx.meta.limited = this.document.limited;
 				ctx.meta.editable = this.isEditable || game.user.isGM;
 				ctx.meta.embedded = this.document.isEmbedded;
+				ctx.meta.isGM = game.user.isGM;
 			};
 			delete ctx.editable;
 
 			return ctx;
+		};
+
+		_processFormData(event, form, formData) {
+			const data = super._processFormData(event, form, formData);
+
+			if (hasProperty(data, `__setMarkers.system.traits`)) {
+				const traits = getProperty(data, `system.traits`);
+				const values = Array.isArray(traits)
+					? traits
+					: (traits == null ? [] : [traits]);
+				setProperty(
+					data,
+					`system.traits`,
+					values
+						.map(value => String(value ?? ``).trim())
+						.filter(Boolean),
+				);
+			};
+			deleteProperty(data, `__setMarkers`);
+
+			return data;
 		};
 
 		_tearDown(options) {

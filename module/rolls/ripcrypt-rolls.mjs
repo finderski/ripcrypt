@@ -1,3 +1,4 @@
+import { getTraitDisplayData, RipCryptTraitKinds } from "../config/traits.mjs";
 import { filePath } from "../consts.mjs";
 import {
 	buildWeaponAttackChatData,
@@ -7,7 +8,7 @@ import {
 
 const { renderTemplate } = foundry.applications.handlebars;
 const { Roll } = foundry.dice;
-const { mergeObject, deepClone } = foundry.utils;
+const { mergeObject, deepClone, escapeHTML } = foundry.utils;
 
 const rollTemplate = filePath(`templates/chat/roll.hbs`);
 const DifficultyLabelKeys = Object.freeze({
@@ -259,6 +260,8 @@ function getWeaponAttackCardContext(attack) {
 		pendingDamageTitle: game.i18n.localize(`RipCrypt.chat.labels.pending-damage`),
 		pendingDamageValue: attack.appliedDamage ?? 0,
 		noDamageMessage: attack.noDamageMessage ?? null,
+		traitTitle: game.i18n.localize(`RipCrypt.chat.labels.weapon-traits`),
+		weaponTraits: Array.isArray(attack.weaponTraits) ? attack.weaponTraits : [],
 		showDamageRows,
 		showApplyDamage,
 		applyDamageLabel: game.i18n.format(`RipCrypt.chat.buttons.apply-damage`, {
@@ -273,6 +276,80 @@ function getWeaponAttackCardContext(attack) {
 			})
 			: null,
 	};
+};
+
+function renderTraitDetailsHtml({
+	title,
+	traits,
+	extraClass = ``,
+} = {}) {
+	if (!title || !Array.isArray(traits) || traits.length === 0) { return `` };
+
+	const items = traits.map(trait => {
+		const label = escapeHTML(trait.label ?? ``);
+		const description = escapeHTML(trait.description ?? ``);
+		if (!description) {
+			return `<div class="ripcrypt-roll-trait-label">${label}</div>`;
+		};
+
+		return `<details class="ripcrypt-roll-trait">
+			<summary>${label}</summary>
+			<p>${description}</p>
+		</details>`;
+	}).join(``);
+
+	const sectionClass = [
+		`ripcrypt-roll-traits`,
+		extraClass,
+	].filter(Boolean).join(` `);
+
+	return `<section class="${sectionClass}">
+		<div class="ripcrypt-roll-traits-title">${escapeHTML(title)}</div>
+		<div class="ripcrypt-roll-traits-list">${items}</div>
+	</section>`;
+};
+
+function resolveSpeakerActor(message) {
+	const speaker = message?.speaker ?? {};
+	const actor = ChatMessage.getSpeakerActor?.(speaker);
+	if (actor instanceof Actor) { return actor };
+
+	const tokenActor = speaker.scene && speaker.token
+		? game.scenes?.get(speaker.scene)?.tokens?.get(speaker.token)?.actor
+		: null;
+	if (tokenActor instanceof Actor) { return tokenActor };
+
+	return speaker.actor ? (game.actors?.get(speaker.actor) ?? null) : null;
+};
+
+function injectGeistTraits(message, html) {
+	if (!game.user.isGM) { return };
+
+	const actor = resolveSpeakerActor(message);
+	if (!(actor instanceof Actor) || actor.type !== `geist`) { return };
+
+	// Geist trait details stay out of persisted chat content and flags so that
+	// players cannot inspect them from message HTML or serialized chat data.
+	const traits = getTraitDisplayData(RipCryptTraitKinds.GEIST, actor.system.traits);
+	if (traits.length === 0) { return };
+
+	const diceResult = html.querySelector(`.ripcrypt-chat-card .dice-result`);
+	if (!diceResult || diceResult.querySelector(`.ripcrypt-roll-traits.is-geist-gm`)) { return };
+
+	const markup = renderTraitDetailsHtml({
+		title: game.i18n.localize(`RipCrypt.chat.labels.geist-traits-gm`),
+		traits,
+		extraClass: `is-geist-gm`,
+	});
+	if (!markup) { return };
+
+	const details = diceResult.querySelector(`.ripcrypt-roll-details`);
+	if (details) {
+		details.insertAdjacentHTML(`beforebegin`, markup);
+		return;
+	};
+
+	diceResult.insertAdjacentHTML(`beforeend`, markup);
 };
 
 function canCurrentUserApplyWeaponDamage(message, targetActor) {
@@ -338,6 +415,7 @@ async function applyWeaponAttackDamage(message, button) {
 export function onRenderRipCryptChatMessage(message, html) {
 	const ripcrypt = message.getFlag(game.system.id, `rollCard`) ?? {};
 	const attack = ripcrypt.weaponAttack;
+	injectGeistTraits(message, html);
 	if (!attack) { return };
 
 	const buttons = html.querySelectorAll(`[data-ripcrypt-action="applyWeaponDamage"]`);

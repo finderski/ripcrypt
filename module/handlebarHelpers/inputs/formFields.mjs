@@ -1,5 +1,6 @@
 import { barInput } from "./barInput.mjs";
 import { booleanInput } from "./booleanInput.mjs";
+import { checkboxSet } from "./checkboxSet.mjs";
 import { costInput } from "./currency.mjs";
 import { dropdownInput } from "./dropdownInput.mjs";
 import { groupInput } from "./groupInput.mjs";
@@ -12,6 +13,7 @@ const { getType } = foundry.utils;
 
 const inputTypes = {
 	"string-set": stringSet,
+	"checkbox-set": checkboxSet,
 	prosemirror: prosemirrorInput,
 	integer: numberInput,
 	bar: barInput,

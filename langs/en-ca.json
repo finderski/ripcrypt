@@ -41,11 +41,13 @@
 				"damage-before-armour": "Damage",
 				"dice-term": "Die",
 				"final-modifiers": "Final Modifiers",
+				"geist-traits-gm": "Geist Traits (GM Only)",
 				"hit-location": "Hit Location",
 				"modifiers": "Modifiers",
 				"pending-damage": "Pending Damage",
 				"target": "Target",
-				"target-number": "Target Number"
+				"target-number": "Target Number",
+				"weapon-traits": "Weapon Traits"
 			},
 			"outcomes": {
 				"failure": "Failure (0)",
@@ -252,6 +254,7 @@
 			"ability-roll": "{name} Roll",
 			"weapon-attack": "Weapon Attack",
 			"weapon-attack-roll": "{actorName} attacks with {weaponName} ({abilityName})",
+			"geist-traits": "Geist Traits",
 			"heroic-hit-location-prompt": "{actorName} scored a Heroic Success against {targetName} with {weaponName}. Choose the hit location.",
 			"heroic-hit-location-title": "Choose Hit Location",
 			"haste-check": "Haste Check",
@@ -325,6 +328,100 @@
 			"auras": {
 				"normal": "The distance of your aura normally",
 				"heavy": "The distance of your aura when using Heavycraft"
+			}
+		},
+		"traits": {
+			"weapon": {
+				"able": {
+					"name": "Able",
+					"description": "Able weapons can be used two-handed or one-handed with a shield. When used with two hands, able weapons are considered long."
+				},
+				"agile": {
+					"name": "Agile",
+					"description": "Attacks with Agile weapons may be made with Gait instead of Grit."
+				},
+				"ammo": {
+					"name": "Ammo",
+					"description": "Weapons with this trait require ammunition for use."
+				},
+				"crude": {
+					"name": "Crude",
+					"description": "Crude or improvised weapons aren’t designed for combat. They’re ineffective against armor, unreliable, break with wear, and do 1 damage."
+				},
+				"heavy": {
+					"name": "Heavy",
+					"description": "Heavy weapons require two hands and cannot be equipped with other weapons or a shield. Their size, weight, and durability maximizes damage. Attacks made after moving with heavy weapons drag. Heavy ranged weapons may not be used in close combat."
+				},
+				"light": {
+					"name": "Light",
+					"description": "Light weapons can be used with one hand. Their light build makes them susceptible to wear. Light ranged weapons can be used without drag in close combat."
+				},
+				"long": {
+					"name": "Long",
+					"description": "Long weapons extend reach to diagonal spaces so that attacks can be made diagonally without drag."
+				},
+				"loud": {
+					"name": "Loud",
+					"description": "Targets damaged by loud weapons take 1 morale effect."
+				},
+				"modest": {
+					"name": "Modest",
+					"description": "Modest weapons are designed to maximize efficiency and effectiveness with one hand. They balance weight, durability, and capability. Modest ranged weapons drag in close combat."
+				},
+				"reload": {
+					"name": "Reload",
+					"description": "Reload weapons are assumed loaded to start but must be reloaded once a shot has been fired. All Reload weapons also have the ammo trait."
+				},
+				"thrown": {
+					"name": "Thrown",
+					"description": "Thrown weapons are light hand weapons that can optionally be thrown to make short ranged attacks."
+				}
+			},
+			"geist": {
+				"corrosive": {
+					"name": "Corrosive",
+					"description": "Corrosive creatures secrete an acidic mucus that damages metal. These creatures cause one point of wear on metal weapons when attacks hit."
+				},
+				"entangle": {
+					"name": "Entangle",
+					"description": "Some creatures have whip-like tentacles used to bind threats to protect themselves. If combatants are hit by creatures with this trait, they must rival for Gait. If they fail, they are entangled and are not able to move or attack until they successfully break as their next action."
+				},
+				"fear": {
+					"name": "Fear",
+					"description": "Some creatures are so terrifying that even moving towards them demands incredible resolve. To move towards a creature with this trait, heroes must successfully rival for Grip. Failure makes the hero Fearful until a morale trial is passed."
+				},
+				"flying": {
+					"name": "Flying",
+					"description": "Flying creatures follow the rules for flying movement in combat."
+				},
+				"immunity": {
+					"name": "Immunity",
+					"description": "Creatures with immunity have either an impenetrable aura or none at all and cannot be targeted with craft."
+				},
+				"large": {
+					"name": "Large",
+					"description": "Large creatures are hard to miss. Any attempt to attack or shoot a creature with this trait has edge."
+				},
+				"poison": {
+					"name": "Poison",
+					"description": "Many species produce lethal enzymes. If combatants are damaged, they must rival for Grit. If they fail, they are poisoned. Poisoned combatants take 1 damage each morale phase until a successful recovery is made."
+				},
+				"regeneration": {
+					"name": "Regeneration",
+					"description": "Some species have a super fast metabolism and heal at an unnatural rate. Subjects with this trait recover 1 damage each morale phase in combat."
+				},
+				"smog": {
+					"name": "Smog",
+					"description": "Some creatures exude toxic gas. To move within reach, successfully rival for Grip. If heroes fail, they are poisoned."
+				},
+				"stealth": {
+					"name": "Stealth",
+					"description": "Creatures with stealth are fast and agile, making them difficult to hit in combat. Any attempt to attack or shoot a creature with this trait is subject to drag. Stealth does not affect use of Glimcraft."
+				},
+				"tough": {
+					"name": "Tough",
+					"description": "Tough creatures are harder to damage, having developed a natural resilience. Divide any damage done to a tough creature in half, rounding down. 1 damage has no effect, 2 damage does 1 damage, and so on. This applies to all damage resulting from close combat attacks, ranged attacks, and Glimcraft."
+				}
 			}
 		}
 	},

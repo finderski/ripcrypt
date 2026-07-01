@@ -50,6 +50,23 @@
 						<span class="ripcrypt-roll-meta-value">{{attack.finalModifiersValue}}</span>
 					</div>
 				{{/if}}
+				{{#if attack.weaponTraits.length}}
+					<section class="ripcrypt-roll-traits">
+						<div class="ripcrypt-roll-traits-title">{{attack.traitTitle}}</div>
+						<div class="ripcrypt-roll-traits-list">
+							{{#each attack.weaponTraits as | trait |}}
+								{{#if trait.description}}
+									<details class="ripcrypt-roll-trait">
+										<summary>{{trait.label}}</summary>
+										<p>{{trait.description}}</p>
+									</details>
+								{{else}}
+									<div class="ripcrypt-roll-trait-label">{{trait.label}}</div>
+								{{/if}}
+							{{/each}}
+						</div>
+					</section>
+				{{/if}}
 				{{#if attack.hitLocationLabel}}
 					<div class="ripcrypt-roll-meta-row">
 						<span class="ripcrypt-roll-meta-label">{{attack.hitLocationTitle}}</span>

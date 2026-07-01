@@ -21,6 +21,42 @@
 			{{ rc-i18n "RipCrypt.Apps.haste-check" }}
 		</button>
 	</div>
+	{{#if geistTraits.visible}}
+		<details class="geist-traits row-alt">
+			<summary>
+				<span class="label">{{ rc-i18n "RipCrypt.Apps.geist-traits" }}</span>
+				<span class="value ellipses">{{ geistTraits.summary }}</span>
+			</summary>
+			<div class="geist-traits__content">
+				{{#if geistTraits.editable}}
+					<input type="hidden" name="__setMarkers.system.traits" value="1">
+					{{#each geistTraits.unknownValues as | value |}}
+						<input type="hidden" name="system.traits" value="{{ value }}">
+					{{/each}}
+					{{#each geistTraits.options as | trait index |}}
+						<label class="geist-traits__option" for="{{@root.meta.idp}}-geist-trait-{{index}}">
+							<input
+								type="checkbox"
+								id="{{@root.meta.idp}}-geist-trait-{{index}}"
+								name="system.traits"
+								value="{{trait.value}}"
+								{{ checked trait.checked }}
+							>
+							<span class="geist-traits__option-label">{{ trait.label }}</span>
+							<small class="geist-traits__option-description">{{ trait.description }}</small>
+						</label>
+					{{/each}}
+				{{else}}
+					{{#each geistTraits.selected as | trait |}}
+						<details class="geist-traits__entry">
+							<summary>{{ trait.label }}</summary>
+							<p>{{ trait.description }}</p>
+						</details>
+					{{/each}}
+				{{/if}}
+			</div>
+		</details>
+	{{/if}}
 
 	{{!-- * Armour --}}
 	<div class="armour">

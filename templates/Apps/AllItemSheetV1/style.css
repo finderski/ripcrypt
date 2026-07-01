@@ -45,6 +45,53 @@
 		}
 	}
 
+	> [data-input-type="checkbox-set"] {
+		grid-column: 1 / -1;
+		display: grid;
+		grid-template-columns: subgrid;
+		row-gap: var(--row-gap);
+	}
+
+	.ripcrypt-checkbox-set-options,
+	.ripcrypt-checkbox-set-readonly {
+		display: grid;
+		gap: 6px;
+	}
+
+	.ripcrypt-checkbox-set-option {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr);
+		column-gap: 6px;
+		row-gap: 2px;
+		align-items: start;
+		text-transform: none;
+		font-weight: normal;
+	}
+
+	.ripcrypt-checkbox-set-option-label {
+		font-weight: 700;
+	}
+
+	.ripcrypt-checkbox-set-option-description,
+	.ripcrypt-trait-entry p {
+		grid-column: 2;
+		margin: 0;
+		font-size: var(--font-size-12);
+		text-transform: none;
+	}
+
+	.ripcrypt-trait-entry {
+		padding: 4px 6px;
+		border: 1px solid var(--accent-2);
+		border-radius: 4px;
+	}
+
+	.ripcrypt-trait-entry summary {
+		cursor: pointer;
+		font-weight: 700;
+		list-style: none;
+	}
+
 	> [data-input-type="prose-mirror"] {
 		grid-column: 1 / -1;
 		display: flex;

@@ -43,6 +43,40 @@
 	margin-top: 0.5rem;
 }
 
+.ripcrypt-chat-card .ripcrypt-roll-traits {
+	display: grid;
+	gap: 0.35rem;
+	margin-top: 0.35rem;
+}
+
+.ripcrypt-chat-card .ripcrypt-roll-traits-title {
+	font-size: 0.875rem;
+	font-weight: 600;
+}
+
+.ripcrypt-chat-card .ripcrypt-roll-traits-list {
+	display: grid;
+	gap: 0.25rem;
+}
+
+.ripcrypt-chat-card .ripcrypt-roll-trait,
+.ripcrypt-chat-card .ripcrypt-roll-trait-label {
+	padding: 0.3rem 0.45rem;
+	border: 1px solid rgb(0 0 0 / 15%);
+	border-radius: 4px;
+	background: rgb(255 255 255 / 15%);
+}
+
+.ripcrypt-chat-card .ripcrypt-roll-trait summary {
+	cursor: pointer;
+	font-weight: 700;
+}
+
+.ripcrypt-chat-card .ripcrypt-roll-trait p {
+	margin: 0.35rem 0 0;
+	font-size: 0.825rem;
+}
+
 .ripcrypt-chat-card .ripcrypt-roll-details-toggle {
 	cursor: pointer;
 	font-size: 0.875rem;
