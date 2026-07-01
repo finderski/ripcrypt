@@ -1,6 +1,7 @@
 import { distanceBetweenFates } from "../utils/fates.mjs";
 
 export class RipCryptCombatant extends Combatant {
+	static MISSING_FATE_INITIATIVE = 4;
 
 	get disposition() {
 		switch (this.token?.disposition) {
@@ -21,7 +22,12 @@ export class RipCryptCombatant extends Combatant {
 
 		const start = game.settings.get(`ripcrypt`, `currentFate`);
 		const end = this.actor?.system?.fate || this.baseActor?.system?.fate;
-		total += distanceBetweenFates(start, end);
+		if (start && end) {
+			total += distanceBetweenFates(start, end);
+		}
+		else {
+			total += this.constructor.MISSING_FATE_INITIATIVE;
+		};
 
 		const whoFirst = game.settings.get(`ripcrypt`, `whoFirst`);
 		if (whoFirst) {

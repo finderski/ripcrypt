@@ -33,4 +33,21 @@ export class RipCryptToken extends Token {
 			this.turnMarker = null;
 		}
 	}
+
+	/**
+	 * Preserve RipCrypt's table workflow by allowing double-right click to toggle
+	 * targeting even for owned tokens. Hold Alt/Option to open token config.
+	 *
+	 * @override
+	 */
+	_onClickRight2(event) {
+		if (event.altKey && this.isOwner && game.user.can(`TOKEN_CONFIGURE`)) {
+			return super._onClickRight2(event);
+		};
+
+		event.stopPropagation();
+		return this.setTarget(!this.targeted.has(game.user), {
+			releaseOthers: !event.shiftKey,
+		});
+	}
 };

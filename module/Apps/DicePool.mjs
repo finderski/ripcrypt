@@ -3,6 +3,11 @@ import { GenericAppMixin } from "./GenericApp.mjs";
 import { localizer } from "../utils/Localizer.mjs";
 import { Logger } from "../utils/Logger.mjs";
 import { evaluateRipCryptRoll, getRollSpeaker, sendRollToChat } from "../rolls/ripcrypt-rolls.mjs";
+import {
+	applyStatusEdgeDrag,
+	canActorPerformRipCryptAction,
+	RipCryptActionTypes,
+} from "../utils/statuses.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
@@ -57,6 +62,7 @@ export class DicePool extends GenericAppMixin(HandlebarsApplicationMixin(Applica
 	_drag;
 	_edge;
 	_onRoll;
+	_actionType;
 
 	constructor({
 		diceCount = 1,
@@ -64,6 +70,7 @@ export class DicePool extends GenericAppMixin(HandlebarsApplicationMixin(Applica
 		drag = 0, edge = 0,
 		flavor = ``,
 		actor = null,
+		actionType = RipCryptActionTypes.UNTYPED,
 		speaker = null,
 		onRoll = null,
 		...opts
@@ -74,6 +81,7 @@ export class DicePool extends GenericAppMixin(HandlebarsApplicationMixin(Applica
 		this._edge = edge;
 		this._flavor = flavor;
 		this._actor = actor;
+		this._actionType = actionType;
 		this._speaker = speaker;
 		this._onRoll = onRoll;
 		this._diceCount = diceCount;
@@ -204,6 +212,17 @@ export class DicePool extends GenericAppMixin(HandlebarsApplicationMixin(Applica
 	};
 
 	static async #roll() {
+		if (!canActorPerformRipCryptAction(this._actor, { actionType: this._actionType })) {
+			return;
+		};
+
+		const rollOptions = applyStatusEdgeDrag(this._actor, {
+			edge: this._edge,
+			drag: this._drag,
+		});
+		this._edge = rollOptions.edge;
+		this._drag = rollOptions.drag;
+
 		const {
 			roll,
 			formula,
@@ -211,8 +230,8 @@ export class DicePool extends GenericAppMixin(HandlebarsApplicationMixin(Applica
 		} = await evaluateRipCryptRoll({
 			diceCount: this._diceCount,
 			target: this._target,
-			edge: this._edge,
-			drag: this._drag,
+			edge: rollOptions.edge,
+			drag: rollOptions.drag,
 		});
 		Logger.debug(`Attempting to roll formula: ${formula}`);
 
@@ -228,6 +247,8 @@ export class DicePool extends GenericAppMixin(HandlebarsApplicationMixin(Applica
 				formula,
 				effectiveTarget,
 				baseTarget: this._target,
+				edge: rollOptions.edge,
+				drag: rollOptions.drag,
 				flavor,
 				actor: this._actor,
 				speaker,

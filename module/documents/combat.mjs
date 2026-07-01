@@ -120,8 +120,8 @@ export class RipCryptCombat extends Combat {
 
 		const tokenGroup = this.combatant?.groupKey;
 		for (const token of canvas.tokens.turnMarkers) {
-			const actor = token.actor ?? token.baseActor;
-			if (actor?.groupKey !== tokenGroup) {
+			const combatantGroup = token.combatant?.groupKey;
+			if (combatantGroup !== tokenGroup) {
 				token.renderFlags.set({refreshTurnMarker: true});
 			}
 		}

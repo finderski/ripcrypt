@@ -215,6 +215,16 @@ Checklist:
 - [ ] Open the Dice Pool app from an actor workflow that uses it.
 - [ ] Roll an ability check and confirm chat message creation succeeds.
 - [ ] Trigger a weapon attack from an equipped weapon row or its context menu and confirm the Dice Pool opens prefilled from the weapon's attack attribute.
+- [ ] With a ranged weapon and no target selected, trigger a weapon attack and confirm the Dice Pool still opens, while a warning notes that range modifiers were not applied.
+- [ ] With a ranged weapon and exactly one target selected, confirm the chat card includes target name, measured distance in spaces, weapon mid/max range, modifier summary, and final Edge/Drag/TN counts.
+- [ ] Place a target within the weapon's short or mid range and confirm no range-based Drag is added.
+- [ ] Place a target beyond the weapon's short or mid range but within long or max range and confirm exactly `+1 Drag` is added for range.
+- [ ] Place a target beyond the weapon's long or max range and confirm the attack is blocked with an out-of-range warning.
+- [ ] Use a light ranged weapon within 1 space and confirm close-combat use adds no Drag.
+- [ ] Use a modest ranged weapon within 1 space and confirm close-combat use adds `+1 Drag`.
+- [ ] Use a heavy ranged weapon within 1 space and confirm the attack is blocked with a close-combat warning.
+- [ ] Apply `Fatigued` to the attacker and confirm its `+1 Drag` stacks numerically with any range-based Drag.
+- [ ] Apply `Frenzied` or Fate alignment Edge and confirm that Edge stacks numerically against accumulated Drag in the final Target Number.
 - [ ] Confirm the roll formula parses and evaluates.
 - [ ] Inspect the roll tooltip for obvious custom die errors.
 - [ ] Confirm the RipCrypt roll card renders the formula and total cleanly in chat.
@@ -237,6 +247,32 @@ Known watch items from the audit:
 
 - DicePool speaker handling now receives the actor from the sheet action when available; confirm chat messages show the expected speaker.
 - `templates/chat/roll.hbs` now drives the custom RipCrypt chat card; confirm it loads without missing-template errors.
+
+Record:
+
+- Result:
+- Console warnings/errors:
+
+## Morale Status Effects Smoke Test
+
+Checklist:
+
+- [ ] Open a placed token's HUD and confirm the status effects palette shows only `Fazed`, `Fatigued`, `Fearful`, and `Frenzied`.
+- [ ] Confirm no default core conditions such as prone, stunned, blinded, or dead appear in the token HUD status list.
+- [ ] Apply `Fazed` from the token HUD and confirm the status icon appears on the token.
+- [ ] Attempt a trait roll while `Fazed` is active and confirm the roll is blocked with the warning `Fazed: this subject may not take actions.`
+- [ ] Remove `Fazed` and confirm the same roll can proceed normally.
+- [ ] Apply `Fatigued` and open a trait roll Dice Pool from an actor sheet.
+- [ ] Confirm the Dice Pool opens with at least `1` Drag applied automatically.
+- [ ] Roll while `Fatigued` is active and confirm the resulting Target Number reflects that Drag.
+- [ ] Apply `Frenzied` and open a trait roll Dice Pool from an actor sheet.
+- [ ] Confirm the Dice Pool opens with at least `1` Edge applied automatically.
+- [ ] Roll while `Frenzied` is active and confirm the resulting Target Number reflects that Edge.
+- [ ] Apply both `Fatigued` and `Frenzied` together and confirm the automatic Edge and Drag offset each other in the final target calculation.
+- [ ] Apply `Fearful` and attempt a weapon attack.
+- [ ] Confirm the attack is blocked with the warning `Fearful: this subject may only break, move, or run away from hostile combatants.`
+- [ ] Apply `Fearful` and attempt an untyped ability roll; note current behavior and verify there is no console error. This path is intentionally a partial enforcement point until explicit move/break/flee action typing exists.
+- [ ] Remove each morale status and confirm its mechanical effect stops immediately without requiring a world reload.
 
 Record:
 

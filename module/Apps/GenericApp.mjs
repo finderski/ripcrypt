@@ -2,6 +2,12 @@ import { createItemFromElement, deleteItemFromElement, editItemFromElement, upda
 import { DicePool } from "./DicePool.mjs";
 import { RichEditor } from "./RichEditor.mjs";
 import { toBoolean } from "../consts.mjs";
+import { getFateAlignmentEdge } from "../utils/fates.mjs";
+import {
+	applyStatusEdgeDrag,
+	canActorPerformRipCryptAction,
+	RipCryptActionTypes,
+} from "../utils/statuses.mjs";
 import { buildWeaponAttackRollDataFromElement } from "../utils/weaponAttack.mjs";
 import { sendWeaponAttackToChat } from "../rolls/ripcrypt-rolls.mjs";
 
@@ -130,9 +136,26 @@ export function GenericAppMixin(HandlebarsApp) {
 			const data = target.dataset;
 			const diceCount = parseInt(data.diceCount);
 			const flavor = data.flavor;
-			const actor = this.document instanceof Actor ? this.document : null;
+			const actor = this.document instanceof Actor
+				? this.document
+				: (this.document?.parent instanceof Actor ? this.document.parent : null);
+			if (!canActorPerformRipCryptAction(actor, { actionType: RipCryptActionTypes.UNTYPED })) {
+				return;
+			};
 
-			const dp = new DicePool({ diceCount, flavor, actor });
+			const rollOptions = applyStatusEdgeDrag(actor, {
+				edge: getFateAlignmentEdge(actor),
+				drag: 0,
+			});
+
+			const dp = new DicePool({
+				diceCount,
+				edge: rollOptions.edge,
+				drag: rollOptions.drag,
+				flavor,
+				actor,
+				actionType: RipCryptActionTypes.UNTYPED,
+			});
 			dp.render({ force: true });
 		};
 
@@ -146,14 +169,21 @@ export function GenericAppMixin(HandlebarsApp) {
 			const dp = new DicePool({
 				diceCount: rollData.diceCount,
 				target: rollData.target,
+				edge: rollData.edge,
+				drag: rollData.drag,
 				flavor: rollData.flavor,
 				actor: rollData.actor,
-				onRoll: ({ roll, baseTarget, effectiveTarget, flavor, speaker }) => sendWeaponAttackToChat({
+				actionType: RipCryptActionTypes.ATTACK,
+				onRoll: ({ roll, baseTarget, effectiveTarget, edge, drag, flavor, speaker }) => sendWeaponAttackToChat({
 					roll,
 					actor: rollData.actor,
 					weapon: rollData.weapon,
 					baseTarget,
 					effectiveTarget,
+					edgeCount: edge,
+					dragCount: drag,
+					targetData: rollData.targetData,
+					rangeContext: rollData.rangeContext,
 					speaker,
 					flavor,
 				}),

@@ -40,7 +40,9 @@
 				"armour-at-location": "Armour",
 				"damage-before-armour": "Damage",
 				"dice-term": "Die",
+				"final-modifiers": "Final Modifiers",
 				"hit-location": "Hit Location",
+				"modifiers": "Modifiers",
 				"pending-damage": "Pending Damage",
 				"target": "Target",
 				"target-number": "Target Number"
@@ -59,12 +61,30 @@
 			"weapon": {
 				"apply-damage-disabled": "Only a Keeper, or a user who can update both the target and this chat card, may apply damage.",
 				"damage-applied": "{userName} applied {value} damage to {targetName}. Guts is now {guts}.",
+				"final-modifiers": "Edge {edge}, Drag {drag}, TN {adjustment}",
 				"hit-location-chosen": "(chosen)",
 				"hit-location-rolled": "({formula}: {total})",
+				"modifier-beyond-mid": "Beyond mid range: +1 Drag",
+				"modifier-close-heavy": "Heavy ranged weapons cannot be used in close combat.",
+				"modifier-close-light": "Close combat with light ranged weapon: no penalty",
+				"modifier-close-modest": "Close combat with modest ranged weapon: +1 Drag",
+				"modifier-no-source": "No source token available; range modifiers were not applied.",
+				"modifier-no-target": "No target selected; range modifiers were not applied.",
+				"modifier-out-of-range": "Target is beyond this weapon's maximum range.",
+				"modifier-within-mid": "Within mid range",
 				"no-damage-penetrates": "{targetName}'s armour on the {locationName} absorbs the blow.",
 				"no-target": "No target selected. Attack rolled without hit location or damage application.",
+				"no-target-range": "No target selected; range modifiers were not applied. Attack rolled without hit location or damage application.",
+				"pending-hit-location": "Awaiting hit location selection...",
+				"range-detail": "{distance} spaces ({range})",
 				"raw-damage": "{total} ({base} + {extra})"
 			}
+		},
+		"statuses": {
+			"fazed": "Fazed",
+			"fatigued": "Fatigued",
+			"fearful": "Fearful",
+			"frenzied": "Frenzied"
 		},
 		"common": {
 			"abilities": {
@@ -271,6 +291,8 @@
 			},
 			"warn": {
 				"cannot-go-negative": "\"{name}\" is unable to be a negative number.",
+				"fazed-no-actions": "Fazed: this subject may not take actions.",
+				"fearful-restricted-actions": "Fearful: this subject may only break, move, or run away from hostile combatants.",
 				"unsupported-drop": "This actor sheet only supports dropping Items.",
 				"unsupported-drop-document": "Dropping {documentName} documents onto this actor sheet is not supported.",
 				"unsupported-item-drop": "Cannot drop the item \"{itemName}\" of type \"{itemType}\" onto this actor sheet.",
@@ -282,6 +304,10 @@
 				"weapon-attack-invalid-target": "The selected target does not have a valid actor to damage.",
 				"weapon-attack-invalid-attribute": "{weaponName} does not have a valid attack attribute configured.",
 				"weapon-attack-invalid-dice": "{actorName} cannot roll {abilityName} for {weaponName}.",
+				"weapon-attack-out-of-range": "Target is beyond this weapon's maximum range.",
+				"weapon-attack-heavy-close-combat": "Heavy ranged weapons cannot be used in close combat.",
+				"weapon-attack-range-no-target": "No target selected; range modifiers were not applied.",
+				"weapon-attack-range-no-source": "No source token available; range modifiers were not applied.",
 				"weapon-attack-target-missing": "The targeted token or actor is no longer available."
 			},
 			"info": {

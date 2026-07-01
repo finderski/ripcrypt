@@ -32,6 +32,13 @@ export function distanceBetweenFates(start, end) {
 	return 3;
 };
 
+export function getFateAlignmentEdge(actor) {
+	const actorFate = actor?.system?.fate;
+	const currentFate = game.settings.get(`ripcrypt`, `currentFate`);
+	if (!actorFate || !currentFate) { return 0 };
+	return actorFate === currentFate ? 1 : 0;
+};
+
 const fateOrder = [
 	FatePath.WEST, // to make the .find not integer overflow
 	FatePath.NORTH,

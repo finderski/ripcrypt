@@ -38,6 +38,7 @@ import { onRenderRipCryptChatMessage } from "../rolls/ripcrypt-rolls.mjs";
 import { registerDevSettings } from "../settings/devSettings.mjs";
 import { registerMetaSettings } from "../settings/metaSettings.mjs";
 import { registerSockets } from "../sockets/_index.mjs";
+import { registerRipCryptStatusEffects } from "../utils/statuses.mjs";
 import { registerUserSettings } from "../settings/userSettings.mjs";
 import { registerWorldSettings } from "../settings/worldSettings.mjs";
 
@@ -82,6 +83,7 @@ Hooks.once(`init`, () => {
 
 	CONFIG.Combat.initiative.decimals = 2;
 	CONFIG.ui.delveDice = DelveDiceHUD;
+	registerRipCryptStatusEffects();
 
 	// #region Settings
 	registerMetaSettings();

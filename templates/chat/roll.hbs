@@ -32,6 +32,24 @@
 						<span class="ripcrypt-roll-meta-value">{{attack.targetName}}</span>
 					</div>
 				{{/if}}
+				{{#if attack.rangeValue}}
+					<div class="ripcrypt-roll-meta-row">
+						<span class="ripcrypt-roll-meta-label">{{attack.rangeTitle}}</span>
+						<span class="ripcrypt-roll-meta-value">{{attack.rangeValue}}</span>
+					</div>
+				{{/if}}
+				{{#if attack.modifiersValue}}
+					<div class="ripcrypt-roll-meta-row">
+						<span class="ripcrypt-roll-meta-label">{{attack.modifiersTitle}}</span>
+						<span class="ripcrypt-roll-meta-value">{{attack.modifiersValue}}</span>
+					</div>
+				{{/if}}
+				{{#if attack.finalModifiersValue}}
+					<div class="ripcrypt-roll-meta-row">
+						<span class="ripcrypt-roll-meta-label">{{attack.finalModifiersTitle}}</span>
+						<span class="ripcrypt-roll-meta-value">{{attack.finalModifiersValue}}</span>
+					</div>
+				{{/if}}
 				{{#if attack.hitLocationLabel}}
 					<div class="ripcrypt-roll-meta-row">
 						<span class="ripcrypt-roll-meta-label">{{attack.hitLocationTitle}}</span>
@@ -59,6 +77,9 @@
 				{{/if}}
 				{{#if attack.noTargetMessage}}
 					<p class="ripcrypt-roll-note">{{attack.noTargetMessage}}</p>
+				{{/if}}
+				{{#if attack.pendingHitLocationMessage}}
+					<p class="ripcrypt-roll-note">{{attack.pendingHitLocationMessage}}</p>
 				{{/if}}
 				{{#if attack.noDamageMessage}}
 					<p class="ripcrypt-roll-note">{{attack.noDamageMessage}}</p>

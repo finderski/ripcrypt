@@ -5,6 +5,7 @@ import { filePath } from "../../consts.mjs";
 import { gameTerms } from "../../gameTerms.mjs";
 import { localizer } from "../../utils/Localizer.mjs";
 import { Logger } from "../../utils/Logger.mjs";
+import { RipCryptActionTypes } from "../../utils/statuses.mjs";
 import { buildWeaponAttackRollDataFromElement } from "../../utils/weaponAttack.mjs";
 import { RipCryptActorSheetV2 } from "./RipCryptActorSheetV2.mjs";
 import { sendWeaponAttackToChat } from "../../rolls/ripcrypt-rolls.mjs";
@@ -62,14 +63,21 @@ export class StatsCardV1 extends RipCryptActorSheetV2 {
 			const dp = new DicePool({
 				diceCount: rollData.diceCount,
 				target: rollData.target,
+				edge: rollData.edge,
+				drag: rollData.drag,
 				flavor: rollData.flavor,
 				actor: rollData.actor,
-				onRoll: ({ roll, baseTarget, effectiveTarget, flavor, speaker }) => sendWeaponAttackToChat({
+				actionType: RipCryptActionTypes.ATTACK,
+				onRoll: ({ roll, baseTarget, effectiveTarget, edge, drag, flavor, speaker }) => sendWeaponAttackToChat({
 					roll,
 					actor: rollData.actor,
 					weapon: rollData.weapon,
 					baseTarget,
 					effectiveTarget,
+					edgeCount: edge,
+					dragCount: drag,
+					targetData: rollData.targetData,
+					rangeContext: rollData.rangeContext,
 					speaker,
 					flavor,
 				}),

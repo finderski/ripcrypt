@@ -1,5 +1,9 @@
 import { filePath } from "../consts.mjs";
-import { buildWeaponAttackChatData, resolveWeaponAttackTargetActor } from "../utils/weaponAttack.mjs";
+import {
+	buildWeaponAttackChatData,
+	resolvePendingWeaponAttackChatData,
+	resolveWeaponAttackTargetActor,
+} from "../utils/weaponAttack.mjs";
 
 const { renderTemplate } = foundry.applications.handlebars;
 const { Roll } = foundry.dice;
@@ -76,6 +80,10 @@ export async function sendWeaponAttackToChat({
 	weapon,
 	baseTarget,
 	effectiveTarget,
+	edgeCount = 0,
+	dragCount = 0,
+	targetData = null,
+	rangeContext = null,
 	speaker,
 	flavor,
 } = {}) {
@@ -85,13 +93,25 @@ export async function sendWeaponAttackToChat({
 		roll,
 		baseTarget,
 		effectiveTarget,
+		edgeCount,
+		dragCount,
+		targetData,
+		rangeContext,
+		deferHeroicSelection: true,
 	});
 
-	return sendRollToChat(roll, {
+	const message = await sendRollToChat(roll, {
 		speaker: speaker ?? getRollSpeaker({ actor }),
 		flavor,
 		ripcrypt,
 	});
+
+	if (ripcrypt.weaponAttack?.pendingHeroicSelection) {
+		await resolvePendingWeaponAttackChatData(ripcrypt.weaponAttack);
+		await refreshRipCryptMessageCard(message, ripcrypt);
+	}
+
+	return message;
 };
 
 export function getRipCryptState(roll) {
@@ -208,7 +228,16 @@ function getWeaponAttackCardContext(attack) {
 	return {
 		targetTitle: game.i18n.localize(`RipCrypt.chat.labels.target`),
 		targetName: attack.targetName ?? null,
+		rangeTitle: game.i18n.localize(`RipCrypt.common.range`),
+		rangeValue: attack.rangeValue ?? null,
+		modifiersTitle: game.i18n.localize(`RipCrypt.chat.labels.modifiers`),
+		modifiersValue: attack.modifierSummary ?? null,
+		finalModifiersTitle: game.i18n.localize(`RipCrypt.chat.labels.final-modifiers`),
+		finalModifiersValue: attack.finalModifierSummary ?? null,
 		noTargetMessage: attack.noTargetMessage ?? null,
+		pendingHitLocationMessage: attack.pendingHeroicSelection
+			? game.i18n.localize(`RipCrypt.chat.weapon.pending-hit-location`)
+			: null,
 		hitLocationTitle: game.i18n.localize(`RipCrypt.chat.labels.hit-location`),
 		hitLocationLabel: attack.hitLocationLabel ?? null,
 		hitLocationDetail: attack.hitLocationMethod === `chosen`
